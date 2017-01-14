@@ -1,5 +1,5 @@
 ﻿
-@model CRM.Models.Customer
+@model CRM.ViewModels.CustomerViewModel
 
 @{
     ViewBag.Title = "Create";
@@ -8,10 +8,11 @@
 
 <h2>Create</h2>
 
-<form>
+@using (Html.BeginForm("Create", "Customer"))
+{
     <div class="form-group">
         @Html.LabelFor(m => m.Name)
-        @Html.TextBoxFor(m => m.Name, new { @class = "form-control"})
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Phone)
@@ -21,5 +22,11 @@
         @Html.LabelFor(m => m.Email)
         @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
     </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.SelectedUsers)
+        @Html.ListBoxFor(m => m.SelectedUsers, Model.Users)
+    </div>
+
     <button type="submit" class="btn btn-primary">Save</button>
-</form>
+}
+

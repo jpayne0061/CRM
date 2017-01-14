@@ -1,0 +1,16 @@
+﻿@model CRM.ViewModels.CustomerViewModel
+
+<h2>Add Team Members for @Model.Name</h2>
+
+
+@using (Html.BeginForm("AddTeam", "Customer"))
+{
+
+    @Html.HiddenFor(m => m.TransferId)
+    <div class="form-group">
+        @Html.LabelFor(m => m.SelectedUsers)
+        @Html.ListBoxFor(m => m.SelectedUsers, Model.Users)
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+}

@@ -1,0 +1,18 @@
+﻿@model List<CRM.Models.Message>
+
+
+@{
+    ViewBag.Title = "UserMessages";
+}
+
+<h2>UserMessages</h2>
+
+<ul>
+    @foreach (var message in Model)
+    {
+        <li>Author: @message.AuthorName</li>
+        <li>Customer: @message.Customer.Name</li>
+        <li>Body: @message.Body</li>
+    }
+
+</ul>

@@ -11,7 +11,12 @@ namespace CRM.Models
         public string Body { get; set; }
         public Customer Customer { get; set; }
         public int CustomerId { get; set; }
-
+        public ApplicationUser Author { get; set; }
+        public string AuthorId { get; set; }
+        public string AuthorName { get; set; }
+        public DateTime DateTime { get; set; }
+        //public string BodySnippet { get; set; }
 
     }
 }
+

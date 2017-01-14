@@ -22,3 +22,81 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+/****************BOOTSTARP/FLATLY OVERRIDES*********/
+
+.glyphicon-pencil:hover {
+    cursor: pointer;
+    color: #3498db;
+    padding-left: 4px;
+}
+
+.glyphicon-pencil {
+    padding-left: 4px;
+}
+
+
+.glyphicon-trash:hover {
+    cursor: pointer;
+    color: #e74c3c;
+}
+
+td > .glyphicon-trash {
+    padding-left: 7px;
+}
+
+.table a:not(.btn) {
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.table a:not(.btn):hover {
+    color: #42E3C4;    
+}
+
+.btn {
+    padding: 5px 10px;
+    margin: 3px;
+}
+
+
+
+
+/*********SITE OVERRIDES********/
+
+table > thead > tr > th.table-head-title {
+    font-size: 2em;
+    padding-top: 25px;
+}
+
+table {
+    table-layout: fixed;
+}
+
+.glyph-cell {
+    width: 65px;
+}
+
+.name-header {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.team-header {
+    margin-top: 30px;
+}
+
+.divider-hr {
+    margin-top: 60px;
+}
+
+
+#logo {
+    max-width: 50px;
+    height: auto;
+}
+
+#team-button {
+    margin-top: 30px;
+}

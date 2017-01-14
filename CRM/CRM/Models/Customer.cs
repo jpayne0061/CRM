@@ -12,9 +12,13 @@ namespace CRM.Models
         public Customer()
         {
             Messages = new List<Message>();
+            Tasks = new List<Task>();
+            Team = new List<ApplicationUser>();
         }
 
         public ICollection<Message> Messages { get; set; }
+        public ICollection<Task> Tasks { get; set; }
+        public ICollection<ApplicationUser> Team { get; set; }
 
 
         public int Id { get; set; }

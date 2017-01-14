@@ -1,0 +1,51 @@
+﻿@model List<CRM.Models.Customer>
+
+
+    @*@foreach (var customer in Model)
+    {
+        <li>Name: @customer.Name</li>
+        <li>Phone: @customer.Phone</li>
+        <li>Email: @customer.Email</li>
+        <li>
+            Messages: @foreach (var message in customer.Messages)
+            {
+                <div>@message.Body</div><span>@message.AuthorName</span>
+                <div> **** </div>
+            }
+        </li>
+        <li>@Html.ActionLink("Add Message", "Create", "Messages", new { id = customer.Id }, null)</li>
+        <li>@Html.ActionLink("Create Task", "Create", "Tasks", new { id = customer.Id }, null)</li>
+        <li>------------------------------</li>
+    }
+
+*@
+
+
+<table class="table table-striped table-hover ">
+    <thead>
+        <tr>
+            <th colspan="3" class="table-head-title">All Clients</th>
+            <th>@Html.ActionLink("Add Customer", "Create", "Customer", null, new { @class = "btn btn-success" })</th>
+        </tr>
+        @*<tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+        </tr>*@
+    </thead>
+    <tbody>
+        @foreach (var customer in Model)
+        {
+        <tr>
+            <td>@Html.ActionLink(customer.Name, "Detail", "Customer", new { id = customer.Id }, null)</td>
+            <td>@customer.Phone</td>
+            <td>@customer.Email</td>
+            <td>
+                <span class="glyphicon glyphicon-pencil"></span>
+                <span class="glyphicon glyphicon-trash"></span>
+            </td>
+
+        </tr>
+        }
+    </tbody>
+</table>

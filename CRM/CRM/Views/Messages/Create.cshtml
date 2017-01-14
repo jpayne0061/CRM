@@ -1,0 +1,21 @@
+﻿@model CRM.ViewModels.MessageViewModel
+
+
+<h2>Message Re: @Model.CustomerName</h2>
+
+@using (Html.BeginForm("Create", "Messages"))
+{
+
+    @Html.HiddenFor(m => m.CustomerName)
+    @Html.HiddenFor(m => m.CustomerId)
+    <div class="form-group">
+        @Html.LabelFor(m => m.Body)
+        @Html.TextAreaFor(m => m.Body, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.SelectedEmails)
+        @Html.ListBoxFor(m => m.SelectedEmails, Model.Users)
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+}

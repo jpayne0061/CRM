@@ -81,12 +81,24 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -196,10 +208,14 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MessagesController.cs" />
+    <Compile Include="api\UsersController.cs" />
+    <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -223,6 +239,34 @@
     <Compile Include="Migrations\201701111553402_changednameToNameOnCustomer.Designer.cs">
       <DependentUpon>201701111553402_changednameToNameOnCustomer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701111836351_addedAuthorAndUSerPropertyToMessage.cs" />
+    <Compile Include="Migrations\201701111836351_addedAuthorAndUSerPropertyToMessage.Designer.cs">
+      <DependentUpon>201701111836351_addedAuthorAndUSerPropertyToMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701111854533_addedUserMessageandRelationShipToAppUser.cs" />
+    <Compile Include="Migrations\201701111854533_addedUserMessageandRelationShipToAppUser.Designer.cs">
+      <DependentUpon>201701111854533_addedUserMessageandRelationShipToAppUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701121624041_addedNameToAppUserandModifiedRegisterViewModel.cs" />
+    <Compile Include="Migrations\201701121624041_addedNameToAppUserandModifiedRegisterViewModel.Designer.cs">
+      <DependentUpon>201701121624041_addedNameToAppUserandModifiedRegisterViewModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701121824115_AddTasksToDb.cs" />
+    <Compile Include="Migrations\201701121824115_AddTasksToDb.Designer.cs">
+      <DependentUpon>201701121824115_AddTasksToDb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701121834555_modifiedPropsOfCustomerandUser.cs" />
+    <Compile Include="Migrations\201701121834555_modifiedPropsOfCustomerandUser.Designer.cs">
+      <DependentUpon>201701121834555_modifiedPropsOfCustomerandUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701130149131_addedDTtoMessages.cs" />
+    <Compile Include="Migrations\201701130149131_addedDTtoMessages.Designer.cs">
+      <DependentUpon>201701130149131_addedDTtoMessages.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701131850285_removedTitleFromTaskAddedManyToManyforCustomerAndUsers.cs" />
+    <Compile Include="Migrations\201701131850285_removedTitleFromTaskAddedManyToManyforCustomerAndUsers.Designer.cs">
+      <DependentUpon>201701131850285_removedTitleFromTaskAddedManyToManyforCustomerAndUsers.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -230,12 +274,19 @@
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Message.cs" />
+    <Compile Include="Models\Task.cs" />
+    <Compile Include="Models\UserMessage.cs" />
+    <Compile Include="ViewModels\CustomerViewModel.cs" />
+    <Compile Include="ViewModels\MessageViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\TaskViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\flatly.min.css" />
+    <Content Include="Content\img\feather.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -293,6 +344,13 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Service References\Application Insights\ConnectedService.json" />
     <Content Include="Views\Customer\Create.cshtml" />
+    <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\Messages\Create.cshtml" />
+    <Content Include="Views\Messages\UserMessages.cshtml" />
+    <Content Include="Views\Tasks\Create.cshtml" />
+    <Content Include="Views\Tasks\UserTasks.cshtml" />
+    <Content Include="Views\Customer\Detail.cshtml" />
+    <Content Include="Views\Customer\AddTeam.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -323,6 +381,27 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701111553402_changednameToNameOnCustomer.resx">
       <DependentUpon>201701111553402_changednameToNameOnCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701111836351_addedAuthorAndUSerPropertyToMessage.resx">
+      <DependentUpon>201701111836351_addedAuthorAndUSerPropertyToMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701111854533_addedUserMessageandRelationShipToAppUser.resx">
+      <DependentUpon>201701111854533_addedUserMessageandRelationShipToAppUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701121624041_addedNameToAppUserandModifiedRegisterViewModel.resx">
+      <DependentUpon>201701121624041_addedNameToAppUserandModifiedRegisterViewModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701121824115_AddTasksToDb.resx">
+      <DependentUpon>201701121824115_AddTasksToDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701121834555_modifiedPropsOfCustomerandUser.resx">
+      <DependentUpon>201701121834555_modifiedPropsOfCustomerandUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701130149131_addedDTtoMessages.resx">
+      <DependentUpon>201701130149131_addedDTtoMessages.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701131850285_removedTitleFromTaskAddedManyToManyforCustomerAndUsers.resx">
+      <DependentUpon>201701131850285_removedTitleFromTaskAddedManyToManyforCustomerAndUsers.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
