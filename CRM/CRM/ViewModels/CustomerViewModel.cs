@@ -24,5 +24,7 @@ namespace CRM.ViewModels
         public List<string> SelectedUsers { get; set; }
 
         public List<SelectListItem> Users { get; set; }
+
+
     }
 }

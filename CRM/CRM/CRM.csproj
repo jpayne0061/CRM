@@ -215,6 +215,8 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="api\UsersController.cs" />
+    <Compile Include="Controllers\StyleController.cs" />
+    <Compile Include="Controllers\TaskApiController.cs" />
     <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -267,16 +269,23 @@
     <Compile Include="Migrations\201701131850285_removedTitleFromTaskAddedManyToManyforCustomerAndUsers.Designer.cs">
       <DependentUpon>201701131850285_removedTitleFromTaskAddedManyToManyforCustomerAndUsers.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701141514516_addedStyleToUser.cs" />
+    <Compile Include="Migrations\201701141514516_addedStyleToUser.Designer.cs">
+      <DependentUpon>201701141514516_addedStyleToUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
+    <Compile Include="Models\CheckBox.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Task.cs" />
     <Compile Include="Models\UserMessage.cs" />
+    <Compile Include="ViewModels\CustomerDetailViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModel.cs" />
+    <Compile Include="ViewModels\FutureDate.cs" />
     <Compile Include="ViewModels\MessageViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -285,8 +294,13 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\ceru.min.css" />
+    <Content Include="Content\darkly.min.css" />
     <Content Include="Content\flatly.min.css" />
     <Content Include="Content\img\feather.png" />
+    <Content Include="Content\img\eagle.jpg" />
+    <Content Include="Content\img\feather_black.png" />
+    <Content Include="Content\jquery.datetimepicker.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -296,6 +310,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Scripts\datetimepicker-master.zip" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -319,8 +334,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
@@ -351,9 +364,13 @@
     <Content Include="Views\Tasks\UserTasks.cshtml" />
     <Content Include="Views\Customer\Detail.cshtml" />
     <Content Include="Views\Customer\AddTeam.cshtml" />
+    <Content Include="Views\Style\Index.cshtml" />
+    <Content Include="Views\Tasks\Edit.cshtml" />
+    <Content Include="Views\Messages\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\styles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -402,6 +419,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701131850285_removedTitleFromTaskAddedManyToManyforCustomerAndUsers.resx">
       <DependentUpon>201701131850285_removedTitleFromTaskAddedManyToManyforCustomerAndUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701141514516_addedStyleToUser.resx">
+      <DependentUpon>201701141514516_addedStyleToUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

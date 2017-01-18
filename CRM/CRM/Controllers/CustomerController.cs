@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using CRM.ViewModels;
+using Microsoft.AspNet.Identity;
 
 namespace CRM.Controllers
 {
@@ -72,6 +73,8 @@ namespace CRM.Controllers
             return RedirectToAction("Index", "Customer");
         }
 
+
+
         public ActionResult Detail(int id)
         {
 
@@ -81,9 +84,23 @@ namespace CRM.Controllers
                                              .Include(c => c.Tasks.Select(t => t.AssignedBy))
                                              .SingleOrDefault(c => c.Id == id);
 
-            return View(customer);
+            var customerDetailVm = new CustomerDetailViewModel
+            {
+                Messages = customer.Messages.ToList(),
+                Team = customer.Team.ToList(),
+                Tasks = customer.Tasks.ToList(),
+                Id = customer.Id,
+                CurrentUserId = User.Identity.GetUserId(),
+                Name = customer.Name,
+                Phone = customer.Phone,
+                Email = customer.Email
+            };
+
+            return View(customerDetailVm);
         }
 
+
+        [Authorize]
         public ActionResult AddTeam(int id)
         {
             var customer = _context.Customers.SingleOrDefault(c => c.Id == id);

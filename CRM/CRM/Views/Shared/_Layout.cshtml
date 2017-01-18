@@ -4,7 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
+    @Html.Action("GetStyle", "Style")
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="~/Content/Site.css">
     @Scripts.Render("~/bundles/modernizr")
 
     <script type = 'text/javascript' >
@@ -30,12 +32,13 @@
                     <span class="icon-bar"></span>
                 </button>
                 
-                
+                <img id="logo-black" src="~/Content/img/feather_black.png" />
                 <img id="logo" src="~/Content/img/feather.png" />
             </div>
             <div class="navbar-collapse collapse">
+
                 <ul class="nav navbar-nav">
-                    @Html.ActionLink("Fly Client", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Fly Client", "Index", "Customer", new { area = "" }, new { @class = "navbar-brand", id="logo-font" })
                     
                 </ul>
                 @Html.Partial("_LoginPartial")
@@ -53,12 +56,13 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
-        $(document).ready(function () {
-            $.getJSON("/api/Users", function (users) {
-                console.log(users);
-            });
+        //$("#datetimepicker").datetimepicker();
+        $("#datetimepicker").datepicker();
+        $("#logo-font").hover(function () {
+            $("#logo-black").toggle();
+            $("#logo").toggle();
         });
 
     </script>

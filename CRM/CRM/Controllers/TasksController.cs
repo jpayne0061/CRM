@@ -43,12 +43,13 @@ namespace CRM.Controllers
         {
             var taskMaker = User.Identity.GetUserId();
 
-            var users = _context.Users.ToList();
+            var customer = _context.Customers.Include(c => c.Team).SingleOrDefault(c => c.Id == id);
 
             var taskVm = new TaskViewModel
             {
                 CustomerId = id,
-                Users = users
+                Users = customer.Team,
+                Deadline = DateTime.Now
             };
 
 
@@ -56,10 +57,45 @@ namespace CRM.Controllers
         }
 
 
+        [Authorize]
+        public ActionResult Edit(int id)
+        {
+            //var taskMaker = User.Identity.GetUserId();
+
+            //var customer = _context.Customers.Include(c => c.Team).SingleOrDefault(c => c.Id == id);
+            var task = _context.Tasks.Include(t => t.Customer.Team).Include(t => t.AssignedTo).SingleOrDefault(t => t.Id == id);
+
+
+            var taskVm = new TaskViewModel
+            {
+                CustomerId = task.Customer.Id,
+                Body = task.Body,
+                AssignedTo = task.AssignedTo.Name,
+                Users = task.Customer.Team,
+                Deadline = task.Deadline,
+                EditId = id
+            };
+
+
+            return View(taskVm);
+        }
+
+
+
+
         [HttpPost]
         [Authorize]
         public ActionResult Create(TaskViewModel vm)
         {
+
+
+            if (!ModelState.IsValid)
+            {
+                vm.Users = _context.Customers.Include(c => c.Team).SingleOrDefault(c => c.Id == vm.CustomerId).Team;
+                vm.Deadline = DateTime.Now;
+                return View("Create", vm);
+            }
+
             var customer = _context.Customers.SingleOrDefault(c => c.Id == vm.CustomerId);
             var assignedTo = _context.Users.SingleOrDefault(u => u.Id == vm.AssignedTo);
             var userId = User.Identity.GetUserId();
@@ -80,7 +116,42 @@ namespace CRM.Controllers
             _context.Tasks.Add(task);
             _context.SaveChanges();
 
-            return RedirectToAction("Index", "Customer");
+            return RedirectToAction("Detail", "Customer", new { id = customer.Id });
+        }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult Edit(TaskViewModel vm)
+        {
+
+
+            if (!ModelState.IsValid)
+            {
+                vm.Users = _context.Customers.Include(c => c.Team).SingleOrDefault(c => c.Id == vm.CustomerId).Team;
+                vm.Deadline = DateTime.Now;
+                return View("Edit", vm);
+            }
+
+            var customer = _context.Customers.SingleOrDefault(c => c.Id == vm.CustomerId);
+            var assignedTo = _context.Users.SingleOrDefault(u => u.Id == vm.AssignedTo);
+            var userId = User.Identity.GetUserId();
+            var assignedBy = _context.Users.SingleOrDefault(u => u.Id == userId);
+
+            var task = _context.Tasks.SingleOrDefault(t => t.Id == vm.EditId);
+
+
+            task.Customer = customer;
+            task.CustomerId = vm.CustomerId;
+            task.AssignedTo = assignedTo;
+            task.AssignedToId = assignedTo.Id;
+            task.AssignedBy = assignedBy;
+            task.AssignedById = userId;
+            task.Deadline = vm.Deadline;
+            task.Body = vm.Body;
+
+            _context.SaveChanges();
+
+            return RedirectToAction("Detail", "Customer", new { id = customer.Id });
         }
 
 

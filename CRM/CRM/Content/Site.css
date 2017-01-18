@@ -1,4 +1,6 @@
-﻿body {
+﻿
+
+body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
@@ -51,13 +53,16 @@ td > .glyphicon-trash {
     font-weight: 600;
 }
 
-.table a:not(.btn):hover {
-    color: #42E3C4;    
-}
 
 .btn {
     padding: 5px 10px;
     margin: 3px;
+}
+
+/*****************THEME SPECIFIC OVERRIDES------DEFAULT************************/
+
+.table a:not(.btn):hover {
+    color: #42E3C4;    
 }
 
 
@@ -78,6 +83,10 @@ table {
     width: 65px;
 }
 
+.glyph-cell a {
+    color: #2c3e50;
+}
+
 .name-header {
     font-size: 32px;
     font-weight: bold;
@@ -95,8 +104,115 @@ table {
 #logo {
     max-width: 50px;
     height: auto;
+    margin-top: 4px;
 }
 
 #team-button {
     margin-top: 30px;
+}
+
+
+span.field-validation-error {
+    color: red;
+}
+
+span.field-validation-error span{
+    color: red;
+}
+
+.assigned-to-task {
+    margin-top: 7px;
+}
+
+
+.table>tbody>tr>td.task-cell-parent {
+    padding: 5% 2%;
+}
+
+#logo-black {
+    display: none;
+    max-width: 50px;
+    height: auto;
+    margin-top: 4px;
+
+}
+
+span.btn-danger>a{
+    color: white;
+    text-decoration: none;
+}
+
+.submit-and-cancel {
+    padding: 7px 40px;
+    margin-right: 15px;
+    font-size: 17px;
+}
+
+#js-minimize-messages {
+    display: none;
+    color: #798d8f;
+    margin-left: 4px;
+    padding-left: 5px;
+    padding-bottom: 9px;
+    vertical-align: middle;
+    font-size: 20px; 
+}
+
+#js-minimize-messages:hover {
+    cursor: pointer;
+    color: black;
+ 
+}
+
+
+
+#js-enlarge-messages {
+   color: #798d8f;
+   margin-left: 4px;
+   padding-left: 5px;
+   padding-bottom: 9px;
+   vertical-align: middle;
+   font-size: 20px;
+
+}
+
+#js-enlarge-messages:hover {
+   cursor: pointer;
+   color: black;
+  
+}
+
+.divider-hr-expanded {
+    display: none;
+}
+
+
+/***************LANDING PAGE************/
+
+.eagle-image {
+    width: 100%;
+    height: auto;
+}
+
+#landing-body {
+    margin: 0;
+    padding:0;
+
+}
+
+div.fill-screen {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    text-align: center;
+
+}
+
+img.eagle-image {
+    max-width: 99%;
+    max-height: 99%;
+    background:rgba(255,255,255,0.5);
+
 }

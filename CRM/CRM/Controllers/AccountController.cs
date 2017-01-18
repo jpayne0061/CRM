@@ -151,7 +151,7 @@ namespace CRM.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.Name };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.Name, Style= "<link rel='stylesheet' href='/Content/styles/flatly.min.css'>" };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
