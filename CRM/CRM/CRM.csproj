@@ -210,14 +210,17 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CustomerApiController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MessagesApiController.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="api\UsersController.cs" />
     <Compile Include="Controllers\StyleController.cs" />
     <Compile Include="Controllers\TaskApiController.cs" />
     <Compile Include="Controllers\TasksController.cs" />
+    <Compile Include="Controllers\UserNotificationApiController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -273,6 +276,14 @@
     <Compile Include="Migrations\201701141514516_addedStyleToUser.Designer.cs">
       <DependentUpon>201701141514516_addedStyleToUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701191538119_AddedUserNotifications.cs" />
+    <Compile Include="Migrations\201701191538119_AddedUserNotifications.Designer.cs">
+      <DependentUpon>201701191538119_AddedUserNotifications.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701191619227_AddedIsReadToUserNotification.cs" />
+    <Compile Include="Migrations\201701191619227_AddedIsReadToUserNotification.Designer.cs">
+      <DependentUpon>201701191619227_AddedIsReadToUserNotification.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -283,6 +294,8 @@
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Task.cs" />
     <Compile Include="Models\UserMessage.cs" />
+    <Compile Include="Models\UserNotification.cs" />
+    <Compile Include="Models\UserNotificationDto.cs" />
     <Compile Include="ViewModels\CustomerDetailViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModel.cs" />
     <Compile Include="ViewModels\FutureDate.cs" />
@@ -292,6 +305,7 @@
     <Compile Include="ViewModels\TaskViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\animate.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\ceru.min.css" />
@@ -300,11 +314,13 @@
     <Content Include="Content\img\feather.png" />
     <Content Include="Content\img\eagle.jpg" />
     <Content Include="Content\img\feather_black.png" />
+    <Content Include="Content\img\future.png" />
     <Content Include="Content\jquery.datetimepicker.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -322,6 +338,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\underscore-min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -367,6 +384,7 @@
     <Content Include="Views\Style\Index.cshtml" />
     <Content Include="Views\Tasks\Edit.cshtml" />
     <Content Include="Views\Messages\Edit.cshtml" />
+    <Content Include="Views\Customer\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -422,6 +440,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701141514516_addedStyleToUser.resx">
       <DependentUpon>201701141514516_addedStyleToUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701191538119_AddedUserNotifications.resx">
+      <DependentUpon>201701191538119_AddedUserNotifications.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701191619227_AddedIsReadToUserNotification.resx">
+      <DependentUpon>201701191619227_AddedIsReadToUserNotification.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

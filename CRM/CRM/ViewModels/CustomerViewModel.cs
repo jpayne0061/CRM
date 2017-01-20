@@ -25,6 +25,7 @@ namespace CRM.ViewModels
 
         public List<SelectListItem> Users { get; set; }
 
+        public int EditId { get; set; }
 
     }
 }

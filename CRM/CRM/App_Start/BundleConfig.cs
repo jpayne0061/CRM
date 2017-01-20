@@ -8,8 +8,13 @@ namespace CRM
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+
+
+            //MODIFY THE NAME OF THIS BUNDLE TO INCLUDE ALL THIRD PARTY LIBRARIES
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"
+                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/bootbox.min.js",
+                        "~/Scripts/underscore-min.js"
                         ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -26,8 +31,8 @@ namespace CRM
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/flatly.min.css",
-            
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/animate.css"));
         }
     }
 }

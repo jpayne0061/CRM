@@ -137,7 +137,7 @@
                                 @if (Model.CurrentUserId == message.AuthorId)
                                 {
                                     <a href="/Messages/Edit/@message.Id"> <span class="glyphicon glyphicon-pencil"></span></a>
-                                    <span class="glyphicon glyphicon-trash js-delete-message"> </span>
+                                    <span class="glyphicon glyphicon-trash js-delete-message" js-data-id="@message.Id"></span>
                                 }
 
 
@@ -165,24 +165,62 @@
 
 @section scripts {
     <script>
+
+        //DELETE TASK
         $(document.body).on("click", ".js-delete-task", function (e) {
             var num = $(e.target);
             console.log("target id", num.attr("js-data-id"));
-            $.ajax({
-                url: "/api/TaskApi/" + num.attr("js-data-id"),
-                method: "DELETE"
-            })
-             .done(function () {
-                 num.parent().parent("tr").fadeOut(function () {
-                     $(this).remove();
-                 })
-             }).fail(function () {
-                 alert("Something Went Wrong!!!");
-             });
+
+            bootbox.confirm("Are you sure you want to delete this task?", function (result) {
+                if (result) {
+                    $.ajax({
+                        url: "/api/TaskApi/" + num.attr("js-data-id"),
+                        method: "DELETE"
+                    })
+                     .done(function () {
+                         num.parent().parent("tr").fadeOut(function () {
+                             $(this).remove();
+                         })
+                     }).fail(function () {
+                         alert("Something Went Wrong!!!");
+                     });
+                }
+
+            });
 
 
         });
 
+
+
+        //DELETE MESSAGE
+        $(document.body).on("click", ".js-delete-message", function (e) {
+            var num = $(e.target);
+            console.log("target id", num.attr("js-data-id"));
+
+
+            bootbox.confirm("Are you sure you want to delete this message?", function (result) {
+                if (result) {
+                    $.ajax({
+                        url: "/api/MessagesApi/" + num.attr("js-data-id"),
+                        method: "DELETE"
+                    })
+                     .done(function () {
+                         num.parent().parent("tr").fadeOut(function () {
+                             $(this).remove();
+                         })
+                     }).fail(function () {
+                         alert("Something Went Wrong!!!");
+                     });
+                }
+
+            });
+
+        });
+
+
+
+        //EXPAND AND CHANGE MESSAGES VIEW
         $("#js-enlarge-messages").on("click", function () {
             $(".divider-hr").toggle();
             $(".divider-hr-expanded").toggle();
@@ -201,6 +239,7 @@
         });
 
 
+        //RETURN MESSAGES VIEW TO NORMAL OR MINIMIZE
         $("#js-minimize-messages").on("click", function () {
             $(".divider-hr").toggle();
             $(".divider-hr-expanded").toggle();
@@ -216,6 +255,8 @@
             $("#js-expanded-tasks").empty();
             $(".expand").removeClass("col-md-12").addClass("col-md-6");
         })
+
+
 
 
     </script>

@@ -55,7 +55,11 @@ namespace CRM.Controllers
                 
             }
 
-            var team = _context.Users.Where(u => viewCustomer.SelectedUsers.Contains(u.Name)).ToList();
+            var userId = User.Identity.GetUserId();
+
+            var creator = _context.Users.SingleOrDefault(u => u.Id == userId);
+
+            var team = _context.Users.Include(u => u.UserNotifications).Where(u => viewCustomer.SelectedUsers.Contains(u.Name)).ToList();
 
 
             var customer = new Customer
@@ -66,6 +70,26 @@ namespace CRM.Controllers
                 Team = team
 
             };
+
+
+            //add notification for each team member that they have been added
+            foreach(var user in team)
+            {
+                var userNotification = new UserNotification
+                {
+                    Sender = creator.Name,
+                    CustomerName = customer.Name,
+                    Body = creator.Name + " has assigned you to a team: " + customer.Name,
+                    Recipient = user,
+                    RecipientId = user.Id,
+                    IsRead = false
+                };
+
+
+                user.UserNotifications.Add(userNotification);
+                _context.UserNotifications.Add(userNotification);
+
+            }
 
             _context.Customers.Add(customer);
             _context.SaveChanges();    
@@ -139,6 +163,49 @@ namespace CRM.Controllers
 
             return RedirectToAction("Index", "Customer");
         }
+
+        [HttpGet]
+        public ActionResult Edit(int id) {
+
+            var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
+
+            var users = _context.Users.Select(u => u.Name);
+
+            var vm = new CustomerViewModel();
+
+            vm.Users = new List<SelectListItem>();
+
+            foreach(var name in users)
+            {
+                vm.Users.Add(new SelectListItem { Value = name, Text = name });
+            }
+
+            vm.EditId = id;
+            vm.Phone = customer.Phone;
+            vm.Name = customer.Name;
+            vm.Email = customer.Email;
+
+            return View(vm);
+        }
+
+
+        [HttpPost]
+        public ActionResult Edit(CustomerViewModel vm) {
+
+            var customer = _context.Customers.Include(c => c.Team).SingleOrDefault(c => c.Id == vm.EditId);
+
+            var team = _context.Users.Where(u => vm.SelectedUsers.Contains(u.Name)).ToList();
+
+            customer.Email = vm.Email;
+            customer.Name = vm.Name;
+            customer.Phone = vm.Phone;
+            customer.Team = team;
+
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Customer");
+        }
+
 
 
 

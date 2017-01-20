@@ -54,9 +54,21 @@ td > .glyphicon-trash {
 }
 
 
+
 .btn {
     padding: 5px 10px;
     margin: 3px;
+}
+
+.notifications {
+    position: relative;
+}
+
+.notifications .badge{
+    position: absolute;
+    top: 8px;
+    right: 0;
+
 }
 
 /*****************THEME SPECIFIC OVERRIDES------DEFAULT************************/
@@ -83,7 +95,7 @@ table {
     width: 65px;
 }
 
-.glyph-cell a {
+.glyph-cell a, a.edit-link {
     color: #2c3e50;
 }
 
@@ -187,32 +199,82 @@ span.btn-danger>a{
 }
 
 
+.style-caret {
+    font-size: 0.7em;
+}
+
+.dropdown-menu>li>a.style-dropdown-link {
+    max-width: 100px;
+}
+
+#globe {
+    font-size: 1.2em;
+}
+
 /***************LANDING PAGE************/
 
-.eagle-image {
+#landing-body {
+    background-image: url("img/future.png");
+    background-attachment: fixed;
+    background-size: 100%;
+    padding-bottom: 0;
+   
+}
+
+
+#overlay {
+    z-index: 1;
+    height: 100%;
     width: 100%;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    background: rgba(66, 199, 173, 0.7);    
+    text-align: center;
+    overflow-x:hidden;
+    overflow-y:hidden;
+  
+}
+
+#register-header {
+    color: #fff;
+}
+
+#overlay .row .col-md-4 {
+    text-align: center;
+}
+
+input.form-control {
+    margin: auto;
+}
+
+#register-button-landing {
+    width: 100%;
+}
+
+.register-form {
+    padding-top: 7%;
+}
+
+#landing-page-logo {
+
+    max-width: 60px;
     height: auto;
 }
 
-#landing-body {
-    margin: 0;
-    padding:0;
 
+#fly-client-text {
+    font-size: 3.7em;
+    font-weight: bold;
+    color: #fff;
+    text-align: start;
+    vertical-align: bottom;
+    margin-top: 10px;
 }
 
-div.fill-screen {
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    text-align: center;
-
-}
-
-img.eagle-image {
-    max-width: 99%;
-    max-height: 99%;
-    background:rgba(255,255,255,0.5);
-
+#text-and-logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: inline-block;
 }

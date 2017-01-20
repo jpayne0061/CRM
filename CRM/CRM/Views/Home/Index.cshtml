@@ -1,4 +1,6 @@
-﻿@{
+﻿@model CRM.Models.RegisterViewModel
+
+@{
     Layout = "";
 }
 
@@ -8,6 +10,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/Content/flatly.min.css">
     <link rel="stylesheet" href="~/Content/Site.css">
     <script type='text/javascript'>
         var appInsights=window.appInsights||function(config)
@@ -23,12 +26,51 @@
     </script>
 </head>
 <body id="landing-body">
-    <div class='fill-screen'>
-        <img src="~/Content/img/eagle.jpg" class="eagle-image">
+    <div id="overlay">
+    <div id="text-and-logo"><img src="~/Content/img/feather.png" id="landing-page-logo" /><span id="fly-client-text">Fly Client</span></div>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4 register-form">
+                @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <h3 id="register-header">Register</h3>
 
+                    @Html.ValidationSummary("", new { @class = "text-danger" })
 
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Name) })
+
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Email) })
+
+                    </div>
+                    <div class="form-group">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Password) })
+
+                    </div>
+                    <div class="form-group">
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.ConfirmPassword) })
+
+                    </div>
+                    <div class="form-group">
+
+                        <input type="submit" class="btn btn-primary" value="Register" id="register-button-landing"/>
+
+                    </div>
+                }
+
+            </div>
+
+        </div>
 
     </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
 </body>
 </html>
 

@@ -90,6 +90,17 @@ namespace CRM.Controllers
                     User = taggedUser
                 };
 
+                var userNotification = new UserNotification
+                {
+                    Sender = user.Name,
+                    CustomerName = customer.Name,
+                    Body = user.Name + " has sent you a message in the file for " + customer.Name,
+                    Recipient = taggedUser,
+                    RecipientId = taggedUser.Id
+
+                };
+
+                _context.UserNotifications.Add(userNotification);
                 _context.UserMessages.Add(userMessage);
                 _context.SaveChanges();
             }

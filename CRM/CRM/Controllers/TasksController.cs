@@ -28,6 +28,8 @@ namespace CRM.Controllers
         public ActionResult UserTasks()
         {
 
+            //IS THERE ANYTHING WITH ACCESSING TASKS/MODEL IN THIS MANNER OR SHOULD I ADD THEM TO THE TASKS PROPERTY OF USER?
+
             var userId = User.Identity.GetUserId();
             var tasks = _context.Tasks.Include(t => t.Customer).Include(t => t.AssignedBy).Where(t => t.AssignedToId == userId).ToList();
             var username = _context.Users.SingleOrDefault(u => u.Id == userId).Name;
@@ -97,7 +99,7 @@ namespace CRM.Controllers
             }
 
             var customer = _context.Customers.SingleOrDefault(c => c.Id == vm.CustomerId);
-            var assignedTo = _context.Users.SingleOrDefault(u => u.Id == vm.AssignedTo);
+            var assignedTo = _context.Users.Include(u => u.UserNotifications).SingleOrDefault(u => u.Id == vm.AssignedTo);
             var userId = User.Identity.GetUserId();
             var assignedBy = _context.Users.SingleOrDefault(u => u.Id == userId);
 
@@ -113,6 +115,20 @@ namespace CRM.Controllers
                 Body = vm.Body
             };
 
+
+            var userNotification = new UserNotification
+            {
+                Sender = assignedBy.Name,
+                CustomerName = customer.Name,
+                Body = assignedBy.Name + " has assigned you a new task for " + customer.Name,
+                Recipient = assignedTo,
+                RecipientId = assignedTo.Id,
+                IsRead = false
+            };
+
+
+            assignedTo.UserNotifications.Add(userNotification);
+            _context.UserNotifications.Add(userNotification);
             _context.Tasks.Add(task);
             _context.SaveChanges();
 

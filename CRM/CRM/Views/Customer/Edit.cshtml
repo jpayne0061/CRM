@@ -1,15 +1,13 @@
-﻿
-@model CRM.ViewModels.CustomerViewModel
+﻿@model CRM.ViewModels.CustomerViewModel
 
-@{
-    ViewBag.Title = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
 
-<h2>Create</h2>
+<h2>Edit</h2>
 
-@using (Html.BeginForm("Create", "Customer"))
+
+@using (Html.BeginForm("Edit", "Customer"))
 {
+
+    @Html.HiddenFor(m => m.EditId)
     <div class="form-group">
         @Html.LabelFor(m => m.Name)
         @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
@@ -46,16 +44,3 @@
 
 
 
-
-
-@**@
-
-    @*foreach (var user in Model.Users)
-    {
-<div class="form-group">
-    <label>@user.Value</label>
-    @Html.HiddenFor(m => user.Value)
-    @Html.HiddenFor(m => user.Text)
-    @Html.CheckBoxFor(m => user.Value)
-</div>
-    }*@

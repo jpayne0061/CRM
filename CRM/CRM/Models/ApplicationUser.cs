@@ -22,12 +22,14 @@ namespace CRM.Models
         public ICollection<UserMessage> UserMessages { get; set; }
         public ICollection<Task> Tasks{ get; set; }
         public ICollection<Customer> Customers { get; set; }
+        public ICollection<UserNotification> UserNotifications { get; set; }
 
         public ApplicationUser()
         {
             UserMessages = new Collection<UserMessage>();
             Tasks = new Collection<Task>();
             Customers = new Collection<Customer>();
+            UserNotifications = new List<UserNotification>();
         }
 
 

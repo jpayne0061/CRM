@@ -41,11 +41,45 @@
             <td>@customer.Phone</td>
             <td>@customer.Email</td>
             <td>
-                <span class="glyphicon glyphicon-pencil"></span>
-                <span class="glyphicon glyphicon-trash delete-customer"></span>
+                <a href="~/Customer/Edit/@customer.Id" class="edit-link"><span class="glyphicon glyphicon-pencil edit-customer"></span></a>
+                <span class="glyphicon glyphicon-trash delete-customer" js-data-id="@customer.Id"></span>
             </td>
 
         </tr>
         }
     </tbody>
 </table>
+
+
+@section scripts {
+    <script>
+        $(document.body).on("click", ".delete-customer", function (e) {
+            var num = $(e.target);
+            console.log("target id", num.attr("js-data-id"));
+
+            bootbox.confirm("Are you sure you want to delete this customer?", function (result) {
+                if (result) {
+                    $.ajax({
+                        url: "/api/CustomerApi/" + num.attr("js-data-id"),
+                        method: "DELETE"
+                    })
+                     .done(function () {
+                         num.parent().parent("tr").fadeOut(function () {
+                             $(this).remove();
+                         })
+                     }).fail(function () {
+                         alert("Something Went Wrong!!!");
+                     });
+                }
+
+            });
+
+
+        });
+
+
+    </script>
+
+    
+    
+}
