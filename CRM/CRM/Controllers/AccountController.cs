@@ -10,6 +10,11 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using CRM.Models;
 
+
+using System.Collections.Generic;
+using System.Data.Entity.Validation;
+using System.Data.Entity;
+
 namespace CRM.Controllers
 {
     [Authorize]
@@ -17,9 +22,13 @@ namespace CRM.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private readonly ApplicationDbContext _context;
+
 
         public AccountController()
         {
+
+            _context = new ApplicationDbContext();
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -66,7 +75,7 @@ namespace CRM.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        public async Task<ActionResult> Login(LoginViewModel model/*, string returnUrl*/)
         {
             if (!ModelState.IsValid)
             {
@@ -79,11 +88,11 @@ namespace CRM.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToAction("Index", "Customer");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                //case SignInStatus.RequiresVerification:
+                //    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
@@ -139,7 +148,13 @@ namespace CRM.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            var vm = new RegisterViewModel();
+
+            var roles = _context.Roles.Where(u => !u.Name.Contains("Admin") && !u.Name.Contains("Admin2")).ToList();
+
+            vm.Roles = roles;
+
+            return View(vm);
         }
 
         //
@@ -151,25 +166,150 @@ namespace CRM.Controllers
         {
             if (ModelState.IsValid)
             {
+
+
+
+                //need custom data annotation on RegisterViewModel to ensure that user cannpt regsiter as manager on existing group--needs permission granted
+                //if registering as manager and group name exists, let user know that they must register as employ
+
+                //save this query for future use
+                var groups = _context.Groups;
+
+                var groupLength = groups.Where(g => g.Name == model.Group).ToList().Count();
+
+                if(groupLength > 0 && model.Role == "Manager")
+                {
+                    ModelState.AddModelError("Group Already Exists", "If you are registering as a manager, you must create a unique group Name");
+
+                    var vm = new RegisterViewModel();
+
+                    var roles = _context.Roles.Where(u => !u.Name.Contains("Admin") && !u.Name.Contains("Admin2")).ToList();
+
+                    vm.Roles = roles;
+                    vm.Email = model.Email;
+                    vm.Group = model.Group;
+                    vm.Name = model.Name;
+                    vm.Role = model.Role;
+
+
+                    return View(vm);
+                }
+
+                if(groupLength == 0 && model.Role == "Employee")
+                {
+                    ModelState.AddModelError("No Group Found By That Name", "If you are registering as an employee, you must register under an existing group");
+
+                    var vm = new RegisterViewModel();
+
+                    var roles = _context.Roles.Where(u => !u.Name.Contains("Admin") && !u.Name.Contains("Admin2")).ToList();
+
+                    vm.Roles = roles;
+                    vm.Email = model.Email;
+                    vm.Group = model.Group;
+                    vm.Name = model.Name;
+                    vm.Role = model.Role;
+
+                    return View(vm);
+                }
+
+                //if user is registering as employee, they must join already formed group
+                //need data annotation to let user know that they must join already formed group
+
+
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.Name, Style= "<link rel='stylesheet' href='/Content/flatly.min.css'>" };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
+                    await this.UserManager.AddToRoleAsync(user.Id, model.Role);
+
+                    //if model.Role == "manager" then create new group
+                    if (model.Role == "Manager")
+                    {
+
+                        var group = new Group
+                        {
+                            Name = model.Group
+                        };
+
+                        _context.Groups.Add(group);
+
+                        var manager = _context.Users.Single(u => u.Id == user.Id);
+
+                        group.Manager = manager;
+                        group.ManagerId = manager.Id;
+                        group.Users.Add(manager);
+
+                        manager.Group = group;
+
+                        _context.SaveChanges();
+                        
+                    }
+
+
+
+                    if(model.Role == "Employee")
+                    {
+                        var groupToJoin = groups.Include(g => g.Manager).Single(g => g.Name == model.Group);
+
+                        var employee = _context.Users.Single(u => u.Id == user.Id);
+
+                        var manager = groupToJoin.Manager;
+
+                        var userNotification = new UserNotification
+                        {
+                         
+                            Sender = employee.Name,
+                            Body = "You have a join request from " + employee.Name,
+                            Recipient = manager,
+                            RecipientId = manager.Id,
+                            IsRead = false
+
+                        };
+
+                        var joinRequest = new JoinRequest
+                        {
+                            Requester = employee,
+                            RequesterId = employee.Id,
+                            ManagerId = manager.Id,
+
+                        };
+
+
+                        _context.JoinRequests.Add(joinRequest);
+
+                        _context.UserNotifications.Add(userNotification);
+
+                        //groupToJoin.Users.Add(employee);---this goes in JoinRequest API
+                        _context.SaveChanges();
+                    }
+
+                    
+
+
                     return RedirectToAction("Index", "Customer");
                 }
                 AddErrors(result);
             }
 
+            var m = new RegisterViewModel();
+
+            var roles2 = _context.Roles.Where(u => !u.Name.Contains("Admin") && !u.Name.Contains("Admin2")).ToList();
+
+            m.Roles = roles2;
+            m.Email = model.Email;
+            m.Group = model.Group;
+            m.Name = model.Name;
+            m.Role = model.Role;
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return View(m);
         }
 
         //
@@ -392,7 +532,7 @@ namespace CRM.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Register", "Account");
         }
 
         //

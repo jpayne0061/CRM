@@ -61,7 +61,7 @@ namespace CRM.Controllers
 
             _context.SaveChanges();
 
-            return RedirectToAction("Index", "Customer");
+            return RedirectToAction("Index", "Manage");
         }
 
 

@@ -20,10 +20,12 @@ namespace CRM.ViewModels
         public string CustomerName { get; set; }
 
 
-        [Required]
-        [Display(Name="Select Recipients")]
-        public List<string> SelectedEmails { get; set; }
+        //[Required]
+        //[Display(Name="Select Recipients")]
+        //public List<string> SelectedEmails { get; set; }
         public List<SelectListItem> Users { get; set; }
-        
+
+        public List<UserCheckBox> UserCheckBoxes { get; set; }
+
     }
 }

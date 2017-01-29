@@ -13,7 +13,7 @@
                 </a>
 
             </li>
-            <li class="dropdown">
+            @*<li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">style<span class="style-caret">&#9660</span></a>
                 <ul class="dropdown-menu" id="style-dropdown-menu">
 
@@ -22,10 +22,29 @@
                     <li>@Html.ActionLink("Default", "SetStyle", "Style", new { id = 3 }, null)</li>
 
                 </ul>
+            </li>*@
+
+            <li class="dropdown">
+                @*@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
+
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Hello @(User.Identity.GetUserName() + "!")<span class="style-caret">&#9660</span></a>
+                @*<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">style<span class="style-caret">&#9660</span></a>*@
+                <ul class="dropdown-menu" id="style-dropdown-menu">
+
+                    <li>@Html.ActionLink("Reset Password/Change Theme", "Index", "Manage")</li>
+                    <li>@Html.ActionLink("My Group", "Index", "Group")</li>
+                    <li>@Html.ActionLink("My Customers", "Index", "Customer")</li>
+                    <li>@Html.ActionLink("My Tasks", "UserTasks", "Tasks")</li>
+                    <li>@Html.ActionLink("My Messages", "UserMessages", "Messages")</li>
+                </ul>
             </li>
-            <li>
+
+
+
+
+            @*<li>
                 @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-            </li>
+            </li>*@
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
         </ul>
     }

@@ -14,7 +14,9 @@ namespace CRM
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/bootbox.min.js",
-                        "~/Scripts/underscore-min.js"
+                        "~/Scripts/underscore-min.js",
+                        "~/Scripts/moment.js",
+                        "~/Scripts/bootstrap-datetimepicker.min.js"
                         ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -30,9 +32,10 @@ namespace CRM
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/flatly.min.css",
-                      "~/Content/site.css",
-                      "~/Content/animate.css"));
+                      //"~/Content/flatly.min.css",
+                      "~/Content/animate.css",
+                      "~/Content/bootstrap-datetimepicker.min.css",
+                      "~/Content/Site.css"));
         }
     }
 }

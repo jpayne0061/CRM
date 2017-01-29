@@ -18,11 +18,13 @@ namespace CRM.Models
         [StringLength(100)]
         public string Name { get; set; }
         public string Style { get; set; }
+        public Group Group { get; set; }
 
         public ICollection<UserMessage> UserMessages { get; set; }
         public ICollection<Task> Tasks{ get; set; }
         public ICollection<Customer> Customers { get; set; }
         public ICollection<UserNotification> UserNotifications { get; set; }
+
 
         public ApplicationUser()
         {

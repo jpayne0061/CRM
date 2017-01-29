@@ -19,6 +19,9 @@ namespace CRM.Models
         public DbSet<UserMessage> UserMessages { get; set; }
         public DbSet<Task> Tasks { get; set; }
         public DbSet<UserNotification> UserNotifications { get; set; }
+        public DbSet<Group> Groups { get; set; }
+        public DbSet<JoinRequest> JoinRequests { get; set; }
+        public DbSet<ChatMessage> ChatMessages { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

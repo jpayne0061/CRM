@@ -19,6 +19,7 @@ namespace CRM.Models
         public ICollection<Message> Messages { get; set; }
         public ICollection<Task> Tasks { get; set; }
         public ICollection<ApplicationUser> Team { get; set; }
+        public Group Group { get; set; }
 
 
         public int Id { get; set; }

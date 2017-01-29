@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Html.Action("GetStyle", "Style")
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    @*<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">*@
     <link rel="stylesheet" href="~/Content/animate.css">
+    <link rel="stylesheet" href="~/Content/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="~/Content/Site.css">
+    @*@Styles.Render("~/Content/css")*@
     @Scripts.Render("~/bundles/modernizr")
 
     <script type = 'text/javascript' >
@@ -23,6 +25,7 @@
         appInsights.trackPageView();
     </script>
 </head>
+
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -64,13 +67,16 @@
             <%
                 _.each(notifications, function(notification){%>
                     <li><%= notification.Body %></li>
-
+                    
                 <%})
+                %><li id="mark-as-read">Mark Notifications as Read</li><%
+
             %>
 
         </ul>
     </script>
     <script>
+
 
         $(document).ready(function () {
 
@@ -98,6 +104,41 @@
             });
 
 
+            //HIDE NOTIFICATIONS POPOVER
+            $('body').on('click', function (e) {
+                $('[data-original-title]').each(function () {
+                    //the 'is' for buttons that trigger popups
+                    //the 'has' for icons within a button that triggers a popup
+                    if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+                        $(this).popover('hide');
+
+                    }
+                });
+            });
+
+
+            //Uncaught ReferenceError: e is not defined--not sure why the below does not work
+            //$('body').on('click', hideNotifications (e));
+
+
+
+            $(document.body).on("click", "#mark-as-read", function () {
+                $.ajax({
+                    url: "/api/UserNotificationApi/DeleteAll",
+                    method: "DELETE"
+                })
+                 .done(function () {
+                     //alert("Deleted!");
+                     $(".js-notification-count").addClass("hide");
+                     $(".popover-content ul li").fadeOut(function () {
+                         $(".popover").hide();
+                     });
+                 }).fail(function () {
+                     alert("Something Went Wrong!!!");
+                 });
+            })
+
+
             //replace logo img with black one when hovering
             $("#logo-font").hover(function () {
                 $("#logo-black").toggle();
@@ -105,7 +146,9 @@
             });
 
             //provide dt picker on create/edit forms
-            $("#datetimepicker").datepicker();
+            $("#datetimepicker").datetimepicker({
+                sideBySide: true
+            });
 
 
 
@@ -115,6 +158,68 @@
 
         //$("#datetimepicker").datetimepicker();
 
+
+        //CHAT MESSAGE FEATURE BETA HERE
+
+        //var chatPartner = $("#js-chat-partner").value;
+
+
+        //continually get 
+        //anna: 7aa736a7-6776-41b0-b14a-3ac656b616d8
+        //cran: a7058f32-5435-46f1-a777-90e89369dd67
+
+        //http://localhost:49166/
+        function getChatMessages() {
+            var chatPartner = $("#js-chat-partner").val();
+            $.ajax({
+                url: "/api/ChatMessagesApi/GetMessages/" + chatPartner,
+                cache: false,
+                success: function (html) {
+                    if (html.length == 0) {
+                        return;
+                    }
+                    console.log(html);
+                    for (var i in html) {
+                        $("#js-messages-holder").append("<div>" + "Other person: " + html[i]["Body"] + "</div>");
+                    }
+
+                    
+
+                }
+            });
+        }
+
+        $(document.body).on("click", "#js-begin-chat", function () {
+
+            setInterval(getChatMessages, 1000);
+        })
+
+        //setInterval(getChatMessages, 1000);
+
+        //post message
+
+        $(document.body).on("click", "#js-send-chat-message", function () {
+            var message = $("#js-chat-input").val();
+            var chatPartner = $("#js-chat-partner").val();
+            console.log("message: ", message, "partner: ", chatPartner);
+            $.ajax({
+                type: "POST",
+                url: "/api/ChatMessagesApi/PostMessage",
+                data: { ReceiverId: chatPartner, Body: message }
+                
+            })
+             .done(function () {
+                 $("#js-messages-holder").append("<div>" + "You: " + message + "</div>");
+
+                 alert("sent!");
+             }).fail(function () {
+                 alert("Something Went Wrong!!!");
+             });
+
+            getChatMessages();
+
+
+        })
 
 
     </script>

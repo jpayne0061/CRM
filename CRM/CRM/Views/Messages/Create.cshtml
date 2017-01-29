@@ -3,7 +3,7 @@
 
 <h2>Message Re: @Model.CustomerName</h2>
 
-@using (Html.BeginForm("Create", "Messages"))
+@using (Html.BeginForm("CreateMessage", "Messages", FormMethod.Post))
 {
 
     @Html.HiddenFor(m => m.CustomerName)
@@ -12,13 +12,21 @@
         @Html.LabelFor(m => m.Body)
         @Html.TextAreaFor(m => m.Body, new { @class = "form-control" })
     </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.SelectedEmails)
-        @Html.ListBoxFor(m => m.SelectedEmails, Model.Users)
-    </div>
+
+    <label>Select Team Members</label>
+    for (var i = 0; i < Model.UserCheckBoxes.Count; i++)
+    {
+        <div id="create-form-input-checks">
+            @Html.HiddenFor(m => m.UserCheckBoxes[i].Name)
+
+            @Html.CheckBoxFor(m => m.UserCheckBoxes[i].Checked, new { @class = "form-control" })
+            @Html.LabelFor(m => m.UserCheckBoxes[i].Name, Model.UserCheckBoxes[i].Name)
+        </div>
+    }
+
 
     <button type="submit" class="btn btn-primary submit-and-cancel">Save</button>
-    <span class="btn btn-danger submit-and-cancel"> <a href="/Customer/Detail/@Model.CustomerId">Cancel</a></span>
+    @*<span class="btn btn-danger submit-and-cancel"> <a href="/Customer/Detail/@Model.CustomerId">Cancel</a></span>*@
 }
 
 @section scripts {

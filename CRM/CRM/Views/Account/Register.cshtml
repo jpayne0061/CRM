@@ -1,48 +1,91 @@
 ﻿@model CRM.Models.RegisterViewModel
+
 @{
-    ViewBag.Title = "Register";
+    Layout = "";
 }
 
-<h2>@ViewBag.Title.</h2>
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-    @Html.AntiForgeryToken()
-    <h4>Create a new account.</h4>
-    <hr />
-    @Html.ValidationSummary("", new { @class = "text-danger" })
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/Content/flatly.min.css">
+    <link rel="stylesheet" href="~/Content/Site.css">
+    <script type='text/javascript'>
+        var appInsights=window.appInsights||function(config)
+        {
+            function r(config){ t[config] = function(){ var i = arguments; t.queue.push(function(){ t[config].apply(t, i)})} }
+            var t = { config:config},u=document,e=window,o='script',s=u.createElement(o),i,f;for(s.src=config.url||'//az416426.vo.msecnd.net/scripts/a/ai.0.js',u.getElementsByTagName(o)[0].parentNode.appendChild(s),t.cookie=u.cookie,t.queue=[],i=['Event','Exception','Metric','PageView','Trace','Ajax'];i.length;)r('track'+i.pop());return r('setAuthenticatedUserContext'),r('clearAuthenticatedUserContext'),config.disableExceptionTracking||(i='onerror',r('_'+i),f=e[i],e[i]=function(config, r, u, e, o) { var s = f && f(config, r, u, e, o); return s !== !0 && t['_' + i](config, r, u, e, o),s}),t
+        }({
+            instrumentationKey:'10389228-3c4e-44fe-91b7-93de363084b1'
+        });
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
-        </div>
-    </div>
-}
+        window.appInsights=appInsights;
+        appInsights.trackPageView();
+    </script>
+</head>
+<body id="landing-body">
+    <div id="overlay">
+        <div id="text-and-logo"><img src="~/Content/img/feather.png" id="landing-page-logo" /><span id="fly-client-text">Fly Client</span></div>
 
-@section Scripts {
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4 register-form">
+                @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <h3 id="register-header">Register</h3>
+
+                    
+
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control sign-up-input", placeholder = Html.DisplayNameFor(m => m.Name) })
+                        @*@Html.ValidationMessageFor(m => m.Name)*@
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control sign-up-input", placeholder = Html.DisplayNameFor(m => m.Email) })
+                        @*@Html.ValidationMessageFor(m => m.Email)*@
+                    </div>
+
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.Group, new { @class = "form-control sign-up-input", placeholder = Html.DisplayNameFor(m => m.Group) })
+                        @*@Html.ValidationMessageFor(m => m.Group)*@
+                    </div>
+
+                    <div class="form-group">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control sign-up-input", placeholder = Html.DisplayNameFor(m => m.Password) })
+                        @*@Html.ValidationMessageFor(m => m.Password)*@
+                    </div>
+                    <div class="form-group">
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control sign-up-input", placeholder = Html.DisplayNameFor(m => m.ConfirmPassword) })
+                        @*@Html.ValidationMessageFor(m => m.ConfirmPassword)*@
+                    </div>
+
+                    <div class="form-group">
+                        @Html.DropDownListFor(m => m.Role, new SelectList(Model.Roles, "Name", "Name"), "", new { @class = "form-control sign-up-input", placeholder = Html.DisplayNameFor(m => m.Role) })
+                        @*@Html.ValidationMessageFor(m => m.Role)*@
+                    </div>
+
+                    <div class="form-group">
+
+                        <input type="submit" class="btn btn-primary" value="Register" id="register-button-landing" />
+
+                    </div>
+                }
+
+            </div>
+            <div class="col-md-4 error-column form-horizontal">@Html.ValidationSummary("", new { @class = "text-danger" })</div>
+        </div>
+
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jqueryval")
-}
+    @section Scripts {
+        
+    }
+</body>
+
+</html>

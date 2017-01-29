@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+using CRM.Models;
 namespace CRM.ViewModels
 {
     public class CustomerViewModel
@@ -26,6 +26,11 @@ namespace CRM.ViewModels
         public List<SelectListItem> Users { get; set; }
 
         public int EditId { get; set; }
+
+        //new checkboxes try
+        public List<UserCheckBox> UserCheckBoxes { get; set; }
+
+
 
     }
 }

@@ -19,28 +19,53 @@ namespace CRM.Controllers
             _context = new ApplicationDbContext();
         }
 
+
+        [Authorize]
         public ActionResult Index()
         {
-            var customers = _context.Customers.Include(c => c.Messages).ToList();
+            //var customers = _context.Customers.Include(c => c.Messages).ToList();
+            var userId = User.Identity.GetUserId();
 
-            return View(customers);
+            var user = _context.Users.Include(u => u.Customers).Include(u => u.Group).Single(u => u.Id == userId);
+
+            if(user.Group != null)
+            {
+                var customers = user.Customers.ToList();
+
+                return View(customers);
+            }
+
+            
+            return RedirectToAction("NoGroup");
         }
 
+
+        public ActionResult NoGroup() {
+
+
+            return View();
+        }
 
 
         [Authorize]
         public ActionResult Create()
         {
-            var users = _context.Users.Select(u => u.Name).ToList();
+            var userId = User.Identity.GetUserId();
+
+            var user = _context.Users.Include(u => u.Group.Users).Single(u => u.Id == userId);
+
+            var users = user.Group.Users.Select(u => u.Name);
 
             var customerVm = new CustomerViewModel();
 
-            customerVm.Users = new List<SelectListItem>();
+            customerVm.UserCheckBoxes = new List<UserCheckBox>();
 
             foreach (var name in users)
             {
-                customerVm.Users.Add(new SelectListItem { Value = name, Text = name });
+                customerVm.UserCheckBoxes.Add(new UserCheckBox { Name = name, Checked = false});
             }
+
+            
 
 
             return View(customerVm);
@@ -54,26 +79,43 @@ namespace CRM.Controllers
             {
                 
             }
+            //build list of strings from checkbox
+            List<string> usersSelected = new List<string>();
+
+            foreach(UserCheckBox userCb in viewCustomer.UserCheckBoxes)
+            {
+                if(userCb.Checked == true)
+                {
+                    usersSelected.Add(userCb.Name);
+                }
+            }
+
 
             var userId = User.Identity.GetUserId();
 
-            var creator = _context.Users.SingleOrDefault(u => u.Id == userId);
+            var creator = _context.Users.Include(u => u.Group).SingleOrDefault(u => u.Id == userId);
 
-            var team = _context.Users.Include(u => u.UserNotifications).Where(u => viewCustomer.SelectedUsers.Contains(u.Name)).ToList();
+            var group = creator.Group;
 
+            var manager = _context.Users.Include(u => u.Customers).Single(u => u.Id == group.ManagerId);
+
+         
+            var team = _context.Users.Include(u => u.UserNotifications).Include(u => u.Customers).Where(u => usersSelected.Contains(u.Name)).ToList();
 
             var customer = new Customer
             {
                 Name = viewCustomer.Name,
                 Phone = viewCustomer.Phone,
                 Email = viewCustomer.Email,
-                Team = team
+                Team = team,
+                Group = group
 
             };
 
+            _context.Customers.Add(customer);
 
             //add notification for each team member that they have been added
-            foreach(var user in team)
+            foreach (var user in team)
             {
                 var userNotification = new UserNotification
                 {
@@ -85,13 +127,18 @@ namespace CRM.Controllers
                     IsRead = false
                 };
 
-
+                user.Customers.Add(customer);
                 user.UserNotifications.Add(userNotification);
                 _context.UserNotifications.Add(userNotification);
+                
 
             }
 
-            _context.Customers.Add(customer);
+
+            //why is the below line adding the manager to customer's team?
+            //manager.Customers.Add(customer);
+            group.Customers.Add(customer);
+            
             _context.SaveChanges();    
 
             return RedirectToAction("Index", "Customer");
@@ -127,19 +174,33 @@ namespace CRM.Controllers
         [Authorize]
         public ActionResult AddTeam(int id)
         {
-            var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
+            //look up current user
+            //look up customer that will receive new team members
+            //get all users in Group from group property of user
+            //get all current team members from customer
+            //get a list of team mates that are not already in the team
 
-            var users = _context.Users.Select(u => u.Name).ToList();
+            var customer = _context.Customers.Include(c => c.Team).SingleOrDefault(c => c.Id == id);
+
+            var userId = User.Identity.GetUserId();
+
+            var user = _context.Users.Include(u => u.Group.Users).Single(u => u.Id == userId);
+
+            var currentTeamNames = customer.Team.Select(u => u.Name).ToList();
+
+            var users = user.Group.Users.Select(u => u.Name).Where(u => !currentTeamNames.Contains(u)).ToList();
 
             var customerVm = new CustomerViewModel();
-
-            customerVm.Users = new List<SelectListItem>();
+            customerVm.Name = customer.Name;
             customerVm.TransferId = customer.Id;
+
+            customerVm.UserCheckBoxes = new List<UserCheckBox>();
 
             foreach (var name in users)
             {
-                customerVm.Users.Add(new SelectListItem { Value = name, Text = name });
+                customerVm.UserCheckBoxes.Add(new UserCheckBox { Name = name, Checked = false });
             }
+
 
             return View(customerVm);
         }
@@ -152,8 +213,19 @@ namespace CRM.Controllers
             {
 
             }
+            List<string> usersSelected = new List<string>();
 
-            var team = _context.Users.Where(u => viewCustomer.SelectedUsers.Contains(u.Name)).ToList();
+            foreach (UserCheckBox userCb in viewCustomer.UserCheckBoxes)
+            {
+                if (userCb.Checked == true)
+                {
+                    usersSelected.Add(userCb.Name);
+                }
+            }
+
+            //////////////////////////
+
+            var team = _context.Users.Where(u => usersSelected.Contains(u.Name)).ToList();
 
             var customer = _context.Customers.SingleOrDefault(c => c.Id == viewCustomer.TransferId);
 
@@ -167,18 +239,33 @@ namespace CRM.Controllers
         [HttpGet]
         public ActionResult Edit(int id) {
 
-            var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
+            var customer = _context.Customers.Include(c => c.Team).SingleOrDefault(c => c.Id == id);
 
-            var users = _context.Users.Select(u => u.Name);
+            var currentTeam = customer.Team.Select(t => t.Name);
+
+            var userId = User.Identity.GetUserId();
+
+            var user = _context.Users.Include(u => u.Group.Users).Single(u => u.Id == userId);
+
+            var users = user.Group.Users.Select(u => u.Name);
 
             var vm = new CustomerViewModel();
+            //
+            vm.UserCheckBoxes = new List<UserCheckBox>();
 
-            vm.Users = new List<SelectListItem>();
-
-            foreach(var name in users)
+            foreach (var name in users)
             {
-                vm.Users.Add(new SelectListItem { Value = name, Text = name });
+                if (currentTeam.Contains(name))
+                {
+                    vm.UserCheckBoxes.Add(new UserCheckBox { Name = name, Checked = true });
+                }
+                else
+                {
+                    vm.UserCheckBoxes.Add(new UserCheckBox { Name = name, Checked = false });
+                }
+                
             }
+
 
             vm.EditId = id;
             vm.Phone = customer.Phone;
@@ -194,7 +281,17 @@ namespace CRM.Controllers
 
             var customer = _context.Customers.Include(c => c.Team).SingleOrDefault(c => c.Id == vm.EditId);
 
-            var team = _context.Users.Where(u => vm.SelectedUsers.Contains(u.Name)).ToList();
+            List<string> usersSelected = new List<string>();
+
+            foreach (UserCheckBox userCb in vm.UserCheckBoxes)
+            {
+                if (userCb.Checked == true)
+                {
+                    usersSelected.Add(userCb.Name);
+                }
+            }
+
+            var team = _context.Users.Where(u => usersSelected.Contains(u.Name)).ToList();
 
             customer.Email = vm.Email;
             customer.Name = vm.Name;
@@ -203,7 +300,7 @@ namespace CRM.Controllers
 
             _context.SaveChanges();
 
-            return RedirectToAction("Index", "Customer");
+            return RedirectToAction("Detail", "Customer", new { id = vm.EditId});
         }
 
 

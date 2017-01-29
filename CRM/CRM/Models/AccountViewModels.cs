@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using CRM.ViewModels;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace CRM.Models
 {
@@ -82,8 +85,18 @@ namespace CRM.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        
+        public List<IdentityRole> Roles { get; set; }
+
+        [Required]
+        public string Role { get; set; }
+
+
+        [Required]
+        public string Group { get; set; }
     }
 
     public class ResetPasswordViewModel
@@ -101,7 +114,7 @@ namespace CRM.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }

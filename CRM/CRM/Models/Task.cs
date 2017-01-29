@@ -22,6 +22,26 @@ namespace CRM.Models
         public DateTime Deadline { get; set; }
         public string Body { get; set; }
 
+        public TimeLeft Due()
+        {
+            DateTime timeNow = DateTime.Now;
+
+            if (Deadline - timeNow < new TimeSpan(24, 0, 0) && Deadline - timeNow > new TimeSpan(24, 0, 0))
+            {
+                return TimeLeft.LessThan24;
+            }
+            else if(Deadline - timeNow < new TimeSpan(0, 0, 0))
+            {
+                return TimeLeft.OverDue;
+            }
+            else
+            {
+                return TimeLeft.NoDanger;
+            }
+
+
+        }
+
 
     }
 }

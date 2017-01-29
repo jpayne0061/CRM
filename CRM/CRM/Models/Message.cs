@@ -15,6 +15,7 @@ namespace CRM.Models
         public string AuthorId { get; set; }
         public string AuthorName { get; set; }
         public DateTime DateTime { get; set; }
+        //public List<UserCheckBox> UserCheckBoxes { get; set; }
         //public string BodySnippet { get; set; }
 
     }

@@ -43,6 +43,25 @@ namespace CRM.Controllers
 
         }
 
+        [HttpDelete]
+        public IHttpActionResult DeleteAll()
+        {
+            var userId = User.Identity.GetUserId();
+
+            var notifications = _context.UserNotifications.Where(n => n.RecipientId == userId).ToList();
+
+            var notificationContext = _context.UserNotifications;
+
+            foreach (var notification in notifications)
+            {
+                notificationContext.Remove(notification);
+            }
+
+            _context.SaveChanges();
+
+            return Ok();
+        }
+
 
 
 

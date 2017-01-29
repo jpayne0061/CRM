@@ -1,0 +1,28 @@
+﻿@model CRM.Models.Group
+
+
+<table class="table table-striped table-hover ">
+    <thead>
+        <tr>
+            <th colspan="3" class="table-head-title">@Model.Name</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Users)
+        {
+            <tr>
+                <td>@user.Name</td>
+                <td>@user.Email</td>
+
+                <td>
+                    @*<span class="glyphicon glyphicon-thumbs-up" js-data-id="@user.Id"></span>
+                    <span class="glyphicon glyphicon-thumbs-down " js-data-id="@user.Id"></span>*@
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+

@@ -21,6 +21,8 @@ namespace CRM.Controllers
         }
 
         // GET: Messages
+        [Authorize]
+        [HttpGet]
         public ActionResult Create(int id)
         {
             var customer = _context.Customers.Include(c => c.Team).Single(c => c.Id == id);
@@ -35,18 +37,13 @@ namespace CRM.Controllers
                 CustomerName = customer.Name
             };
 
-            messageVm.Users = new List<SelectListItem>();
+            messageVm.UserCheckBoxes = new List<UserCheckBox>();
 
-            foreach(var name in users)
+            foreach (var name in users)
             {
-                messageVm.Users.Add(new SelectListItem { Value = name, Text = name });
+                messageVm.UserCheckBoxes.Add(new UserCheckBox { Name = name, Checked = false });
             }
 
-            //messageVm.UserEmails = new List<SelectListItem>
-            //{
-            //    new SelectListItem { Value = "1", Text = "item 1" },
-
-            //};
 
             return View(messageVm);
         }
@@ -54,11 +51,24 @@ namespace CRM.Controllers
 
         [HttpPost]
         [Authorize]
-        public ActionResult Create(MessageViewModel vm)
+        public ActionResult CreateMessage(MessageViewModel vm)
         {
             if (!ModelState.IsValid)
             {
-                return View("Create");
+
+                //consider placing this after UsersSelectediSBuilt
+                //return View("Create");
+            }
+
+
+            List<string> usersSelected = new List<string>();
+
+            foreach (UserCheckBox userCb in vm.UserCheckBoxes)
+            {
+                if (userCb.Checked == true)
+                {
+                    usersSelected.Add(userCb.Name);
+                }
             }
 
 
@@ -66,7 +76,7 @@ namespace CRM.Controllers
             var userId = User.Identity.GetUserId();
             var user = _context.Users.SingleOrDefault(u => u.Id == userId);
 
-            var taggedUsers = _context.Users.Where(u => vm.SelectedEmails.Contains(u.Name)).ToList();
+            var taggedUsers = _context.Users.Where(u => usersSelected.Contains(u.Name)).ToList();
 
             var message = new Message
             {
@@ -111,10 +121,16 @@ namespace CRM.Controllers
         public ActionResult UserMessages()
         {
             var userId = User.Identity.GetUserId();
-
+            var user = _context.Users.Single(u => u.Id == userId);
             //var messages = _context.UserMessages.Include(m => m.Message).Where(m => m.UserId == userId).ToList();
 
-            var messages = _context.UserMessages.Include(m => m.Message).Where(m => m.UserId == userId).Select(m => m.Message).Include(m => m.Customer).ToList();
+            var messages = _context.UserMessages.Include(m => m.Message)
+                .Where(m => m.UserId == userId).Select(m => m.Message)
+                .Include(m => m.Customer)
+                .Include(m => m.Author)
+                .ToList();
+
+            ViewBag.Name = user.Name;
 
             return View(messages);
         }
@@ -152,72 +168,72 @@ namespace CRM.Controllers
 
 
         ////edit
-        [HttpPost]
-        [Authorize]
-        public ActionResult Edit(MessageViewModel vm)
-        {
-            if (!ModelState.IsValid)
-            {
-                var customerVal = _context.Customers.SingleOrDefault(c => c.Id == vm.CustomerId);
-                var users = customerVal.Team.Select(u => u.Name);
-                vm.Users = new List<SelectListItem>();
+        //[HttpPost]
+        //[Authorize]
+        //public ActionResult Edit(MessageViewModel vm)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        var customerVal = _context.Customers.SingleOrDefault(c => c.Id == vm.CustomerId);
+        //        var users = customerVal.Team.Select(u => u.Name);
+        //        vm.Users = new List<SelectListItem>();
 
-                foreach (var name in users)
-                {
-                    vm.Users.Add(new SelectListItem { Value = name, Text = name });
-                }
-
-
-
-                return View("Edit", vm);
-            }
+        //        foreach (var name in users)
+        //        {
+        //            vm.Users.Add(new SelectListItem { Value = name, Text = name });
+        //        }
 
 
-            var customer = _context.Customers.Single(c => c.Id == vm.CustomerId);
-            var userId = User.Identity.GetUserId();
-            var user = _context.Users.SingleOrDefault(u => u.Id == userId);
 
-            var taggedUsers = _context.Users.Where(u => vm.SelectedEmails.Contains(u.Name)).Include(u => u.UserMessages.Select(um => um.Message)).ToList();
+        //        return View("Edit", vm);
+        //    }
 
-            var message = _context.Messages.SingleOrDefault(m => m.Id == vm.EditId);
 
-            message.Body = vm.Body;
-            message.Customer = customer;
-            message.CustomerId = vm.CustomerId;
-            message.AuthorId = userId;
-            message.Author = user;
-            message.AuthorName = user.Name;
-            message.DateTime = DateTime.Now;
+        //    var customer = _context.Customers.Single(c => c.Id == vm.CustomerId);
+        //    var userId = User.Identity.GetUserId();
+        //    var user = _context.Users.SingleOrDefault(u => u.Id == userId);
+
+        //    var taggedUsers = _context.Users.Where(u => vm.SelectedEmails.Contains(u.Name)).Include(u => u.UserMessages.Select(um => um.Message)).ToList();
+
+        //    var message = _context.Messages.SingleOrDefault(m => m.Id == vm.EditId);
+
+        //    message.Body = vm.Body;
+        //    message.Customer = customer;
+        //    message.CustomerId = vm.CustomerId;
+        //    message.AuthorId = userId;
+        //    message.Author = user;
+        //    message.AuthorName = user.Name;
+        //    message.DateTime = DateTime.Now;
             
 
-            _context.SaveChanges();
+        //    _context.SaveChanges();
 
-            foreach (var taggedUser in taggedUsers)
-            {
-                var userMessage = _context.UserMessages.SingleOrDefault(um => um.MessageId == vm.EditId);
+        //    foreach (var taggedUser in taggedUsers)
+        //    {
+        //        var userMessage = _context.UserMessages.SingleOrDefault(um => um.MessageId == vm.EditId);
 
-                if(userMessage == null)
-                {
-                    var newUserMessage = new UserMessage
-                    {
-                        Message = message,
-                        User = taggedUser
-                    };
+        //        if(userMessage == null)
+        //        {
+        //            var newUserMessage = new UserMessage
+        //            {
+        //                Message = message,
+        //                User = taggedUser
+        //            };
 
-                    _context.UserMessages.Add(newUserMessage);
-                }
-                else
-                {
-                    userMessage.Message = message;
-                }
+        //            _context.UserMessages.Add(newUserMessage);
+        //        }
+        //        else
+        //        {
+        //            userMessage.Message = message;
+        //        }
 
                
 
-                _context.SaveChanges();
-            }
+        //        _context.SaveChanges();
+        //    }
 
-            return RedirectToAction("Detail", "Customer", new { id = customer.Id });
-        }
+        //    return RedirectToAction("Detail", "Customer", new { id = customer.Id });
+        //}
 
 
 

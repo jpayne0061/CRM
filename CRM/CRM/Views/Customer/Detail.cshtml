@@ -21,17 +21,24 @@
 
                     @if (Model.Team.Count == 0)
                     {
-                        @Html.ActionLink("Add Team Members", "AddTeam", "Customer", new { id = Model.Id }, new { @class = "btn btn-default", id= "team-button" })
+                        @Html.ActionLink("Add Team Members", "AddTeam", "Customer", new { id = Model.Id }, new { @class = "btn btn-default", id = "team-button" })
                     }
                     else
                     {
                         <div>
-                            <h3 class="team-header">Team</h3>
-                            @foreach (var member in Model.Team)
-                            {
-                                <div class="btn btn-default">@member.Name</div>
-                            }
-
+                            <div id="button-and-team-header">
+                                <h2 class="team-header">Team</h2>
+                                @Html.ActionLink("Add Team Members", "AddTeam", "Customer", new { id = Model.Id }, new { @class = "btn btn-info", id = "team-button" })
+                            </div>
+                            <div>
+                                @foreach (var member in Model.Team)
+                                {
+                                    <div class="btn btn-default team-member-button">
+                                        @member.Name<span class="glyphicon glyphicon-remove" js-data-id="@member.Id" js-cust-id="@Model.Id" title="Remove User From This Customer Team"></span>
+                                
+                                    </div>
+                                }
+                            </div>
 
                         </div>
                     }
@@ -46,22 +53,23 @@
             <div id="js-task-table">
                 <table class="table table-striped table-hover ">
                     <col style="width:15%">
-                    <col style="width:50%">
-                    <col style="width:23%">
-                    <col style="width:12%">
+                    <col style="width:40%">
+                    <col style="width:18%">
+                    <col style="width:4%">
+                    <col style="width:15%">
                     <thead>
                         <tr>
-                            <th colspan="3" class="table-head-title">Tasks</th>
+                            <th colspan="4" class="table-head-title">Tasks</th>
 
                             @*<th></th>*@
 
                             <th>@Html.ActionLink("Add Task", "Create", "Tasks", new { id = Model.Id }, new { @class = "btn btn-info" })</th>
                         </tr>
                         @*<tr>
-                        <th>Body</th>
-                        <th>Author</th>
+                                <th>Body</th>
+                                <th>Author</th>
 
-                    </tr>*@
+                            </tr>*@
                     </thead>
                     <tbody>
                         @foreach (var task in Model.Tasks)
@@ -81,13 +89,28 @@
                                     <div><strong>Assigned By</strong></div><div> @task.AssignedBy.Name</div>
                                     <div class="assigned-to-task"><strong>Assigned To</strong></div><div> @task.AssignedTo.Name</div>
                                 </td>
+                                <td>
+                                    @if (task.Due() == CRM.Models.TimeLeft.LessThan24)
+                                    {
+                                        <span class="glyphicon glyphicon-eye-open"></span>
+                                    }
+
+                                    @if (task.Due() == CRM.Models.TimeLeft.NoDanger)
+                                    {
+                                        <span class="glyphicon glyphicon-ok"></span>
+                                    }
+                                    @if (task.Due() == CRM.Models.TimeLeft.OverDue)
+                                    {
+                                        <span class="glyphicon glyphicon-fire"></span>
+                                    }
+                                </td>
 
                                 <td class="glyph-cell">
 
                                     @if (Model.CurrentUserId == task.AssignedById)
                                     {
-                                        <a href="/Tasks/Edit/@task.Id"><span class="glyphicon glyphicon-pencil"></span></a>
-                                        <span class="glyphicon glyphicon-trash js-delete-task" js-data-id="@task.Id"></span>
+                                        <a href="/Tasks/Edit/@task.Id"><span class="glyphicon glyphicon-pencil" title="Edit Task"></span></a>
+                                        <span class="glyphicon glyphicon-trash js-delete-task" js-data-id="@task.Id" title="Delete Task"></span>
                                     }
 
 
@@ -111,7 +134,7 @@
 
 
         </div>
-        
+
         <div class="col-md-4 col-xs-12" id="js-messages-col">
             <table class="table table-striped table-hover ">
                 <col style="width:65%">
@@ -136,8 +159,8 @@
 
                                 @if (Model.CurrentUserId == message.AuthorId)
                                 {
-                                    <a href="/Messages/Edit/@message.Id"> <span class="glyphicon glyphicon-pencil"></span></a>
-                                    <span class="glyphicon glyphicon-trash js-delete-message" js-data-id="@message.Id"></span>
+                                    @*<a href="/Messages/Edit/@message.Id"> <span class="glyphicon glyphicon-pencil"></span></a>*@
+                                    <span class="glyphicon glyphicon-trash js-delete-message message-delete" js-data-id="@message.Id" title="Delete Message"></span>
                                 }
 
 
@@ -193,6 +216,34 @@
 
 
 
+        $(document.body).on("click", ".glyphicon-remove", function (e) {
+            var num = $(e.target);
+            var custId = $(e.target).attr("js-cust-id");
+            console.log("target id", num.attr("js-data-id"), "cust: ", custId);
+
+            bootbox.confirm("Are you sure you want to remove " + $(e.target).parent().text() + " from the team?", function (result) {
+                if (result) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/api/CustomerApi/DeleteTeamMember",
+                        data: { CustomerId: custId, TeamMemberId: num.attr("js-data-id") }
+                    })
+                     .done(function () {
+                         num.parent().fadeOut(function () {
+                             $(this).remove();
+                         })
+                     }).fail(function () {
+                         alert("Something Went Wrong!!!");
+                     });
+                }
+
+            });
+
+
+        });
+
+
+
         //DELETE MESSAGE
         $(document.body).on("click", ".js-delete-message", function (e) {
             var num = $(e.target);
@@ -229,7 +280,7 @@
             //expand messages and tasks
             $("#js-messages-col").addClass("col-md-8").removeClass("col-md-4");
             $("#js-customer-name-and-tasks").removeClass("col-md-8").addClass("col-md-4");
-            
+
             var taskTableContents = $("#js-task-table").html();
             $("#js-task-table").hide();
 

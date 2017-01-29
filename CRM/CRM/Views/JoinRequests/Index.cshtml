@@ -1,0 +1,93 @@
+﻿@model List<CRM.Models.JoinRequest>
+
+
+@if(Model.Count == 0)
+{
+    <h1>There are no join requests at this time</h1>
+}
+else
+{
+    <table class="table table-striped table-hover ">
+        <thead>
+            <tr>
+                <th colspan="3" class="table-head-title">Join Requests</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var request in Model)
+            {
+                <tr>
+                    <td>@request.Requester.Name</td>
+                    <td>@request.Requester.Email</td>
+
+                    <td>
+                        <span class="glyphicon glyphicon-thumbs-up accept-request" js-data-id="@request.Id"></span>
+                        <span class="glyphicon glyphicon-thumbs-down deny-request" js-data-id="@request.Id"></span>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+
+@section scripts {
+    <script>
+        $(document.body).on("click", ".deny-request", function (e) {
+            var num = $(e.target);
+            console.log("target id", num.attr("js-data-id"));
+
+            bootbox.confirm("Are you sure you want to deny this request?", function (result) {
+                if (result) {
+                    $.ajax({
+                        url: "/api/JoinRequestApi/" + num.attr("js-data-id"),
+                        method: "DELETE"
+                    })
+                     .done(function () {
+                         num.parent().parent("tr").fadeOut(function () {
+                             $(this).remove();
+                         })
+                     }).fail(function () {
+                         alert("Something Went Wrong!!!");
+                     });
+                }
+
+            });
+
+
+        });
+
+        $(document.body).on("click", ".accept-request", function (e) {
+            var num = $(e.target);
+            console.log("target id", num.attr("js-data-id"));
+
+            bootbox.confirm("Are you sure you want to accept this request?", function (result) {
+                if (result) {
+                    $.post("/api/JoinRequestApi/Accept", { "": num.attr("js-data-id") })
+
+                     .done(function () {
+                         num.parent().parent("tr").fadeOut(function () {
+                             $(this).remove();
+                         })
+                     }).fail(function () {
+                         alert("Something Went Wrong!!!");
+                     });
+                }
+
+            });
+
+
+        });
+
+
+
+
+
+    </script>
+
+
+
+}

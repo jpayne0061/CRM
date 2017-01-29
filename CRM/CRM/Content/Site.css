@@ -71,6 +71,15 @@ td > .glyphicon-trash {
 
 }
 
+.popover-content {
+  overflow-y : auto;
+  height: 200px;  
+}
+
+.glyphicon-fire:before {
+  content: "\1f525";
+}
+
 /*****************THEME SPECIFIC OVERRIDES------DEFAULT************************/
 
 .table a:not(.btn):hover {
@@ -106,6 +115,8 @@ table {
 
 .team-header {
     margin-top: 30px;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .divider-hr {
@@ -121,16 +132,9 @@ table {
 
 #team-button {
     margin-top: 30px;
+    margin-left: 20px;
 }
 
-
-span.field-validation-error {
-    color: red;
-}
-
-span.field-validation-error span{
-    color: red;
-}
 
 .assigned-to-task {
     margin-top: 7px;
@@ -211,6 +215,142 @@ span.btn-danger>a{
     font-size: 1.2em;
 }
 
+.glyphicon-thumbs-up:hover, .glyphicon-thumbs-down:hover {
+    cursor: pointer;
+
+}
+
+.glyphicon-thumbs-up:hover {
+    color: green;
+}
+
+.glyphicon-thumbs-down:hover {
+    color: red;
+}
+
+.glyphicon-thumbs-down {
+    margin-left: 20px;
+}
+
+#create-form-input-checks input{
+    height: 13px;
+    width: 15px;
+
+    display: inline;
+}
+
+#mark-as-read {
+    font-weight: bold;
+    color: #149c82;
+    list-style: none;
+}
+
+#mark-as-read:hover {
+    color:#42E3C4;
+    cursor: pointer;
+}
+
+.popover-content ul li {
+    list-style: none;
+    padding: 9px 0;
+    border-bottom: 1px solid #ddd; 
+}
+
+.popover-content ul li:nth-last-child(2), .popover-content ul li:last-child {
+    border-bottom: none; 
+}
+
+
+.popover-content ul {
+    padding-left: 5px;
+}
+
+.team-member-button {
+    position: relative;
+    padding-right: 16px;
+}
+
+.glyphicon-remove {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    font-size: .7em;
+    color: #bbb;
+}
+
+.glyphicon-remove:hover {
+    color: #3b3b3b;
+}
+
+
+#button-and-team-header {
+    margin-bottom: 10px;
+}
+
+/*Login Link on register*/
+.register-form form h3 a {
+    color: #fff;
+    text-decoration: underline;
+}
+
+td > .message-delete {
+    padding-left: 15px;
+    vertical-align: middle;
+}
+
+table>tbody>tr>td.user-tasks-cell {
+    vertical-align: middle;
+}
+
+
+#author-in-user-messages {
+    padding-right: 8px;
+}
+
+
+
+
+/****BOOTSTRAP DATETIME PICKER******/
+
+/*.datepicker,
+.table-condensed {
+  width: 500px;
+  height:500px;
+}
+
+
+.ui-datepicker {
+    font-size: 9pt !important;
+}*/
+
+
+/*****VALLIDATION ERRORS*****/
+
+
+span.field-validation-error {
+    color: red;
+}
+
+span.field-validation-error span{
+    color: red;
+}
+
+div.validation-summary-errors {
+    margin-top: 30%;
+    background-color: #fff;
+    border-radius: 7px;
+    border: 3px solid #dce4ec;
+    display: inline-block;
+    padding-right: 30px;
+    padding-top: 10px;
+}
+
+.validation-summary-errors li {
+    text-align: left;
+    list-style-type: none;
+    max-width: 220px;
+}
+
 /***************LANDING PAGE************/
 
 #landing-body {
@@ -244,7 +384,7 @@ span.btn-danger>a{
     text-align: center;
 }
 
-input.form-control {
+input.sign-up-input, select.sign-up-input {
     margin: auto;
 }
 
