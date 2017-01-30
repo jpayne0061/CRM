@@ -52,12 +52,66 @@ namespace CRM.Content
             message.SenderId = sender;
             message.TimeStamp = DateTime.Now;
 
+            var chatSession = _context.ChatSessions.Single(cs => (cs.ReceiverId == sender || cs.SenderId == sender) && cs.IsActive == true);
+            chatSession.ChatMessages.Add(message);
 
             _context.ChatMessages.Add(message);
             _context.SaveChanges();
 
             return Ok();
         }
+
+        [HttpPost]
+        public IHttpActionResult StartChatSession([FromBody] ChatSession chatSessionId)
+        {
+
+            var userId = User.Identity.GetUserId();
+
+            var chatSession = new ChatSession
+            {
+                SenderId = userId,
+                ReceiverId = chatSessionId.ReceiverId
+                
+            };
+
+            _context.ChatSessions.Add(chatSession);
+            _context.SaveChanges();
+
+            return Ok();
+        }
+
+
+        [HttpPatch]
+        public IHttpActionResult EndChatSession()
+        {
+            var userId = User.Identity.GetUserId();
+
+            var chatSession = _context.ChatSessions.Single(cs => (cs.ReceiverId == userId || cs.SenderId == userId) && cs.IsActive == true);
+
+            chatSession.IsActive = false;
+
+            _context.SaveChanges();
+
+            return Ok();
+        }
+
+
+
+        [HttpGet]
+        public List<ChatSession> GetChatSession()
+        {
+            var userId = User.Identity.GetUserId();
+
+            var chatSessions = _context.ChatSessions.Where(cs => (cs.ReceiverId == userId || cs.SenderId == userId) && cs.IsActive == true).ToList();
+
+            foreach (var chatSesh in chatSessions)
+            {
+                chatSesh.RequestingUser = userId;
+            }
+
+            return chatSessions;
+        }
+
 
 
     }

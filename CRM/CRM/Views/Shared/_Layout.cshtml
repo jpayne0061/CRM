@@ -51,10 +51,21 @@
     </div>
     <div class="container body-content">
         @RenderBody()
-        @*<hr />
-            <footer>
-                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-            </footer>*@
+
+        <div id="chat-div">
+
+            <div id="js-messages-holder">
+                <span class="glyphicon glyphicon-remove" id="js-exit-chat"></span>
+
+
+            </div>
+            
+            <span id="chat-input">
+                <input type="text" class="form-control" placeholder="enter chat message" id="js-chat-input">
+                <span class="btn btn-success" id="js-send-chat-message">Send</span>
+            </span>
+
+        </div>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
@@ -80,7 +91,7 @@
 
         $(document).ready(function () {
 
-            $.getJSON("/api/UserNotificationApi", function (notifications) {
+            $.getJSON("/api/UserNotificationApi/GetNotifications", function (notifications) {
                 if (notifications.length == 0) {
                     return;
                 }
@@ -156,31 +167,50 @@
         });
 
 
-        //$("#datetimepicker").datetimepicker();
 
+        //CHAT MESSAGE FEATURE BETA HERE***************************************
 
-        //CHAT MESSAGE FEATURE BETA HERE
-
-        //var chatPartner = $("#js-chat-partner").value;
-
-
-        //continually get 
         //anna: 7aa736a7-6776-41b0-b14a-3ac656b616d8
         //cran: a7058f32-5435-46f1-a777-90e89369dd67
 
-        //http://localhost:49166/
+
+        var chatPartner;
+
+        var chatSessionInterval;
+        var chatMessagesInterval;
+        var currentSessionIsActive = false;
+
+        checkForCurrentSession();
+        
+        function updateScroll() {
+            $("#js-messages-holder").scrollTop = $("#js-messages-holder").scrollHeight;
+        }
+
         function getChatMessages() {
-            var chatPartner = $("#js-chat-partner").val();
+            
+            //var chatPartner = $("#js-chat-partner").val();
             $.ajax({
                 url: "/api/ChatMessagesApi/GetMessages/" + chatPartner,
                 cache: false,
                 success: function (html) {
+                    console.log(html);
                     if (html.length == 0) {
                         return;
                     }
-                    console.log(html);
+
+                    
                     for (var i in html) {
-                        $("#js-messages-holder").append("<div>" + "Other person: " + html[i]["Body"] + "</div>");
+                        //check for ending chat session(sending ID as body)
+                        if (html[i]["Body"] == html[i]["ReceiverId"]) {
+                            $("#js-messages-holder").append("<div>" + "Other person has ended this chat session" + "</div>");
+                            currentSessionIsActive = false;
+                            clearInterval(chatMessagesInterval);
+                            return;
+                        }
+
+
+                        $("#js-messages-holder").append("<div>" + "<strong>" + "Other person: " + "</strong>" + html[i]["Body"] + "</div>");
+                        updateScroll();
                     }
 
                     
@@ -189,18 +219,136 @@
             });
         }
 
+
+        //this should run once at page load
+        //if there are no currently active session,
+        //then upon success, checkChatSession should be called
+        function checkForCurrentSession() {
+            $.ajax({
+                url: "/api/ChatMessagesApi/GetChatSession",
+                cache: false,
+                success: function (listSession) {
+                    if (listSession.length == 0) {
+                        con.log("no chat sessions!");
+                        chatSessionInterval = setInterval(checkChatSession, 2500);
+                        return;
+                    }
+                    else {
+                        if(listSession[0]["SenderId"] == listSession[0]["RequestingUser"]){
+                            chatPartner = listSession[0]["ReceiverId"];
+                            
+                        }
+                        else {
+                            chatPartner = listSession[0]["SenderId"];
+                        }
+                        currentSessionIsActive = true;
+                        $("#chat-div").toggle();
+                        chatMessagesInterval = setInterval(getChatMessages, 1000);
+                    }
+
+                }
+            })
+        }
+
+
+        //this only checks for receiving chats
+        function checkChatSession() {
+            $.ajax({
+                url: "/api/ChatMessagesApi/GetChatSession",
+                cache: false,
+                success: function (listSession) {
+                    if (listSession.length == 0) {
+                        return;
+                    }
+                    $("#chat-div").toggle();
+                    //stop checking sessions
+                    clearInterval(chatSessionInterval);
+                    //set partner ID to what is received
+                    chatPartner = listSession[0]["SenderId"];
+                    //start checking for messages
+                    chatMessagesInterval = setInterval(getChatMessages, 1000);
+                    currentSessionIsActive = true;
+                   
+                }
+            })
+        }
+
+
+
+        $(document.body).on("click", "#js-exit-chat", function () {
+
+            if (!currentSessionIsActive) {
+                $("#chat-div").toggle();
+
+                chatSessionInterval = setInterval(checkChatSession, 2500);
+                console.log("yep this was called");
+                return;
+            }
+
+
+            bootbox.confirm("Are you sure you want to end the chat?", function (result) {
+                if (result) {
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/api/ChatMessagesApi/PostMessage",
+                        data: { ReceiverId: chatPartner, Body: chatPartner }
+
+                    })
+                     .done(function () {
+                         //$("#js-messages-holder").append("<div>" + "You have ended the chat session " + "</div>");
+                         $.ajax({
+                             url: "/api/ChatMessagesApi/EndChatSession",
+                             method: "PATCH"
+                         }).done(function () {
+                             $("#chat-div").toggle();
+                             clearInterval(chatMessagesInterval);
+                             chatSessionInterval = setInterval(checkChatSession, 2500);
+                             currentSessionIsActive = false;
+                         })
+                         //alert("sent!");
+                     }).fail(function () {
+                         alert("Something Went Wrong!!!");
+                     });
+
+                }
+            })
+
+        });
+
+
+        //sending/starting a chat session
         $(document.body).on("click", "#js-begin-chat", function () {
+            //stop checking for sessisons since you started one
+            clearInterval(chatSessionInterval);
 
-            setInterval(getChatMessages, 1000);
-        })
+            chatPartner = $("#js-chat-partner").val();
+            $.ajax({
+                type: "POST",
+                url: "/api/ChatMessagesApi/StartChatSession",
+                data: { ReceiverId: chatPartner }
 
-        //setInterval(getChatMessages, 1000);
+            })
+             .done(function () {
+                 $("#chat-div").toggle();
+                 //alert("sent chat session!");
+                 currentSessionIsActive = true;
+             }).fail(function () {
+                 alert("Something Went Wrong!!!");
+             });
+
+            chatMessagesInterval = setInterval(getChatMessages, 1000);
+            
+        });
+
+
+
 
         //post message
 
         $(document.body).on("click", "#js-send-chat-message", function () {
             var message = $("#js-chat-input").val();
-            var chatPartner = $("#js-chat-partner").val();
+            //var chatPartner = $("#js-chat-partner").val();
             console.log("message: ", message, "partner: ", chatPartner);
             $.ajax({
                 type: "POST",
@@ -209,15 +357,12 @@
                 
             })
              .done(function () {
-                 $("#js-messages-holder").append("<div>" + "You: " + message + "</div>");
-
-                 alert("sent!");
+                 $("#js-messages-holder").append("<div>" + "<strong>" + "You: "+ "</strong>" + message + "</div>");
+                 updateScroll();
+                 //alert("sent!");
              }).fail(function () {
                  alert("Something Went Wrong!!!");
              });
-
-            getChatMessages();
-
 
         })
 

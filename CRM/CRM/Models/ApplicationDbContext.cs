@@ -22,6 +22,7 @@ namespace CRM.Models
         public DbSet<Group> Groups { get; set; }
         public DbSet<JoinRequest> JoinRequests { get; set; }
         public DbSet<ChatMessage> ChatMessages { get; set; }
+        public DbSet<ChatSession> ChatSessions { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
