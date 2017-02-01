@@ -1,12 +1,30 @@
-﻿
-@{
-    ViewBag.Title = "ChatTest";
-}
+﻿@model CRM.ViewModels.ChatUsersViewModel
 
 <h2>ChatTest</h2>
-<span class="input-group">
-    <input type="text" class="form-control" placeholder="chat partner Id" id="js-chat-partner">
-</span>
+
+
+<form id="users-available-form">
+    @foreach (var userAvailable in Model.UsersAvailable)
+    {
+        if (userAvailable == Model.CurrentUser)
+        {
+            continue;
+        }
+
+        <div class="radio">
+            <label><input type="radio" value="@userAvailable.Id" name="chat-partner" chat-name="@userAvailable.Name">@userAvailable.Name</label>
+        </div>
+    }
+
+    @foreach (var userNotAvailable in Model.UsersNotAvailable)
+    {
+        <div class="radio disabled">
+            <label><input type="radio" value="@userNotAvailable.Id" name="chat-partner" disabled>@userNotAvailable.Name<i> -currently in chat</i></label>
+        </div>
+    }
+
+</form>
+
 
 <span class="btn btn-success" id="js-begin-chat">Begin Chat</span>
 

@@ -362,8 +362,29 @@ table>tbody>tr>td.user-tasks-cell {
     position: relative;
     height: 320px;
     padding-left: 15px;
+    padding-top: 10px;
+    padding-right: 15px;
     margin-bottom: 35px;
     overflow-y: auto;
+}
+
+#end-chat-message{
+    margin-top: 15px;
+}
+
+#chat-header {
+    position: relative;
+    
+    height: 30px;
+    font-weight: 600;
+    background-color: #3b3b3b;
+    color: #eee;
+    text-align: center;
+
+}
+
+#chat-header-name {
+    padding: 5px 0;
 }
 
 /****BOOTSTRAP DATETIME PICKER******/

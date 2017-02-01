@@ -6,6 +6,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using CRM.Models;
+using System.Data.Entity;
+using CRM.ViewModels;
 
 namespace CRM.Controllers
 {
@@ -35,8 +37,26 @@ namespace CRM.Controllers
 
         public ActionResult ChatTest()
         {
+            var userId = User.Identity.GetUserId();
 
-            return View();
+            var user = _context.Users.Include(u => u.Group.Users).Single(u => u.Id == userId);
+
+            var users = user.Group.Users;
+
+            ChatUsersViewModel chatUsers = new ChatUsersViewModel();
+
+            //add first             
+            var userIds = _context.ChatSessions.Where(cs => cs.IsActive == true).Select(cs => cs.ReceiverId).ToList();
+            var userIds2 = _context.ChatSessions.Where(cs => cs.IsActive == true).Select(cs => cs.SenderId).ToList();
+            var userIdsCombined = userIds.Concat(userIds2).ToList();
+
+
+
+            chatUsers.UsersNotAvailable = users.Where(u => userIdsCombined.Contains(u.Id)).ToList();
+            chatUsers.UsersAvailable = users.Where(u => !userIdsCombined.Contains(u.Id)).ToList();
+            chatUsers.CurrentUser = user;
+
+            return View(chatUsers);
         }
 
         

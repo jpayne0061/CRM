@@ -52,7 +52,9 @@ namespace CRM.Content
             message.SenderId = sender;
             message.TimeStamp = DateTime.Now;
 
-            var chatSession = _context.ChatSessions.Single(cs => (cs.ReceiverId == sender || cs.SenderId == sender) && cs.IsActive == true);
+            var chatSession = _context.ChatSessions
+                                      .Single(cs => (cs.ReceiverId == sender || cs.SenderId == sender) && cs.IsActive == true);
+
             chatSession.ChatMessages.Add(message);
 
             _context.ChatMessages.Add(message);
@@ -67,10 +69,15 @@ namespace CRM.Content
 
             var userId = User.Identity.GetUserId();
 
+
+            //check if user has joined chat inbetween time page loaded and first message sent
+
             var chatSession = new ChatSession
             {
                 SenderId = userId,
-                ReceiverId = chatSessionId.ReceiverId
+                ReceiverId = chatSessionId.ReceiverId,
+                RequesterName = _context.Users.Single(u => u.Id == userId).Name,
+                RecipientName = _context.Users.Single(u => u.Id == chatSessionId.ReceiverId).Name
                 
             };
 
@@ -111,6 +118,17 @@ namespace CRM.Content
 
             return chatSessions;
         }
+
+        [HttpGet]
+        public List<ChatSession> GetPartnerSession(string id)
+        {
+            var userId = _context.Users.Single(u => u.Id == id).Id;
+
+            var chatSessions = _context.ChatSessions.Where(cs => (cs.ReceiverId == userId || cs.SenderId == userId) && cs.IsActive == true).ToList();
+
+            return chatSessions;
+        }
+
 
 
 

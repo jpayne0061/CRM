@@ -292,6 +292,14 @@
     <Compile Include="Migrations\201701301951013_AddedRequestingUserToChatSession.Designer.cs">
       <DependentUpon>201701301951013_AddedRequestingUserToChatSession.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702011537528_AddedRequestingUserNAMEToChatSession.cs" />
+    <Compile Include="Migrations\201702011537528_AddedRequestingUserNAMEToChatSession.Designer.cs">
+      <DependentUpon>201702011537528_AddedRequestingUserNAMEToChatSession.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702011619212_AddedPropertyToChatSession.cs" />
+    <Compile Include="Migrations\201702011619212_AddedPropertyToChatSession.Designer.cs">
+      <DependentUpon>201702011619212_AddedPropertyToChatSession.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -311,6 +319,7 @@
     <Compile Include="Models\UserMessage.cs" />
     <Compile Include="Models\UserNotification.cs" />
     <Compile Include="Models\UserNotificationDto.cs" />
+    <Compile Include="ViewModels\ChatUsersViewModel.cs" />
     <Compile Include="ViewModels\CustomerDetailViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModel.cs" />
     <Compile Include="ViewModels\FutureDate.cs" />
@@ -495,6 +504,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701301951013_AddedRequestingUserToChatSession.resx">
       <DependentUpon>201701301951013_AddedRequestingUserToChatSession.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702011537528_AddedRequestingUserNAMEToChatSession.resx">
+      <DependentUpon>201702011537528_AddedRequestingUserNAMEToChatSession.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702011619212_AddedPropertyToChatSession.resx">
+      <DependentUpon>201702011619212_AddedPropertyToChatSession.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
