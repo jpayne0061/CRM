@@ -187,7 +187,10 @@
         checkForCurrentSession();
         
         function updateScroll() {
-            $("#js-messages-holder").scrollTop = $("#js-messages-holder").scrollHeight;
+
+            $("#js-messages-holder").animate({
+                scrollTop: $("#js-messages-holder")[0].scrollHeight}, 200);
+
         }
 
         function getChatMessages() {
