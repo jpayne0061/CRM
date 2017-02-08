@@ -300,6 +300,10 @@
     <Compile Include="Migrations\201702011619212_AddedPropertyToChatSession.Designer.cs">
       <DependentUpon>201702011619212_AddedPropertyToChatSession.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702071740025_addedIsCompleteToTask.cs" />
+    <Compile Include="Migrations\201702071740025_addedIsCompleteToTask.Designer.cs">
+      <DependentUpon>201702071740025_addedIsCompleteToTask.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -354,8 +358,12 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Scripts\chat\chatCopy.js" />
+    <Content Include="Scripts\chat\chat.js" />
     <Content Include="Scripts\datetimepicker-master.zip" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\delete\delete.js" />
+    <Content Include="Scripts\join_requests\join_requests.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -365,6 +373,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\notifications\notifications.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\underscore-min.js" />
@@ -510,6 +519,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702011619212_AddedPropertyToChatSession.resx">
       <DependentUpon>201702011619212_AddedPropertyToChatSession.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702071740025_addedIsCompleteToTask.resx">
+      <DependentUpon>201702071740025_addedIsCompleteToTask.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

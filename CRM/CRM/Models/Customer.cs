@@ -36,6 +36,11 @@ namespace CRM.Models
         [StringLength(255)]
         public string Email { get; set; }
 
+        public int OverDueTasks()
+        {
+            return Tasks.Where(t => t.Due() == TimeLeft.OverDue).ToList().Count();
+        }
+
 
     }
 }

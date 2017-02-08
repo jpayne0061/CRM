@@ -8,6 +8,7 @@ using System.Web.Security;
 using CRM.Models;
 using System.Data.Entity;
 using CRM.ViewModels;
+using System.IO;
 
 namespace CRM.Controllers
 {
@@ -57,6 +58,13 @@ namespace CRM.Controllers
             chatUsers.CurrentUser = user;
 
             return View(chatUsers);
+        }
+
+        public ActionResult UploadDownload()
+        {
+
+
+            return View();
         }
 
         

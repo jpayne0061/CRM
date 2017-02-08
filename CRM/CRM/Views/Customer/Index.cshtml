@@ -15,50 +15,30 @@
     <tbody>
         @foreach (var customer in Model)
         {
-        <tr>
-            <td>@Html.ActionLink(customer.Name, "Detail", "Customer", new { id = customer.Id }, null)</td>
-            <td>@customer.Phone</td>
-            <td>@customer.Email</td>
-            <td>
-                <a href="~/Customer/Edit/@customer.Id" class="edit-link"><span class="glyphicon glyphicon-pencil edit-customer" title="Edit Customer"></span></a>
-                <span class="glyphicon glyphicon-trash delete-customer" js-data-id="@customer.Id" title="Delete Customer"></span>
-            </td>
+            <tr>
+                <td>@Html.ActionLink(customer.Name, "Detail", "Customer", new { id = customer.Id }, null)</td>
+                <td>@customer.Phone</td>
+                <td>@customer.Email</td>
+                @if (customer.OverDueTasks() > 0)
+                {
+                    <td class="over-due">@customer.OverDueTasks() @(customer.OverDueTasks() > 1 ? "tasks" : "task") overdue</td>
+                }
+                else
+                {
+                    <td> </td>
+                }
 
-        </tr>
+                <td>
+                    <a href="~/Messages/Create/@customer.Id" class="edit-link"><span class="glyphicon glyphicon-envelope edit-customer" title="Send Message"></span></a>
+                    <a href="~/Tasks/Create/@customer.Id" class="edit-link"><span class="glyphicon glyphicon-wrench edit-customer" title="Assign Task"></span></a>
+                </td>
+                <td>
+                    <a href="~/Customer/Edit/@customer.Id" class="edit-link"><span class="glyphicon glyphicon-pencil edit-customer" title="Edit Customer"></span></a>
+                    <span class="glyphicon glyphicon-trash delete-customer" js-data-id="@customer.Id" title="Delete Customer"></span>
+                </td>
+
+            </tr>
         }
     </tbody>
 </table>
 
-
-@section scripts {
-    <script>
-        $(document.body).on("click", ".delete-customer", function (e) {
-            var num = $(e.target);
-            console.log("target id", num.attr("js-data-id"));
-
-            bootbox.confirm("Are you sure you want to delete this customer?", function (result) {
-                if (result) {
-                    $.ajax({
-                        url: "/api/CustomerApi/" + num.attr("js-data-id"),
-                        method: "DELETE"
-                    })
-                     .done(function () {
-                         num.parent().parent("tr").fadeOut(function () {
-                             $(this).remove();
-                         })
-                     }).fail(function () {
-                         alert("Something Went Wrong!!!");
-                     });
-                }
-
-            });
-
-
-        });
-
-
-    </script>
-
-    
-    
-}

@@ -36,6 +36,10 @@
                     <li>@Html.ActionLink("My Customers", "Index", "Customer")</li>
                     <li>@Html.ActionLink("My Tasks", "UserTasks", "Tasks")</li>
                     <li>@Html.ActionLink("My Messages", "UserMessages", "Messages")</li>
+                    @if (Request.IsAuthenticated && User.IsInRole("Manager"))
+                    {
+                        <li>@Html.ActionLink("Join Requests", "Index", "JoinRequests")</li>
+                    }
                 </ul>
             </li>
 

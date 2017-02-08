@@ -34,8 +34,14 @@
                                 @foreach (var member in Model.Team)
                                 {
                                     <div class="btn btn-default team-member-button">
-                                        @member.Name<span class="glyphicon glyphicon-remove" js-data-id="@member.Id" js-cust-id="@Model.Id" title="Remove User From This Customer Team"></span>
-                                
+                                        @member.Name
+                                        @if (Request.IsAuthenticated && User.IsInRole("Manager"))
+                                        {
+                                            <span class="glyphicon glyphicon-remove js-glyphicon-remove-member" 
+                                            js-data-id="@member.Id" js-cust-id="@Model.Id" title="Remove User From This Customer Team"></span>
+                                        }
+                                       
+
                                     </div>
                                 }
                             </div>
@@ -74,12 +80,25 @@
                     <tbody>
                         @foreach (var task in Model.Tasks)
                         {
-                            <tr>
+                            <tr class="@(task.IsComplete ? "deactivated" : "")">
 
-                                <td class="task-cell-parent">
-                                    <div><strong>Deadline</strong></div>
-                                    <div>@task.Deadline.ToString("d")</div>
-                                </td>
+                                @if (task.IsComplete == true)
+                                {
+                                    <td class="task-cell-parent completed green">
+                                        <div>COMPLETED</div>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td class="task-cell-parent completed">
+                                        <div><strong>Deadline</strong></div>
+                                        <div>@task.Deadline.ToString("d")</div>
+                                        @if (task.Due() == CRM.Models.TimeLeft.OverDue)
+                                        {
+                                            <div class="@task.DueStyle()">@task.DaysLate() @(task.DaysLate() > 1 ? "days" : "day") late</div>
+                                        }
+                                    </td>
+                                }
 
                                 <td class="task-cell-parent">
                                     @task.Body
@@ -89,21 +108,7 @@
                                     <div><strong>Assigned By</strong></div><div> @task.AssignedBy.Name</div>
                                     <div class="assigned-to-task"><strong>Assigned To</strong></div><div> @task.AssignedTo.Name</div>
                                 </td>
-                                <td>
-                                    @if (task.Due() == CRM.Models.TimeLeft.LessThan24)
-                                    {
-                                        <span class="glyphicon glyphicon-eye-open"></span>
-                                    }
-
-                                    @if (task.Due() == CRM.Models.TimeLeft.NoDanger)
-                                    {
-                                        <span class="glyphicon glyphicon-ok"></span>
-                                    }
-                                    @if (task.Due() == CRM.Models.TimeLeft.OverDue)
-                                    {
-                                        <span class="glyphicon glyphicon-fire"></span>
-                                    }
-                                </td>
+                                <td></td>
 
                                 <td class="glyph-cell">
 
@@ -111,6 +116,7 @@
                                     {
                                         <a href="/Tasks/Edit/@task.Id"><span class="glyphicon glyphicon-pencil" title="Edit Task"></span></a>
                                         <span class="glyphicon glyphicon-trash js-delete-task" js-data-id="@task.Id" title="Delete Task"></span>
+                                        <span class="glyphicon glyphicon-ok js-mark-task-complete" js-data-id="@task.Id" title="Mark Task Complete"></span>
                                     }
 
 
@@ -179,7 +185,7 @@
 
         </div>
     </div>
-    <hr class="divider-hr-exapnded" />
+    <hr class="divider-hr-expanded" />
     <div class="row col-md-12" id="js-expanded-tasks">
 
 
@@ -188,88 +194,6 @@
 
 @section scripts {
     <script>
-
-        //DELETE TASK
-        $(document.body).on("click", ".js-delete-task", function (e) {
-            var num = $(e.target);
-            console.log("target id", num.attr("js-data-id"));
-
-            bootbox.confirm("Are you sure you want to delete this task?", function (result) {
-                if (result) {
-                    $.ajax({
-                        url: "/api/TaskApi/" + num.attr("js-data-id"),
-                        method: "DELETE"
-                    })
-                     .done(function () {
-                         num.parent().parent("tr").fadeOut(function () {
-                             $(this).remove();
-                         })
-                     }).fail(function () {
-                         alert("Something Went Wrong!!!");
-                     });
-                }
-
-            });
-
-
-        });
-
-
-
-        $(document.body).on("click", ".glyphicon-remove", function (e) {
-            var num = $(e.target);
-            var custId = $(e.target).attr("js-cust-id");
-            console.log("target id", num.attr("js-data-id"), "cust: ", custId);
-
-            bootbox.confirm("Are you sure you want to remove " + $(e.target).parent().text() + " from the team?", function (result) {
-                if (result) {
-                    $.ajax({
-                        type: "POST",
-                        url: "/api/CustomerApi/DeleteTeamMember",
-                        data: { CustomerId: custId, TeamMemberId: num.attr("js-data-id") }
-                    })
-                     .done(function () {
-                         num.parent().fadeOut(function () {
-                             $(this).remove();
-                         })
-                     }).fail(function () {
-                         alert("Something Went Wrong!!!");
-                     });
-                }
-
-            });
-
-
-        });
-
-
-
-        //DELETE MESSAGE
-        $(document.body).on("click", ".js-delete-message", function (e) {
-            var num = $(e.target);
-            console.log("target id", num.attr("js-data-id"));
-
-
-            bootbox.confirm("Are you sure you want to delete this message?", function (result) {
-                if (result) {
-                    $.ajax({
-                        url: "/api/MessagesApi/" + num.attr("js-data-id"),
-                        method: "DELETE"
-                    })
-                     .done(function () {
-                         num.parent().parent("tr").fadeOut(function () {
-                             $(this).remove();
-                         })
-                     }).fail(function () {
-                         alert("Something Went Wrong!!!");
-                     });
-                }
-
-            });
-
-        });
-
-
 
         //EXPAND AND CHANGE MESSAGES VIEW
         $("#js-enlarge-messages").on("click", function () {

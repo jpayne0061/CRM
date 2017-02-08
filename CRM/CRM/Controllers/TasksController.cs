@@ -115,6 +115,7 @@ namespace CRM.Controllers
                 Body = vm.Body
             };
 
+            customer.Tasks.Add(task);
 
             var userNotification = new UserNotification
             {

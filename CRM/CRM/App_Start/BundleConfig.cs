@@ -9,6 +9,13 @@ namespace CRM
         public static void RegisterBundles(BundleCollection bundles)
         {
 
+            bundles.Add(new ScriptBundle("~/bundles/chat").Include(
+                        "~/Scripts/chat/chat.js",
+                        "~/Scripts/notifications/notifications.js",
+                        "~/Scripts/delete/delete.js",
+                        "~/Scripts/join_requests/join_requests.js"
+                        ));
+
 
             //MODIFY THE NAME OF THIS BUNDLE TO INCLUDE ALL THIRD PARTY LIBRARIES
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(

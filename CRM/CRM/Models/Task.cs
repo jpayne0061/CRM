@@ -22,6 +22,8 @@ namespace CRM.Models
         public DateTime Deadline { get; set; }
         public string Body { get; set; }
 
+        public bool IsComplete { get; set; }
+
         public TimeLeft Due()
         {
             DateTime timeNow = DateTime.Now;
@@ -38,6 +40,39 @@ namespace CRM.Models
             {
                 return TimeLeft.NoDanger;
             }
+
+
+        }
+
+        public string DueStyle()
+        {
+            if (this.Due() == TimeLeft.OverDue)
+            {
+                return "over-due";
+            }
+
+            if (this.Due() == TimeLeft.LessThan24)
+            {
+                return "less-than-24";
+            }
+            if (this.Due() == TimeLeft.NoDanger)
+            {
+                return "no-danger";
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        public int DaysLate() {
+            return Math.Abs((int)((Deadline - DateTime.Now).TotalDays));
+
+        }
+
+        public int HoursLate()
+        {
+            return (int)((Math.Abs(((Deadline - DateTime.Now).TotalDays) % 1)) * 24);
 
 
         }

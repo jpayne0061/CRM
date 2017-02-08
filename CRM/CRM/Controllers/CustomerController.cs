@@ -26,7 +26,7 @@ namespace CRM.Controllers
             //var customers = _context.Customers.Include(c => c.Messages).ToList();
             var userId = User.Identity.GetUserId();
 
-            var user = _context.Users.Include(u => u.Customers).Include(u => u.Group).Single(u => u.Id == userId);
+            var user = _context.Users.Include(u => u.Customers.Select(c => c.Tasks)).Include(u => u.Group).Single(u => u.Id == userId);
 
             if(user.Group != null)
             {
@@ -159,7 +159,7 @@ namespace CRM.Controllers
             {
                 Messages = customer.Messages.ToList(),
                 Team = customer.Team.ToList(),
-                Tasks = customer.Tasks.ToList(),
+                Tasks = customer.Tasks.OrderBy(t => t.IsComplete).ToList(),
                 Id = customer.Id,
                 CurrentUserId = User.Identity.GetUserId(),
                 Name = customer.Name,

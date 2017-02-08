@@ -30,7 +30,17 @@ namespace CRM.Controllers
             return Ok();
         }
 
+        [HttpPut]
+        public IHttpActionResult MarkComplete(int id)
+        {
+            var task = _context.Tasks.SingleOrDefault(t => t.Id == id);
 
+            task.IsComplete = true;
+
+            _context.SaveChanges();
+
+            return Ok();
+        }
 
 
     }

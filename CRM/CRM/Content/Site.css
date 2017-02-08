@@ -48,6 +48,17 @@ td > .glyphicon-trash {
     padding-left: 7px;
 }
 
+
+td > .glyphicon-ok {
+    padding-left: 7px;
+
+}
+
+td > .glyphicon-ok:hover {
+    cursor: pointer;
+    color: green;
+}
+
 .table a:not(.btn) {
     text-decoration: none;
     font-weight: 600;
@@ -78,6 +89,14 @@ td > .glyphicon-trash {
 
 .glyphicon-fire:before {
   content: "\1f525";
+}
+
+.glyphicon-wrench:before {
+  content: "\1f527";
+}
+
+.glyphicon {
+    padding-left: 14px;
 }
 
 /*****************THEME SPECIFIC OVERRIDES------DEFAULT************************/
@@ -285,6 +304,21 @@ span.btn-danger>a{
 
 #button-and-team-header {
     margin-bottom: 10px;
+}
+
+.over-due {
+    color: #D63C3C;
+    font-weight:600;
+}
+
+.green {
+    color: green;
+    font-weight: 600;
+}
+
+.deactivated {
+    pointer-events: none;
+    opacity: 0.7;
 }
 
 /*Login Link on register*/
