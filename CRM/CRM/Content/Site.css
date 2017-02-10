@@ -31,7 +31,6 @@ textarea {
 .glyphicon-pencil:hover {
     cursor: pointer;
     color: #3498db;
-    padding-left: 4px;
 }
 
 .glyphicon-pencil {
@@ -97,6 +96,7 @@ td > .glyphicon-ok:hover {
 
 .glyphicon {
     padding-left: 14px;
+    cursor: pointer;
 }
 
 /*****************THEME SPECIFIC OVERRIDES------DEFAULT************************/
@@ -126,6 +126,22 @@ table {
 .glyph-cell a, a.edit-link {
     color: #2c3e50;
 }
+
+.icon-cell {
+    width: 65px;
+}
+
+#client-index-table{
+    position: relative;
+}
+
+#add-customer-button {
+    position: absolute;
+    top: 80px;
+    right: 115px;
+    z-index: 1000;
+}
+
 
 .name-header {
     font-size: 32px;
@@ -234,6 +250,7 @@ span.btn-danger>a{
     font-size: 1.2em;
 }
 
+
 .glyphicon-thumbs-up:hover, .glyphicon-thumbs-down:hover {
     cursor: pointer;
 
@@ -341,6 +358,11 @@ table>tbody>tr>td.user-tasks-cell {
     padding-right: 8px;
 }
 
+span.js-begin-chat-table {
+    padding-left: 4px;
+    color: #798d8f;
+}
+
 
         /***************chat messages*********/
 #chat-div {
@@ -348,7 +370,7 @@ table>tbody>tr>td.user-tasks-cell {
     bottom: 0;
     right: 0;
     width: 313px;
-    height: 400px;
+    /*height: 400px;*/
     background-color: #eee;
     border-radius: 4px;
     border: 1px solid #ccc;
@@ -384,7 +406,42 @@ table>tbody>tr>td.user-tasks-cell {
     right: 3px;
     z-index: 10000;
     font-size: 15px;
+    padding-left: 0;
 }
+
+#js-maximize-chat {
+    position: absolute;
+    top: 3px;
+    right: 23px;
+    z-index: 10000;
+    font-size: 15px;
+    color:#bbb; 
+    /*display: none;*/
+}
+
+#js-maximize-chat:hover {
+    cursor: pointer;
+    color: #fff;
+}
+
+.js-hide {
+    display: none;
+}
+
+#js-minimize-chat {
+    position: absolute;
+    top: 3px;
+    right: 23px;
+    z-index: 10000;
+    font-size: 15px;
+    color:#bbb; 
+}
+
+#js-minimize-chat:hover {
+    cursor: pointer;
+    color: #fff;
+}
+
 
 #js-exit-chat:hover {
     cursor: pointer;
@@ -421,6 +478,13 @@ table>tbody>tr>td.user-tasks-cell {
     padding: 5px 0;
 }
 
+.hide-chat {
+    height: 30px; 
+}
+
+.show-chat {
+    height: 400px;
+}
 /****BOOTSTRAP DATETIME PICKER******/
 
 /*.datepicker,

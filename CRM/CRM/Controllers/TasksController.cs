@@ -115,18 +115,22 @@ namespace CRM.Controllers
                 Body = vm.Body
             };
 
-            customer.Tasks.Add(task);
+           
 
             var userNotification = new UserNotification
             {
                 Sender = assignedBy.Name,
+                CustomerId = customer.Id,
                 CustomerName = customer.Name,
-                Body = assignedBy.Name + " has assigned you a new task for " + customer.Name,
+                Body = assignedBy.Name + " has assigned you a new task for ",
                 Recipient = assignedTo,
                 RecipientId = assignedTo.Id,
                 IsRead = false
             };
 
+
+            customer.Tasks.Add(task);
+            assignedTo.Tasks.Add(task);
 
             assignedTo.UserNotifications.Add(userNotification);
             _context.UserNotifications.Add(userNotification);

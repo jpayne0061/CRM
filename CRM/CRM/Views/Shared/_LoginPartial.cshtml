@@ -36,6 +36,7 @@
                     <li>@Html.ActionLink("My Customers", "Index", "Customer")</li>
                     <li>@Html.ActionLink("My Tasks", "UserTasks", "Tasks")</li>
                     <li>@Html.ActionLink("My Messages", "UserMessages", "Messages")</li>
+                    <li>@Html.ActionLink("Chat", "ChatTest", "Home")</li>
                     @if (Request.IsAuthenticated && User.IsInRole("Manager"))
                     {
                         <li>@Html.ActionLink("Join Requests", "Index", "JoinRequests")</li>
@@ -49,7 +50,7 @@
             @*<li>
                 @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
             </li>*@
-            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()" id="js-log-off">Log off</a></li>
         </ul>
     }
 }

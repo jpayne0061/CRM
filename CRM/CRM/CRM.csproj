@@ -304,6 +304,14 @@
     <Compile Include="Migrations\201702071740025_addedIsCompleteToTask.Designer.cs">
       <DependentUpon>201702071740025_addedIsCompleteToTask.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702092354439_AddedCustIdToUserNotification.cs" />
+    <Compile Include="Migrations\201702092354439_AddedCustIdToUserNotification.Designer.cs">
+      <DependentUpon>201702092354439_AddedCustIdToUserNotification.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702092359387_AddedCustIdToUserNotificationDTO.cs" />
+    <Compile Include="Migrations\201702092359387_AddedCustIdToUserNotificationDTO.Designer.cs">
+      <DependentUpon>201702092359387_AddedCustIdToUserNotificationDTO.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -522,6 +530,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702071740025_addedIsCompleteToTask.resx">
       <DependentUpon>201702071740025_addedIsCompleteToTask.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702092354439_AddedCustIdToUserNotification.resx">
+      <DependentUpon>201702092354439_AddedCustIdToUserNotification.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702092359387_AddedCustIdToUserNotificationDTO.resx">
+      <DependentUpon>201702092359387_AddedCustIdToUserNotificationDTO.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,16 +1,19 @@
 ﻿@model List<CRM.Models.Customer>
 
-<table class="table table-striped table-hover ">
+
+<table class="table table-striped table-hover " id="client-index-table">
+
+    @Html.ActionLink("Add Customer", "Create", "Customer", null, new { @class = "btn btn-success", id="add-customer-button" })
     <thead>
         <tr>
             <th colspan="3" class="table-head-title">All Clients</th>
-            <th>@Html.ActionLink("Add Customer", "Create", "Customer", null, new { @class = "btn btn-success" })</th>
+            <th ></th>
+            <th class="icon-cell"></th>
+            <th class="icon-cell"></th>
+            <th class="icon-cell"></th>
+            <th class="icon-cell"></th>
+
         </tr>
-        @*<tr>
-            <th>Name</th>
-            <th>Phone</th>
-            <th>Email</th>
-        </tr>*@
     </thead>
     <tbody>
         @foreach (var customer in Model)
@@ -28,12 +31,18 @@
                     <td> </td>
                 }
 
-                <td>
+                <td class="icon-cell">
                     <a href="~/Messages/Create/@customer.Id" class="edit-link"><span class="glyphicon glyphicon-envelope edit-customer" title="Send Message"></span></a>
+                    
+                </td>
+                <td class="icon-cell">
                     <a href="~/Tasks/Create/@customer.Id" class="edit-link"><span class="glyphicon glyphicon-wrench edit-customer" title="Assign Task"></span></a>
                 </td>
-                <td>
+                <td class="icon-cell">
                     <a href="~/Customer/Edit/@customer.Id" class="edit-link"><span class="glyphicon glyphicon-pencil edit-customer" title="Edit Customer"></span></a>
+                    
+                </td>
+                <td class="icon-cell">
                     <span class="glyphicon glyphicon-trash delete-customer" js-data-id="@customer.Id" title="Delete Customer"></span>
                 </td>
 

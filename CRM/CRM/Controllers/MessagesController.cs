@@ -89,6 +89,7 @@ namespace CRM.Controllers
                 DateTime = DateTime.Now
             };
 
+
             _context.Messages.Add(message);
             _context.SaveChanges();
 
@@ -102,9 +103,10 @@ namespace CRM.Controllers
 
                 var userNotification = new UserNotification
                 {
+                    CustomerId = customer.Id,
                     Sender = user.Name,
                     CustomerName = customer.Name,
-                    Body = user.Name + " has sent you a message in the file for " + customer.Name,
+                    Body = user.Name + " has sent you a message in the file for ",
                     Recipient = taggedUser,
                     RecipientId = taggedUser.Id
 

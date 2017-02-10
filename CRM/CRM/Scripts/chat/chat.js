@@ -53,7 +53,8 @@
         $.ajax({
             url: "/api/ChatMessagesApi/EndChatSession",
             method: "PATCH"
-        }).done(done)
+        }).done(done);
+        console.log("session ended, fool!")
     }
 
     var sendMessage = function (message, handleData, chatPartner) {
@@ -108,9 +109,43 @@ var ChatController = function (apiService) {
         });
     }
 
+    var onClickMinimize = function () {
+        $(document.body).on("click", "#js-minimize-chat", function () {
+            $("#chat-div").removeClass("show-chat");
+            $("#chat-div").addClass("hide-chat");
+            $("#chat-input").toggle();
+            $("#js-maximize-chat").toggleClass("js-hide");
+            $(this).toggle();
+        });
+    }
+
+    var onClickMaximize = function () {
+        $(document.body).on("click", "#js-maximize-chat", function () {
+            $("#chat-div").removeClass("hide-chat");
+            $("#chat-div").addClass("show-chat");
+            $("#chat-input").toggle();
+            $("#js-maximize-chat").addClass("js-hide");
+            $("#js-minimize-chat").toggle();
+            //$(this).toggle();
+        });
+    }
+
     //DOM EVENT
     var onClickBeginChat = function () {
-        $(document.body).on("click", "#js-begin-chat", beginChat);
+        $(document.body).on("click", ".js-begin-chat", beginChat);
+    }
+
+
+    var onClickLogOff = function () {
+        $(document.body).on("click", "#js-log-off", function () {
+            if (currentSessionIsActive) {
+                apiService.sendMessage(chatPartner, function () { apiService.endChatSession(reset) }, chatPartner);
+            }
+        });
+    }
+
+    var onClickBeginChatTable = function () {
+        $(document.body).on("click", ".js-begin-chat-table", function (e) { beginChatTable (e)});
     }
 
 
@@ -130,7 +165,7 @@ var ChatController = function (apiService) {
             bootbox.confirm("Are you sure you want to end the chat?", function (result) {
                 if (result) {
                     //sendTerminalMessage();
-                    apiService.sendMessage(chatPartner, function () { apiService.endChatSession(reset) }, chatPartner)
+                    apiService.sendMessage(chatPartner, function () { apiService.endChatSession(reset) }, chatPartner);
                 }
             })
 
@@ -171,6 +206,16 @@ var ChatController = function (apiService) {
         $("#chat-header-name").text(chatPartnerName);
     }
 
+    var beginChatTable = function (e) {
+        var objectTarget = $(e.target);
+        clearInterval(chatSessionInterval);
+        chatPartner = objectTarget.attr("js-data-id");
+        chatPartnerName = objectTarget.attr("js-data-name");
+        $("#chat-div").toggle();//ONE
+        $("#js-chat-input").focus();
+        $("#chat-header-name").text(chatPartnerName);
+    }
+
     var createSessionSuccess = function (message) {
         currentSessionIsActive = true;
         chatMessagesInterval = setInterval(function () { apiService.getChatMessages(handleMessageReceived, chatPartner) }, 1000);
@@ -180,7 +225,7 @@ var ChatController = function (apiService) {
 
     var handlePartnerSessionQuery = function (listSession, message) {
         console.log("here here!!!!!", message);
-        if (listSession.length == 0) {
+        if (listSession.length == 0 || listSession[0]["SenderId"] == listSesson[0]["RequestingUser"] || listSession[0]["ReceiverId"] == listSesson[0]["RequestingUser"]) {
             apiService.createChatSession(message, createSessionSuccess, function () { appendMessageInUi("", "Chat failed. Other user may now be in chat.") }, chatPartner);
             return;
         }
@@ -207,6 +252,7 @@ var ChatController = function (apiService) {
     }
 
     var handleMessageReceived = function (messageArray) {
+        console.log(messageArray);
         if (messageArray.length == 0) {
             return;
         }
@@ -214,10 +260,17 @@ var ChatController = function (apiService) {
         for (var i in messageArray) {
             var message = messageArray[i]["Body"];
             //check for ending chat session(sending ID as body)
-            if (message == messageArray[i]["ReceiverId"]) {
+            //make sure it is the last message sent, otherwise another chat session has been started
+            if (message == messageArray[i]["ReceiverId"] && i == (messageArray.length - 1) ) {
+
+
                 endedChatMessage();
                 currentSessionIsActive = false;
                 clearInterval(chatMessagesInterval);
+                return;
+            }
+
+            if (message == messageArray[i]["ReceiverId"]) {
                 return;
             }
 
@@ -279,6 +332,18 @@ var ChatController = function (apiService) {
 
         //ON CLICK BEGIN CHAT
         onClickBeginChat();
+
+        //start chat from index table
+        onClickBeginChatTable();
+
+        //enlarge or show chat window
+        onClickMaximize();
+
+        //minimize or hide chat window
+        onClickMinimize();
+
+        //exit chat when logging off
+        onClickLogOff();
 
         //this handles submission of message if user hits 'ENTER'
         //ON ENTER SEND MESSAGE

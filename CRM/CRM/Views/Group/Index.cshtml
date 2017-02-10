@@ -12,14 +12,12 @@
         @foreach (var user in Model.Users)
         {
             <tr>
-                <td>@user.Name</td>
+                <td><strong>@user.Name</strong></td>
                 <td>@user.Email</td>
-
-                <td>
-                    @*<span class="glyphicon glyphicon-thumbs-up" js-data-id="@user.Id"></span>
-                    <span class="glyphicon glyphicon-thumbs-down " js-data-id="@user.Id"></span>*@
-                </td>
-
+                <td><strong>Customers</strong>: @user.Customers.Count()</td>
+                <td><strong>Active tasks</strong>: @user.Tasks.Where(t => t.IsComplete == false).Count()</td>
+                <td><strong>Completed tasks</strong>: @user.Tasks.Where(t => t.IsComplete == true).Count()</td>
+                <td><span class="glyphicon glyphicon-comment js-begin-chat-table" title="chat with this user" js-data-id="@user.Id" js-data-name="@user.Name"></span></td>
             </tr>
         }
     </tbody>

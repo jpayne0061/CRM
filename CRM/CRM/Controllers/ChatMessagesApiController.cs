@@ -126,6 +126,11 @@ namespace CRM.Content
 
             var chatSessions = _context.ChatSessions.Where(cs => (cs.ReceiverId == userId || cs.SenderId == userId) && cs.IsActive == true).ToList();
 
+            foreach (var chatSesh in chatSessions)
+            {
+                chatSesh.RequestingUser = userId;
+            }
+
             return chatSessions;
         }
 

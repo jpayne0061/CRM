@@ -24,20 +24,17 @@ namespace CRM.Controllers
             var userId = User.Identity.GetUserId();
             var user = _context.Users.Single(u => u.Id == userId);
             var groups = _context.Groups.Include(g => g.Users).ToList();
-            Group usersGroup;
-            foreach(var group in groups)
-            {
-                if (group.Users.Contains(user))
-                {
-                    usersGroup = group;
-                    return View(usersGroup);
-                }
-                else
-                {
 
-                }
+            var group = _context.Groups.Include(g => g.Users.Select(u => u.Tasks))
+                                       .Include(g => g.Users.Select(u => u.Customers))
+                                       .ToList().Single(g => g.Users.Contains(user));
+            //.Select(g => g.Users.Contains(user));
+
+            if (group != null) {
+                return View(group);
             }
-
+                
+            
             //var group = _context.Groups.Include(g => g.Users).Single(g => g.Users.Contains(user));
             return RedirectToAction("NoGroup", "Customer");
 

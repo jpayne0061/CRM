@@ -105,8 +105,15 @@
                                 </td>
 
                                 <td>
-                                    <div><strong>Assigned By</strong></div><div> @task.AssignedBy.Name</div>
-                                    <div class="assigned-to-task"><strong>Assigned To</strong></div><div> @task.AssignedTo.Name</div>
+                                    <div><strong>Assigned By</strong></div><div>
+                                        @task.AssignedBy.Name
+                                        <span class="glyphicon glyphicon-comment js-begin-chat-table" title="chat with this user" js-data-id="@task.AssignedBy.Id" js-data-name="@task.AssignedBy.Name"></span>
+                                    </div>
+                                    <div class="assigned-to-task"><strong>Assigned To</strong></div><div>
+                                        @task.AssignedTo.Name
+                                        <span class="glyphicon glyphicon-comment js-begin-chat-table" title="chat with this user" js-data-id="@task.AssignedTo.Id" js-data-name="@task.AssignedTo.Name"></span>
+                                    </div>
+
                                 </td>
                                 <td></td>
 

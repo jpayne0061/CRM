@@ -16,6 +16,7 @@ namespace CRM.Models
         public ApplicationUser Recipient { get; set; }
         public string RecipientId { get; set; }
         public bool IsRead { get; set; }
+        public int CustomerId { get; set; }
 
     }
 }

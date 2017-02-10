@@ -34,7 +34,8 @@ namespace CRM.Controllers
                     Sender = notification.Sender,
                     CustomerName = notification.CustomerName,
                     Body = notification.Body,
-                    IsRead = notification.IsRead
+                    IsRead = notification.IsRead,
+                    CustomerId =notification.CustomerId
                 };
 
                 dtos.Add(dto);

@@ -532,7 +532,7 @@ namespace CRM.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Register", "Account");
+            return RedirectToAction("Login", "Account");
         }
 
         //

@@ -52,14 +52,15 @@
     <div class="container body-content">
         @RenderBody()
 
-        <div id="chat-div">
+        <div id="chat-div" class="show-chat">
             <div id="chat-header">
                 <div id="chat-header-name"></div>
+                <span class="glyphicon glyphicon-resize-full js-hide" id="js-maximize-chat"></span>
+                <span class="glyphicon glyphicon-minus" id="js-minimize-chat"></span>
                 <span class="glyphicon glyphicon-remove" id="js-exit-chat"></span>
             </div>
             <div id="js-messages-holder">
                 
-
 
             </div>
             
@@ -81,7 +82,7 @@
         <ul>
             <%
                 _.each(notifications, function(notification){%>
-                    <li><%= notification.Body %></li>
+                    <li><%= notification.Body %> <%=  notification.CustomerLink %></li>
                     
                 <%})
                 %><li id="mark-as-read">Mark Notifications as Read</li><%
