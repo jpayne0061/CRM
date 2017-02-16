@@ -26,7 +26,11 @@ var JoinRequestsController = function (joinRequestsService) {
     var success = function (num) {
         num.parent().parent("tr").fadeOut(function () {
             $(this).remove();
-        })
+        });
+       
+        $("tr[js-data-remove='" + num.attr("js-data-remove") + "']").fadeOut(function () {
+            $(this).remove();
+        });
     }
 
     var fail = function () {
@@ -51,6 +55,7 @@ var JoinRequestsController = function (joinRequestsService) {
     var onClickAccept = function () {
         $(document.body).on("click", ".accept-request", function (e) {
             var num = $(e.target);
+            console.log(num.attr("js-data-remove"));
             bootbox.confirm("Are you sure you want to accept this request?", function (result) {
                 if (result) {
                     joinRequestsService.accept(function () { success(num) }, fail, num.attr("js-data-id"))

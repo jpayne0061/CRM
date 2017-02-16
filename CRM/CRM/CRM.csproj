@@ -436,6 +436,8 @@
     <Content Include="Views\Customer\NoGroup.cshtml" />
     <Content Include="Views\Messages\Create2.cshtml" />
     <Content Include="Views\Home\ChatTest.cshtml" />
+    <Content Include="Views\Customer\WrongGroup.cshtml" />
+    <Content Include="Views\Customer\WrongTeam.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -36,17 +36,43 @@
                     <span class="icon-bar"></span>
                 </button>
 
+                
                 <img id="logo-black" src="~/Content/img/feather_black.png" />
                 <img id="logo" src="~/Content/img/feather.png" />
-            </div>
-            <div class="navbar-collapse collapse">
+                @Html.ActionLink("Fly Client", "Index", "Customer", new { area = "" }, new { @class = "navbar-brand", id = "logo-font" })
 
-                <ul class="nav navbar-nav">
-                    @Html.ActionLink("Fly Client", "Index", "Customer", new { area = "" }, new { @class = "navbar-brand", id = "logo-font" })
+                <ul class="nav navbar-nav nav-notifications notification-mobile">
+                    <li class="notifications">
+                        <a href="#">
+                            <span class="glyphicon glyphicon-globe globe" ></span>
+                            <span class="badge js-notification-count hide"></span>
+                        </a>
+
+                    </li>
 
                 </ul>
-                @Html.Partial("_LoginPartial")
+
             </div>
+
+            <div class="navbar-collapse collapse">
+
+
+
+                @Html.Partial("_LoginPartial")
+
+            </div>
+            <ul class="nav navbar-nav nav-notifications notification-desktop">
+                <li class="notifications">
+                    <a href="#">
+                        <span class="glyphicon glyphicon-globe globe"></span>
+                        <span class="badge js-notification-count hide"></span>
+                    </a>
+
+                </li>
+
+            </ul>
+
+
         </div>
     </div>
     <div class="container body-content">
@@ -106,7 +132,7 @@
             });
 
             //provide dt picker on create/edit forms
-            $("#datetimepicker").datetimepicker({
+            $(".datetimepicker").datetimepicker({
                 sideBySide: true
             });
 

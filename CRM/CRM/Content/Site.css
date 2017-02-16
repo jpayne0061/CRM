@@ -110,6 +110,10 @@ td > .glyphicon-ok:hover {
 
 /*********SITE OVERRIDES********/
 
+.table-mobile{
+    display: none;
+}
+
 table > thead > tr > th.table-head-title {
     font-size: 2em;
     padding-top: 25px;
@@ -129,6 +133,10 @@ table {
 
 .icon-cell {
     width: 65px;
+}
+
+.table-mobile td.mobile-icon-cell {
+    width: 20px;
 }
 
 #client-index-table{
@@ -186,6 +194,10 @@ table {
     height: auto;
     margin-top: 4px;
 
+}
+
+#logo-font {
+    float: none;
 }
 
 span.btn-danger>a{
@@ -364,6 +376,21 @@ span.js-begin-chat-table {
 }
 
 
+#js-messages-col {
+    background-color: #f7f7f7;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.nav-notifications{
+    float: right;
+    display: inline;
+}
+
+div.container div.navbar-collapse {
+    float: right;
+}
+
         /***************chat messages*********/
 #chat-div {
     position: fixed;
@@ -531,9 +558,9 @@ div.validation-summary-errors {
 #landing-body {
     background-image: url("img/future.png");
     background-attachment: fixed;
-    background-size: 100%;
-    padding-bottom: 0;
-   
+    background-size: 105%;
+    padding: 0;
+    margin-bottom: 0;
 }
 
 
@@ -593,3 +620,140 @@ input.sign-up-input, select.sign-up-input {
     left: 20px;
     display: inline-block;
 }
+
+/********HIDING MOBILE ELEMENTS**********/
+
+#mobile-table-title{
+    display: none;
+}
+
+#mobile-add-customer-button{
+    display: none;
+}
+
+
+#mobile-table-div{
+    margin-top: 15px;
+}
+
+.mobile-customer-glyphicons {
+    display: none;
+}
+
+.mobile-task-table {
+    display: none;
+}
+
+
+.notification-mobile {
+    display: none;
+}
+
+
+/***********************MEDIA QUERIES*******************/
+
+
+
+
+@media only screen and (max-width: 769px){
+    .notification-mobile {
+        display: block;
+    }
+
+    .notification-desktop {
+        display: none;
+    }
+
+    .nav-notifications {
+        padding-right: 25px;
+    }
+}
+
+
+@media only screen and (max-width: 770px) {
+    /*********LAYOUT********************/
+
+
+    /*******CUSTOMER INDEX ************/
+    .table-desktop {
+        display: none;
+    }
+
+    .table-mobile {
+        display: block;
+    }
+
+    #add-customer-button{
+        display: none;
+    }
+
+    #mobile-table-title{
+        display: inline;
+        font-size: 2em;
+        vertical-align: middle
+    }
+
+    #mobile-add-customer-button{
+        display: inline;
+    }
+
+
+    /************* CUSTOMER DETAIL************/
+    
+    .mobile-customer-glyphicons {
+        display: block;
+        margin-top: 8px;
+    }
+
+    th a.btn-info {
+        display: none;
+    }
+
+    #js-enlarge-messages {
+        display: none;
+    }
+
+    .mobile-task-table {
+        display: table;
+
+    }
+
+    .mobile-table-border {
+        border-bottom: 1px solid #aaa;
+    }
+
+    .mobile-task-table td{
+        padding: 8px 3px;
+
+    }
+
+    .mobile-task-row-title {
+        margin-top: 10px;
+        font-size: 1.4em;
+        border-top: 20px solid #fff;
+    }
+
+    .mobile-task-row-title td a {
+        text-decoration: none;
+    }
+
+    .task-table-desktop{
+        display: none;
+    }
+
+    .customer-index-glyphicons a, .customer-index-glyphicons span{
+        padding-right: 10px;
+    }
+
+
+
+}
+
+@media (max-width: 992px) and (min-width: 451px) {
+    .hide-midsize {
+        display:none;
+    }
+
+}​
+
+

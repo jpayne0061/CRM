@@ -23,12 +23,16 @@ namespace CRM.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            //var customers = _context.Customers.Include(c => c.Messages).ToList();
             var userId = User.Identity.GetUserId();
 
-            var user = _context.Users.Include(u => u.Customers.Select(c => c.Tasks)).Include(u => u.Group).Single(u => u.Id == userId);
+            var user = _context.Users.Include(u => u.Customers.Select(c => c.Tasks)).Include(u => u.Group.Customers).Single(u => u.Id == userId);
 
-            if(user.Group != null)
+            if (Request.IsAuthenticated &&  User.IsInRole("Manager")){
+                var customers = user.Group.Customers.ToList();
+                return View(customers);
+            }
+
+            if (user.Group != null)
             {
                 var customers = user.Customers.ToList();
 
@@ -44,6 +48,22 @@ namespace CRM.Controllers
 
 
             return View();
+        }
+
+        public ActionResult WrongGroup()
+        {
+
+
+            return View();
+        }
+
+        public ActionResult WrongTeam()
+        {
+            var userId = User.Identity.GetUserId();
+
+            var user = _context.Users.Include(u => u.Group.Manager).Single(u => u.Id == userId);
+
+            return View(user);
         }
 
 
@@ -113,6 +133,7 @@ namespace CRM.Controllers
             };
 
             _context.Customers.Add(customer);
+            _context.SaveChanges();
 
             //add notification for each team member that they have been added
             foreach (var user in team)
@@ -120,6 +141,7 @@ namespace CRM.Controllers
                 var userNotification = new UserNotification
                 {
                     Sender = creator.Name,
+                    CustomerId = customer.Id,
                     CustomerName = customer.Name,
                     Body = creator.Name + " has assigned you to a team: " + customer.Name,
                     Recipient = user,
@@ -145,15 +167,32 @@ namespace CRM.Controllers
         }
 
 
-
+        [Authorize]
         public ActionResult Detail(int id)
         {
 
             var customer = _context.Customers.Include(c => c.Messages.Select(m => m.Author))
                                              .Include(c => c.Team)
+                                             .Include(c => c.Group)
                                              .Include(c => c.Tasks.Select(t => t.AssignedTo))
                                              .Include(c => c.Tasks.Select(t => t.AssignedBy))
                                              .SingleOrDefault(c => c.Id == id);
+
+            var userId = User.Identity.GetUserId();
+            var user = _context.Users.Include(u => u.Group).Single(u => u.Id == userId);
+
+            if(user.Group == null)
+            {
+                return RedirectToAction("NoGroup");
+            }
+            if(user.Group != customer.Group)
+            {
+                return RedirectToAction("WrongGroup");
+            }
+            if (!customer.Team.Contains(user))
+            {
+                return RedirectToAction("WrongTeam");
+            }
 
             var customerDetailVm = new CustomerDetailViewModel
             {
@@ -233,7 +272,8 @@ namespace CRM.Controllers
 
             _context.SaveChanges();
 
-            return RedirectToAction("Index", "Customer");
+            return RedirectToAction("Detail", "Customer", new { id = customer.Id });
+
         }
 
         [HttpGet]

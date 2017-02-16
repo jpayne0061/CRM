@@ -61,7 +61,11 @@ var DeleteController = function (deleteService) {
     var deleteSuccess = function (num) {
         num.parent().parent("tr").fadeOut(function () {
             $(this).remove();
-        })
+        });
+
+        $("tr[js-data-remove='" + num.attr("js-data-id") + "']").fadeOut(function () {
+            $(this).remove();
+        });
     }
 
     var markCompleteSuccess = function (num) {

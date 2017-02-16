@@ -1,13 +1,13 @@
 ﻿@model List<CRM.Models.Customer>
 
 
-<table class="table table-striped table-hover " id="client-index-table">
+<table class="table table-striped table-hover table-desktop" id="client-index-table">
 
-    @Html.ActionLink("Add Customer", "Create", "Customer", null, new { @class = "btn btn-success", id="add-customer-button" })
+    @Html.ActionLink("Add Client", "Create", "Customer", null, new { @class = "btn btn-success", id="add-customer-button" })
     <thead>
         <tr>
-            <th colspan="3" class="table-head-title">All Clients</th>
-            <th ></th>
+            <th colspan="3" class="table-head-title">Your Clients</th>
+            <th class="hide-midsize"></th>
             <th class="icon-cell"></th>
             <th class="icon-cell"></th>
             <th class="icon-cell"></th>
@@ -24,11 +24,11 @@
                 <td>@customer.Email</td>
                 @if (customer.OverDueTasks() > 0)
                 {
-                    <td class="over-due">@customer.OverDueTasks() @(customer.OverDueTasks() > 1 ? "tasks" : "task") overdue</td>
+                    <td class="over-due hide-midsize">@customer.OverDueTasks() @(customer.OverDueTasks() > 1 ? "tasks" : "task") overdue</td>
                 }
                 else
                 {
-                    <td> </td>
+                    <td class="hide-midsize"> </td>
                 }
 
                 <td class="icon-cell">
@@ -48,6 +48,57 @@
 
             </tr>
         }
+    </tbody>
+</table>
+
+
+<div id="mobile-table-div">
+    <span id="mobile-table-title"><strong>Your Clients</strong></span>
+    <span id="mobile-add-customer-button">@Html.ActionLink("Add Client", "Create", "Customer", null, new { @class = "btn btn-success" })</span>
+</div>
+<table class="table-striped table-hover mobile-task-table">
+    <tbody>
+        @foreach (var customer in Model)
+        {
+            <tr class="mobile-task-row-title" js-data-remove="@customer.Id">
+                <td>
+                    <strong>@Html.ActionLink(customer.Name, "Detail", "Customer", new { id = customer.Id }, null)</strong>
+                </td>
+                <td></td>
+            </tr>
+            <tr js-data-remove="@customer.Id">
+                <td>
+                    <strong>Email</strong>
+                </td>
+                <td>
+                    @customer.Email
+                </td>
+            </tr>
+            <tr js-data-remove="@customer.Id">
+                <td>
+                    <strong>Phone</strong>
+                </td>
+                <td>
+                    @customer.Phone
+                </td>
+            </tr>
+            <tr js-data-remove="@customer.Id">
+                <td class="customer-index-glyphicons">
+                    <a href="~/Messages/Create/@customer.Id" class="edit-link"><span class="glyphicon glyphicon-envelope edit-customer" title="Send Message"></span></a>
+                    <a href="~/Tasks/Create/@customer.Id" class="edit-link"><span class="glyphicon glyphicon-wrench edit-customer" title="Assign Task"></span></a>
+
+                </td>
+                <td class="customer-index-glyphicons">
+                    
+                    <a href="~/Customer/Edit/@customer.Id" class="edit-link"><span class="glyphicon glyphicon-pencil edit-customer" title="Edit Customer"></span></a>
+                    <span class="glyphicon glyphicon-trash delete-customer" js-data-id="@customer.Id" title="Delete Customer"></span>
+                </td>
+
+            </tr>
+
+        }
+
+
     </tbody>
 </table>
 

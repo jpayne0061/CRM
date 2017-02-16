@@ -31,41 +31,44 @@
         @Html.ListBoxFor(m => m.SelectedUsers, Model.Users)
         @Html.ValidationMessageFor(m => m.SelectedUsers)
     </div>*@
-    <label>Select Team Members</label>
-    for (var i = 0; i < Model.UserCheckBoxes.Count; i++) 
-    {
+
+    <div class="form-group">
+        <label>Select Team Members</label>
+        @for (var i = 0; i < Model.UserCheckBoxes.Count; i++)
+        {
         <div id="create-form-input-checks">
             @Html.HiddenFor(m => m.UserCheckBoxes[i].Name)
-        
+
             @Html.CheckBoxFor(m => m.UserCheckBoxes[i].Checked, new { @class = "form-control" })
             @Html.LabelFor(m => m.UserCheckBoxes[i].Name, Model.UserCheckBoxes[i].Name)
         </div>
-    }
+        }
+        @Html.ValidationMessageFor(m => m.SelectedUsers)
+    </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+        }
 
 
-    <button type="submit" class="btn btn-primary">Save</button>
-}
+        @section scripts {
+            @Scripts.Render("~/bundles/jqueryval")
 
 
-@section scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-
-
-}
+        }
 
 
 
 
 
 
-@**@
+        @**@
 
-    @*foreach (var user in Model.Users)
-    {
-<div class="form-group">
-    <label>@user.Value</label>
-    @Html.HiddenFor(m => user.Value)
-    @Html.HiddenFor(m => user.Text)
-    @Html.CheckBoxFor(m => user.Value)
-</div>
-    }*@
+        @*foreach (var user in Model.Users)
+                {
+            <div class="form-group">
+                <label>@user.Value</label>
+                @Html.HiddenFor(m => user.Value)
+                @Html.HiddenFor(m => user.Text)
+                @Html.CheckBoxFor(m => user.Value)
+            </div>
+                }*@

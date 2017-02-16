@@ -44,8 +44,8 @@ namespace CRM.Controllers
                 messageVm.UserCheckBoxes.Add(new UserCheckBox { Name = name, Checked = false });
             }
 
-
             return View(messageVm);
+
         }
 
 
@@ -117,7 +117,7 @@ namespace CRM.Controllers
                 _context.SaveChanges();
             }
 
-            return RedirectToAction("Index", "Customer");
+            return RedirectToAction("Detail", "Customer", new { id = customer.Id });
         }
 
         public ActionResult UserMessages()

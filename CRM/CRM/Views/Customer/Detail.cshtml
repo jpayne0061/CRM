@@ -13,7 +13,13 @@
 
                         <div>Phone: @Model.Phone</div>
                         <div>Email: @Model.Email</div>
+                        <div class="mobile-customer-glyphicons">
+                            <a href="~/Messages/Create/@Model.Id" class="edit-link"><span class="glyphicon glyphicon-envelope edit-customer" title="Send Message"></span></a>
+                            <a href="~/Tasks/Create/@Model.Id" class="edit-link"><span class="glyphicon glyphicon-wrench edit-customer" title="Assign Task"></span></a>
+                            <a href="~/Customer/Edit/@Model.Id" class="edit-link"><span class="glyphicon glyphicon-pencil edit-customer" title="Edit Customer"></span></a>
+                            <span class="glyphicon glyphicon-trash delete-customer" js-data-id="@Model.Id" title="Delete Customer"></span>
 
+                        </div>
                     </div>
 
                 </div>
@@ -57,7 +63,7 @@
             <hr class="divider-hr" />
 
             <div id="js-task-table">
-                <table class="table table-striped table-hover ">
+                <table class="table table-striped table-hover task-table-desktop">
                     <col style="width:15%">
                     <col style="width:40%">
                     <col style="width:18%">
@@ -93,7 +99,7 @@
                                     <td class="task-cell-parent completed">
                                         <div><strong>Deadline</strong></div>
                                         <div>@task.Deadline.ToString("d")</div>
-                                        @if (task.Due() == CRM.Models.TimeLeft.OverDue)
+                                        @if (task.DaysLate() > 1)
                                         {
                                             <div class="@task.DueStyle()">@task.DaysLate() @(task.DaysLate() > 1 ? "days" : "day") late</div>
                                         }
@@ -107,11 +113,20 @@
                                 <td>
                                     <div><strong>Assigned By</strong></div><div>
                                         @task.AssignedBy.Name
-                                        <span class="glyphicon glyphicon-comment js-begin-chat-table" title="chat with this user" js-data-id="@task.AssignedBy.Id" js-data-name="@task.AssignedBy.Name"></span>
+                                        @if (!(Model.CurrentUserId == task.AssignedById))
+                                        {
+                                            <span class="glyphicon glyphicon-comment js-begin-chat-table" title="chat with this user" js-data-id="@task.AssignedBy.Id" js-data-name="@task.AssignedBy.Name"></span>
+                                           
+                                        }
+
                                     </div>
                                     <div class="assigned-to-task"><strong>Assigned To</strong></div><div>
                                         @task.AssignedTo.Name
-                                        <span class="glyphicon glyphicon-comment js-begin-chat-table" title="chat with this user" js-data-id="@task.AssignedTo.Id" js-data-name="@task.AssignedTo.Name"></span>
+                                        @if (!(Model.CurrentUserId == task.AssignedToId))
+                                        {
+                                            <span class="glyphicon glyphicon-comment js-begin-chat-table" title="chat with this user" js-data-id="@task.AssignedTo.Id" js-data-name="@task.AssignedTo.Name"></span>
+                                        }
+
                                     </div>
 
                                 </td>
@@ -198,6 +213,92 @@
 
     </div>
 </div>
+
+<table class="table-striped table-hover mobile-task-table">
+    <tbody>
+        @foreach (var task in Model.Tasks)
+        {
+            <tr class="@(task.IsComplete ? "deactivated" : "") mobile-task-row-title">
+                <td>Task #@task.Id</td>
+            </tr>
+
+
+            if (task.IsComplete == true)
+            {
+                <tr>
+                    <td class="task-cell-parent completed green">
+                        <div>COMPLETED</div>
+                    </td>
+                </tr>
+            }
+            else
+            {
+
+                <tr class="@(task.IsComplete ? "deactivated" : "")">
+                    <td><strong>Deadline</strong></td>
+                    <td>@task.Deadline</td>
+                </tr>
+
+                if (task.DaysLate() > 1)
+                {
+                    <tr class="@(task.IsComplete ? "deactivated" : "")">
+                        <td><strong>Days Late</strong></td>
+                        <td  class="@task.DueStyle()">@task.DaysLate()</td>
+                    </tr>
+                }
+
+            }
+
+
+            <tr class="@(task.IsComplete ? "deactivated" : "")">
+                <td><strong>Description</strong></td>
+                <td>@task.Body</td>
+            </tr>
+
+
+            <tr class="@(task.IsComplete ? "deactivated" : "")">
+                <td><strong>Assigned By</strong></td>
+                <td>
+                    @task.AssignedBy.Name
+                    @if (!(Model.CurrentUserId == task.AssignedById))
+                    {
+                        <span class="glyphicon glyphicon-comment js-begin-chat-table" title="chat with this user" js-data-id="@task.AssignedBy.Id" js-data-name="@task.AssignedBy.Name"></span>
+                    }
+                    
+                </td>
+            </tr>
+            <tr class="@(task.IsComplete ? "deactivated" : "")">
+                <td><strong>Assigned To</strong></td>
+                <td>
+                    @task.AssignedTo.Name
+                    @if (!(Model.CurrentUserId == task.AssignedToId))
+                    {
+                        <span class="glyphicon glyphicon-comment js-begin-chat-table" title="chat with this user" js-data-id="@task.AssignedTo.Id" js-data-name="@task.AssignedTo.Name"></span>
+                    }
+                    
+                </td>
+            </tr>
+
+            if (Model.CurrentUserId == task.AssignedById)
+            {
+                <tr class="@(task.IsComplete ? "deactivated" : "")">
+                    <td>
+                        <a href="/Tasks/Edit/@task.Id"><span class="glyphicon glyphicon-pencil" title="Edit Task"></span></a>
+                        <span class="glyphicon glyphicon-trash js-delete-task" js-data-id="@task.Id" title="Delete Task"></span>
+                        <span class="glyphicon glyphicon-ok js-mark-task-complete" js-data-id="@task.Id" title="Mark Task Complete"></span>
+
+                    </td>
+
+                </tr>
+
+            }
+
+        }
+
+
+    </tbody>
+
+</table>
 
 @section scripts {
     <script>

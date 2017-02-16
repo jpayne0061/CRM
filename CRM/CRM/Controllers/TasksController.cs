@@ -170,6 +170,18 @@ namespace CRM.Controllers
             task.Deadline = vm.Deadline;
             task.Body = vm.Body;
 
+            var userNotification = new UserNotification
+            {
+                Sender = assignedBy.Name,
+                CustomerId = customer.Id,
+                CustomerName = customer.Name,
+                Body = assignedBy.Name + " has edited one of your tasks for ",
+                Recipient = assignedTo,
+                RecipientId = assignedTo.Id,
+                IsRead = false
+            };
+
+            _context.UserNotifications.Add(userNotification);
             _context.SaveChanges();
 
             return RedirectToAction("Detail", "Customer", new { id = customer.Id });

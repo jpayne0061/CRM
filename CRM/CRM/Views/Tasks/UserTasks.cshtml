@@ -1,27 +1,8 @@
 ﻿@model List<CRM.Models.Task>
 
 
-@*<h2>Tasks for @ViewBag.Username</h2>
-
-
-
-<ul>
-    @foreach (var task in Model)
-    {
-        <li>Customer: @task.Customer.Name</li>
-        <li>Assigned By: @task.AssignedBy.Name</li>
-        <li>Task: @task.Body</li>
-        <li>Deadline: @task.Deadline</li>
-        <li>-----------------------------</li>
-    }
-
-
-</ul>*@
-
-
-
 <div id="js-task-table">
-    <table class="table table-striped table-hover ">
+    <table class="table table-striped table-hover task-table-desktop">
         <col style="width:15%">
         <col style="width:50%">
         <col style="width:23%">
@@ -67,3 +48,81 @@
         </tbody>
     </table>
 </div>
+
+<table class="table-striped table-hover mobile-task-table">
+    <tbody>
+        @foreach (var task in Model)
+        {
+            <tr class="@(task.IsComplete ? "deactivated" : "") mobile-task-row-title">
+                <td>Task #@task.Id</td>
+            </tr>
+
+
+            if (task.IsComplete == true)
+            {
+                <tr>
+                    <td class="task-cell-parent completed green">
+                        <div>COMPLETED</div>
+                    </td>
+                </tr>
+            }
+            else
+            {
+
+                <tr class="@(task.IsComplete ? "deactivated" : "")">
+                    <td><strong>Deadline</strong></td>
+                    <td>@task.Deadline</td>
+                </tr>
+
+                if (task.DaysLate() > 1)
+                {
+                    <tr class="@(task.IsComplete ? "deactivated" : "")">
+                        <td><strong>Days Late</strong></td>
+                        <td class="@task.DueStyle()">@task.DaysLate()</td>
+                    </tr>
+                }
+
+            }
+
+
+            <tr class="@(task.IsComplete ? "deactivated" : "")">
+                <td><strong>Description</strong></td>
+                <td>@task.Body</td>
+            </tr>
+
+
+            <tr class="@(task.IsComplete ? "deactivated" : "")">
+                <td><strong>Assigned By</strong></td>
+                <td>
+                    @task.AssignedBy.Name
+                  
+                    <span class="glyphicon glyphicon-comment js-begin-chat-table" title="chat with this user" js-data-id="@task.AssignedBy.Id" js-data-name="@task.AssignedBy.Name"></span>
+                </td>
+            </tr>
+            @*<tr class="@(task.IsComplete ? "deactivated" : "")">
+                <td><strong>Assigned To</strong></td>
+                <td>
+                    @task.AssignedTo.Name
+                    <span class="glyphicon glyphicon-comment js-begin-chat-table" title="chat with this user" js-data-id="@task.AssignedTo.Id" js-data-name="@task.AssignedTo.Name"></span>
+                </td>
+            </tr>*@
+
+            
+            <tr class="@(task.IsComplete ? "deactivated" : "")">
+                <td>
+                    <a href="/Tasks/Edit/@task.Id"><span class="glyphicon glyphicon-pencil" title="Edit Task"></span></a>
+                    <span class="glyphicon glyphicon-trash js-delete-task" js-data-id="@task.Id" title="Delete Task"></span>
+                    <span class="glyphicon glyphicon-ok js-mark-task-complete" js-data-id="@task.Id" title="Mark Task Complete"></span>
+
+                </td>
+
+            </tr>
+
+            
+
+        }
+
+
+    </tbody>
+
+</table>

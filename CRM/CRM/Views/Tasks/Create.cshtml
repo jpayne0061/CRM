@@ -21,7 +21,7 @@
 
     <div class="form-group" style="position: relative">
         @Html.LabelFor(m => m.Deadline)
-        @Html.TextBoxFor(m => m.Deadline, new { @class = "form-control", id="datetimepicker"})
+        @Html.TextBoxFor(m => m.Deadline, new { @class = "form-control datetimepicker"})
         @Html.ValidationMessageFor(m => m.Deadline)
     </div>
 

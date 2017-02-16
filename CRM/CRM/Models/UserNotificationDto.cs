@@ -14,7 +14,15 @@ namespace CRM.Models
         public int CustomerId { get; set; }
         public string CustomerLink {
             get {
-                return "<a href='/Customer/Detail/" + CustomerId + "' >" + CustomerName + "</a>";
+                if(CustomerId == 0)
+                {
+                    return "<a href='/JoinRequests/Index'>Go To Join Requests</a>";
+                }
+                else
+                {
+                    return "<a href='/Customer/Detail/" + CustomerId + "' >" + CustomerName + "</a>";
+                }
+                
             }
         }
     }
