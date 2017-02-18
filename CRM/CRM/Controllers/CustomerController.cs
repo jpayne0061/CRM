@@ -264,9 +264,19 @@ namespace CRM.Controllers
                 }
             }
 
-            //////////////////////////
+            var userId = User.Identity.GetUserId();
 
-            var team = _context.Users.Where(u => usersSelected.Contains(u.Name)).ToList();
+            var user = _context.Users.Include(u => u.Group.Users).Single(u => u.Id == userId);
+
+            var group = user.Group;
+
+            var groupUsers = group.Users.Select(u => u.Id).ToList();
+            //var team = _context.Users.Where(u => group.Users.Contains(u)).Include(u => u.UserNotifications).Include(u => u.Customers).Where(u => usersSelected.Contains(u.Name)).Distinct().ToList();
+
+            var team = _context.Users.Where(u => groupUsers.Contains(u.Id)).Include(u => u.UserNotifications).Include(u => u.Customers).Where(u => usersSelected.Contains(u.Name)).Distinct().ToList();
+
+
+            //////////////////////////
 
             var customer = _context.Customers.SingleOrDefault(c => c.Id == viewCustomer.TransferId);
 
