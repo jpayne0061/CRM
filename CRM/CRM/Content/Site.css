@@ -384,7 +384,7 @@ span.js-begin-chat-table {
 
 .nav-notifications{
     float: right;
-    display: inline;
+    /*display: inline;*/
 }
 
 div.container div.navbar-collapse {
@@ -537,7 +537,7 @@ span.field-validation-error span{
     color: red;
 }
 
-div.validation-summary-errors {
+/*div.validation-summary-errors {
     margin-top: 30%;
     background-color: #fff;
     border-radius: 7px;
@@ -545,26 +545,26 @@ div.validation-summary-errors {
     display: inline-block;
     padding-right: 30px;
     padding-top: 10px;
-}
+}*/
 
-.validation-summary-errors li {
+/*.validation-summary-errors li {
     text-align: left;
     list-style-type: none;
     max-width: 220px;
-}
+}*/
 
 /***************LANDING PAGE************/
 
-#landing-body {
+.landing-body {
     background-image: url("img/future.png");
-    background-attachment: fixed;
-    background-size: 105%;
+    background-attachment:fixed;
+    background-size: auto;
     padding: 0;
     margin-bottom: 0;
 }
 
 
-#overlay {
+.overlay {
     z-index: 1;
     height: 100%;
     width: 100%;
@@ -580,7 +580,10 @@ div.validation-summary-errors {
 
 #register-header {
     color: #fff;
+    font-size: 2em;
+    margin-right: 8px;
 }
+
 
 #overlay .row .col-md-4 {
     text-align: center;
@@ -590,7 +593,7 @@ input.sign-up-input, select.sign-up-input {
     margin: auto;
 }
 
-#register-button-landing {
+.register-button-landing {
     width: 100%;
 }
 
@@ -598,27 +601,64 @@ input.sign-up-input, select.sign-up-input {
     padding-top: 7%;
 }
 
-#landing-page-logo {
+.login-form {
+    padding-top: 28%;
+}
+
+.landing-page-logo {
 
     max-width: 60px;
     height: auto;
-}
-
-
-#fly-client-text {
-    font-size: 3.7em;
-    font-weight: bold;
-    color: #fff;
-    text-align: start;
-    vertical-align: bottom;
-    margin-top: 10px;
-}
-
-#text-and-logo {
     position: absolute;
     top: 20px;
     left: 20px;
-    display: inline-block;
+
+}
+
+
+.fly-client-text {
+    font-size: 4.2em;
+    font-weight: bold;
+    color: #fff;
+    /*text-align: start;
+    vertical-align: bottom;
+    margin-top: 10px;
+    position: relative;*/
+    position: absolute;
+    top: 0px;
+    left: 90px;
+
+}
+
+.text-and-logo {
+    /*position: absolute;
+    top: 20px;
+    left: 20px;
+    display: inline-block;*/
+    position: relative;
+}
+
+.login-on-register-page {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    color: #fff;
+    margin-left: 8px;
+    font-size: 1.3em;
+}
+
+.login-on-register-page a {
+    color: #fff;
+}
+
+.login-form p a {
+    color: #fff;
+    font-size: 1.3em;
+}
+
+.register-form p a {
+    color: #fff;
+    font-size: 1.3em;
 }
 
 /********HIDING MOBILE ELEMENTS**********/
@@ -666,6 +706,29 @@ input.sign-up-input, select.sign-up-input {
 
     .nav-notifications {
         padding-right: 25px;
+    }
+}
+
+@media only screen and (max-width: 920px){
+    .text-and-logo {
+        text-align: center;
+        position: relative;
+        top: 0;
+        left: 0;
+
+
+    }
+
+    .overlay {
+        overflow-y: scroll;
+    }
+
+    .login-on-register-page {
+        display: none;
+    }
+
+    .login-form {
+        padding: 7%;
     }
 }
 
@@ -749,11 +812,11 @@ input.sign-up-input, select.sign-up-input {
 
 }
 
-@media (max-width: 992px) and (min-width: 451px) {
+/*@media (max-width: 992px) and (min-width: 451px) {
     .hide-midsize {
         display:none;
     }
 
-}​
+}​*/
 
 

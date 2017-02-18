@@ -113,14 +113,16 @@ namespace CRM.Controllers
 
             var userId = User.Identity.GetUserId();
 
-            var creator = _context.Users.Include(u => u.Group).SingleOrDefault(u => u.Id == userId);
+            var creator = _context.Users.Include(u => u.Group.Users).SingleOrDefault(u => u.Id == userId);
 
             var group = creator.Group;
 
             var manager = _context.Users.Include(u => u.Customers).Single(u => u.Id == group.ManagerId);
 
-         
-            var team = _context.Users.Include(u => u.UserNotifications).Include(u => u.Customers).Where(u => usersSelected.Contains(u.Name)).ToList();
+            var groupUsers = group.Users.Select(u => u.Id).ToList();
+            //var team = _context.Users.Where(u => group.Users.Contains(u)).Include(u => u.UserNotifications).Include(u => u.Customers).Where(u => usersSelected.Contains(u.Name)).Distinct().ToList();
+
+            var team = _context.Users.Where(u => groupUsers.Contains(u.Id)).Include(u => u.UserNotifications).Include(u => u.Customers).Where(u => usersSelected.Contains(u.Name)).Distinct().ToList();
 
             var customer = new Customer
             {

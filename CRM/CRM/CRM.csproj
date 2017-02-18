@@ -355,6 +355,7 @@
     <Content Include="Content\img\future.png" />
     <Content Include="Content\jquery.datetimepicker.css" />
     <Content Include="favicon.ico" />
+    <Content Include="favicon_old.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />

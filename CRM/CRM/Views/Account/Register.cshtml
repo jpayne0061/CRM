@@ -25,9 +25,12 @@
         appInsights.trackPageView();
     </script>
 </head>
-<body id="landing-body">
-    <div id="overlay">
-        <div id="text-and-logo"><img src="~/Content/img/feather.png" id="landing-page-logo" /><span id="fly-client-text">Fly Client</span></div>
+<body class="landing-body">
+    <div class="overlay">
+        <div class="text-and-logo"><img src="~/Content/img/feather.png" class="landing-page-logo" /><span class="fly-client-text">Fly Client</span></div>
+        <span class="login-on-register-page">Already registered? @Html.ActionLink("Login", "Login", "Account")</span>
+        
+
 
         <div class="row">
             <div class="col-md-4"></div>
@@ -35,22 +38,22 @@
                 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
                     @Html.AntiForgeryToken()
-                    <h3 id="register-header">Register</h3>
+                    <span id="register-header">Register</span>
 
-
+                    @Html.ValidationSummary("", new { @class = "text-danger" })
 
                     <div class="form-group">
                         @Html.TextBoxFor(m => m.Name, new { @class = "form-control sign-up-input", placeholder = Html.DisplayNameFor(m => m.Name) })
-                        @Html.ValidationMessageFor(m => m.Name)
+                        @*@Html.ValidationMessageFor(m => m.Name)*@
                     </div>
                     <div class="form-group">
                         @Html.TextBoxFor(m => m.Email, new { @class = "form-control sign-up-input", placeholder = Html.DisplayNameFor(m => m.Email) })
-                        @Html.ValidationMessageFor(m => m.Email)
+                        @*@Html.ValidationMessageFor(m => m.Email)*@
                     </div>
 
                     <div class="form-group">
                         @Html.TextBoxFor(m => m.Group, new { @class = "form-control sign-up-input", placeholder = Html.DisplayNameFor(m => m.Group) })
-                        @Html.ValidationMessageFor(m => m.Group)
+                        @*@Html.ValidationMessageFor(m => m.Group)*@
                     </div>
 
                     <div class="form-group">
@@ -60,26 +63,29 @@
 
                     <div class="form-group">
                         @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control sign-up-input", placeholder = Html.DisplayNameFor(m => m.ConfirmPassword) })
-                        @Html.ValidationMessageFor(m => m.ConfirmPassword)
+                        @*@Html.ValidationMessageFor(m => m.ConfirmPassword)*@
                     </div>
 
                     <div class="form-group">
                         @Html.DropDownListFor(m => m.Role, new SelectList(Model.Roles, "Name", "Name"), "", new { @class = "form-control sign-up-input", placeholder = Html.DisplayNameFor(m => m.Role) })
-                        @Html.ValidationMessageFor(m => m.Role)
+                        @*@Html.ValidationMessageFor(m => m.Role)*@
                     </div>
 
                     <div class="form-group">
 
-                        <input type="submit" class="btn btn-primary" value="Register" id="register-button-landing" />
+                        <input type="submit" class="btn btn-primary register-button-landing" value="Register" id="" />
 
                     </div>
+                    <p>
+                        @Html.ActionLink("Go to login page", "Login")
+                    </p>
                 }
 
             </div>
-            <div class="col-md-4 error-column form-horizontal">
+            @*<div class="col-md-4 error-column form-horizontal">
                 @Html.ValidationSummary("", new { @class = "text-danger" })
                 @Html.ValidationMessageFor(m => m.Password)
-            </div>
+            </div>*@
     </div>
 
 </div>

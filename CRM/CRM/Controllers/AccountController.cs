@@ -179,7 +179,7 @@ namespace CRM.Controllers
 
                 if(groupLength > 0 && model.Role == "Manager")
                 {
-                    ModelState.AddModelError("Group Already Exists", "If you are registering as a manager, you must create a unique group Name");
+                    ModelState.AddModelError("Group Already Exists", "The group name, '" + model.Group + "' is already taken");
 
                     var vm = new RegisterViewModel();
 

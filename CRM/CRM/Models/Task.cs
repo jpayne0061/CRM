@@ -32,7 +32,7 @@ namespace CRM.Models
             {
                 return TimeLeft.LessThan24;
             }
-            else if(Deadline - timeNow < new TimeSpan(0, 0, 0))
+            else if(Deadline - timeNow < new TimeSpan(-24, 0, 0))
             {
                 return TimeLeft.OverDue;
             }
@@ -66,7 +66,15 @@ namespace CRM.Models
         }
 
         public int DaysLate() {
-            return Math.Abs((int)((Deadline - DateTime.Now).TotalDays));
+            if((int)((Deadline - DateTime.Now).TotalDays) > 0)
+            {
+                return 0;
+            }
+            else
+            {
+                return Math.Abs((int)((Deadline - DateTime.Now).TotalDays));
+            }
+            
 
         }
 
