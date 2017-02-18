@@ -6,12 +6,25 @@ This app is a CRM or "Customer Relation Management" software. It is used to keep
 
 1. Download/install Visual Studio 2015 
 2. Clone/download this repo to your local machine
-3. Download the sql server files from the front page of the repo:
-      -"aspnet-CRM-20170111065523.mdf"
-      -"aspnet-CRM-20170111065523_log.ldf"
+3. Navigate to the .sln file
 4. Open the application in Visual Studio
-5. Place the sql server files in the App_Data directory
-6. Run it!
+
+#Test account credentials
+Manager Account
+--email: testy1234@CRM.com
+--password: codeLouisville1!
+
+User Account
+--email: frank@CRM.com
+--password: codeLouisville1!
+
+feel free to create your own accounts!!
+
+#A quick few notes
+1. Upon first running the app, it may "time out" on your machine. If this happens, refresh the page and try again
+2. To use the chat feature, you will need to login with two different accounts, using either incognito mode or a different browser
+3. To register a new user, you will need to join an existing group("Code Louisville" already exists) or register your own group as a manager
+4. To use the app as a user, you will need to approve the "join request" as a manager
 
 #What can I do with this app? You can...
 1. Save, edit and delete a customer's data
@@ -60,7 +73,7 @@ This app is a CRM or "Customer Relation Management" software. It is used to keep
 32. A manager can view all users that have requested to join the group
 33. A user can view all messages associated with them on one page
 34. A user can view all tasks associated with them on one page
-#to be continued...
+#wow this is boring...will complete later...
 
 
 
