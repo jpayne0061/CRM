@@ -74,7 +74,9 @@ namespace CRM.Controllers
 
             var user = _context.Users.Include(u => u.Group.Users).Single(u => u.Id == userId);
 
-            var users = user.Group.Users.Select(u => u.Name);
+            var managerName = user.Group.Manager.Name;
+
+            var users = user.Group.Users.Select(u => u.Name).Where(un => un != managerName);
 
             var customerVm = new CustomerViewModel();
 
@@ -123,6 +125,8 @@ namespace CRM.Controllers
             //var team = _context.Users.Where(u => group.Users.Contains(u)).Include(u => u.UserNotifications).Include(u => u.Customers).Where(u => usersSelected.Contains(u.Name)).Distinct().ToList();
 
             var team = _context.Users.Where(u => groupUsers.Contains(u.Id)).Include(u => u.UserNotifications).Include(u => u.Customers).Where(u => usersSelected.Contains(u.Name)).Distinct().ToList();
+
+            team.Add(manager);
 
             var customer = new Customer
             {
