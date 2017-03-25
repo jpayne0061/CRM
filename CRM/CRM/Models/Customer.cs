@@ -14,11 +14,15 @@ namespace CRM.Models
             Messages = new List<Message>();
             Tasks = new List<Task>();
             Team = new List<ApplicationUser>();
+            CustomerFiles = new List<CustomerFile>();
         }
 
         public ICollection<Message> Messages { get; set; }
         public ICollection<Task> Tasks { get; set; }
         public ICollection<ApplicationUser> Team { get; set; }
+        public ICollection<CustomerFile> CustomerFiles { get; set; }
+
+
         public Group Group { get; set; }
 
 

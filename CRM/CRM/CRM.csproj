@@ -312,6 +312,18 @@
     <Compile Include="Migrations\201702092359387_AddedCustIdToUserNotificationDTO.Designer.cs">
       <DependentUpon>201702092359387_AddedCustIdToUserNotificationDTO.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703240056339_CustomerFiles.cs" />
+    <Compile Include="Migrations\201703240056339_CustomerFiles.Designer.cs">
+      <DependentUpon>201703240056339_CustomerFiles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703251052488_AddedUploadedByandDateTimeToCustomerFile.cs" />
+    <Compile Include="Migrations\201703251052488_AddedUploadedByandDateTimeToCustomerFile.Designer.cs">
+      <DependentUpon>201703251052488_AddedUploadedByandDateTimeToCustomerFile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703251059564_AddedFileNameTOCustomerFile.cs" />
+    <Compile Include="Migrations\201703251059564_AddedFileNameTOCustomerFile.Designer.cs">
+      <DependentUpon>201703251059564_AddedFileNameTOCustomerFile.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -320,6 +332,8 @@
     <Compile Include="Models\CheckBox.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
+    <Compile Include="Models\CustomerFile.cs" />
+    <Compile Include="Models\CustomerUploadVM.cs" />
     <Compile Include="Models\DeleteTeamMember.cs" />
     <Compile Include="Models\Group.cs" />
     <Compile Include="Models\JoinRequest.cs" />
@@ -370,6 +384,7 @@
     <Content Include="Scripts\chat\chatCopy.js" />
     <Content Include="Scripts\chat\chat.js" />
     <Content Include="Scripts\datetimepicker-master.zip" />
+    <None Include="Properties\PublishProfiles\CRM20170318065120 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\delete\delete.js" />
     <Content Include="Scripts\join_requests\join_requests.js" />
@@ -439,9 +454,12 @@
     <Content Include="Views\Home\ChatTest.cshtml" />
     <Content Include="Views\Customer\WrongGroup.cshtml" />
     <Content Include="Views\Customer\WrongTeam.cshtml" />
+    <Content Include="Views\Home\Upload.cshtml" />
+    <Content Include="Views\Home\CustomerFiles.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="App_Data\CustomerFiles\" />
+    <Folder Include="App_Data\Images\" />
     <Folder Include="Content\styles\" />
   </ItemGroup>
   <ItemGroup>
@@ -539,6 +557,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702092359387_AddedCustIdToUserNotificationDTO.resx">
       <DependentUpon>201702092359387_AddedCustIdToUserNotificationDTO.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703240056339_CustomerFiles.resx">
+      <DependentUpon>201703240056339_CustomerFiles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703251052488_AddedUploadedByandDateTimeToCustomerFile.resx">
+      <DependentUpon>201703251052488_AddedUploadedByandDateTimeToCustomerFile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703251059564_AddedFileNameTOCustomerFile.resx">
+      <DependentUpon>201703251059564_AddedFileNameTOCustomerFile.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

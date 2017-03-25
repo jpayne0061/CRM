@@ -1,83 +1,83 @@
 ﻿
 
 body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+	padding-top: 50px;
+	padding-bottom: 20px;
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+	padding-left: 15px;
+	padding-right: 15px;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */
 .dl-horizontal dt {
-    white-space: normal;
+	white-space: normal;
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
 textarea {
-    max-width: 280px;
+	max-width: 280px;
 }
 
 
 /****************BOOTSTARP/FLATLY OVERRIDES*********/
 
 .glyphicon-pencil:hover {
-    cursor: pointer;
-    color: #3498db;
+	cursor: pointer;
+	color: #3498db;
 }
 
 .glyphicon-pencil {
-    padding-left: 4px;
+	padding-left: 4px;
 }
 
 
 .glyphicon-trash:hover {
-    cursor: pointer;
-    color: #e74c3c;
+	cursor: pointer;
+	color: #e74c3c;
 }
 
 td > .glyphicon-trash {
-    padding-left: 7px;
+	padding-left: 7px;
 }
 
 
 td > .glyphicon-ok {
-    padding-left: 7px;
+	padding-left: 7px;
 
 }
 
 td > .glyphicon-ok:hover {
-    cursor: pointer;
-    color: green;
+	cursor: pointer;
+	color: green;
 }
 
 .table a:not(.btn) {
-    text-decoration: none;
-    font-weight: 600;
+	text-decoration: none;
+	font-weight: 600;
 }
 
 
 
 .btn {
-    padding: 5px 10px;
-    margin: 3px;
+	padding: 5px 10px;
+	margin: 3px;
 }
 
 .notifications {
-    position: relative;
+	position: relative;
 }
 
 .notifications .badge{
-    position: absolute;
-    top: 8px;
-    right: 0;
+	position: absolute;
+	top: 8px;
+	right: 0;
 
 }
 
@@ -95,14 +95,14 @@ td > .glyphicon-ok:hover {
 }
 
 .glyphicon {
-    padding-left: 14px;
-    cursor: pointer;
+	padding-left: 14px;
+	cursor: pointer;
 }
 
 /*****************THEME SPECIFIC OVERRIDES------DEFAULT************************/
 
 .table a:not(.btn):hover {
-    color: #42E3C4;    
+	color: #42E3C4;    
 }
 
 
@@ -111,119 +111,119 @@ td > .glyphicon-ok:hover {
 /*********SITE OVERRIDES********/
 
 .table-mobile{
-    display: none;
+	display: none;
 }
 
 table > thead > tr > th.table-head-title {
-    font-size: 2em;
-    padding-top: 25px;
+	font-size: 2em;
+	padding-top: 25px;
 }
 
 table {
-    table-layout: fixed;
+	table-layout: fixed;
 }
 
 .glyph-cell {
-    width: 65px;
+	width: 65px;
 }
 
 .glyph-cell a, a.edit-link {
-    color: #2c3e50;
+	color: #2c3e50;
 }
 
 .icon-cell {
-    width: 65px;
+	width: 65px;
 }
 
 .table-mobile td.mobile-icon-cell {
-    width: 20px;
+	width: 20px;
 }
 
 #client-index-table{
-    position: relative;
+	position: relative;
 }
 
 #add-customer-button {
-    position: absolute;
-    top: 80px;
-    right: 115px;
-    z-index: 1000;
+	position: absolute;
+	top: 80px;
+	right: 115px;
+	z-index: 1000;
 }
 
 
 .name-header {
-    font-size: 32px;
-    font-weight: bold;
+	font-size: 32px;
+	font-weight: bold;
 }
 
 .team-header {
-    margin-top: 30px;
-    display: inline-block;
-    vertical-align: middle;
+	margin-top: 30px;
+	display: inline-block;
+	vertical-align: middle;
 }
 
 .divider-hr {
-    margin-top: 60px;
+	margin-top: 60px;
 }
 
 
 #logo {
-    max-width: 50px;
-    height: auto;
-    margin-top: 4px;
+	max-width: 50px;
+	height: auto;
+	margin-top: 4px;
 }
 
 #team-button {
-    margin-top: 30px;
-    margin-left: 20px;
+	margin-top: 30px;
+	margin-left: 20px;
 }
 
 
 .assigned-to-task {
-    margin-top: 7px;
+	margin-top: 7px;
 }
 
 
 .table>tbody>tr>td.task-cell-parent {
-    padding: 5% 2%;
+	padding: 5% 2%;
 }
 
 #logo-black {
-    display: none;
-    max-width: 50px;
-    height: auto;
-    margin-top: 4px;
+	display: none;
+	max-width: 50px;
+	height: auto;
+	margin-top: 4px;
 
 }
 
 #logo-font {
-    float: none;
+	float: none;
 }
 
 span.btn-danger>a{
-    color: white;
-    text-decoration: none;
+	color: white;
+	text-decoration: none;
 }
 
 .submit-and-cancel {
-    padding: 7px 40px;
-    margin-right: 15px;
-    font-size: 17px;
+	padding: 7px 40px;
+	margin-right: 15px;
+	font-size: 17px;
 }
 
 #js-minimize-messages {
-    display: none;
-    color: #798d8f;
-    margin-left: 4px;
-    padding-left: 5px;
-    padding-bottom: 9px;
-    vertical-align: middle;
-    font-size: 20px; 
+	display: none;
+	color: #798d8f;
+	margin-left: 4px;
+	padding-left: 5px;
+	padding-bottom: 9px;
+	vertical-align: middle;
+	font-size: 20px; 
 }
 
 #js-minimize-messages:hover {
-    cursor: pointer;
-    color: black;
+	cursor: pointer;
+	color: black;
  
 }
 
@@ -246,271 +246,296 @@ span.btn-danger>a{
 }
 
 .divider-hr-expanded {
-    display: none;
+	display: none;
 }
 
 
 .style-caret {
-    font-size: 0.7em;
+	font-size: 0.7em;
 }
 
 .dropdown-menu>li>a.style-dropdown-link {
-    max-width: 100px;
+	max-width: 100px;
 }
 
 #globe {
-    font-size: 1.2em;
+	font-size: 1.2em;
 }
 
 
 .glyphicon-thumbs-up:hover, .glyphicon-thumbs-down:hover {
-    cursor: pointer;
+	cursor: pointer;
 
 }
 
 .glyphicon-thumbs-up:hover {
-    color: green;
+	color: green;
 }
 
 .glyphicon-thumbs-down:hover {
-    color: red;
+	color: red;
 }
 
 .glyphicon-thumbs-down {
-    margin-left: 20px;
+	margin-left: 20px;
 }
 
 #create-form-input-checks input{
-    height: 13px;
-    width: 15px;
+	height: 13px;
+	width: 15px;
 
-    display: inline;
+	display: inline;
 }
 
 #mark-as-read {
-    font-weight: bold;
-    color: #149c82;
-    list-style: none;
+	font-weight: bold;
+	color: #149c82;
+	list-style: none;
 }
 
 #mark-as-read:hover {
-    color:#42E3C4;
-    cursor: pointer;
+	color:#42E3C4;
+	cursor: pointer;
 }
 
 .popover-content ul li {
-    list-style: none;
-    padding: 9px 0;
-    border-bottom: 1px solid #ddd; 
+	list-style: none;
+	padding: 9px 0;
+	border-bottom: 1px solid #ddd; 
 }
 
 .popover-content ul li:nth-last-child(2), .popover-content ul li:last-child {
-    border-bottom: none; 
+	border-bottom: none; 
 }
 
 
 .popover-content ul {
-    padding-left: 5px;
+	padding-left: 5px;
 }
 
 .team-member-button {
-    position: relative;
-    padding-right: 16px;
+	position: relative;
+	padding-right: 16px;
 }
 
 .glyphicon-remove {
-    position: absolute;
-    top: 2px;
-    right: 2px;
-    font-size: .7em;
-    color: #bbb;
+	position: absolute;
+	top: 2px;
+	right: 2px;
+	font-size: .7em;
+	color: #bbb;
 }
 
 .glyphicon-remove:hover {
-    color: #3b3b3b;
+	color: #3b3b3b;
 }
 
 
 #button-and-team-header {
-    margin-bottom: 10px;
+	margin-bottom: 10px;
 }
 
 .over-due {
-    color: #D63C3C;
-    font-weight:600;
+	color: #D63C3C;
+	font-weight:600;
 }
 
 .green {
-    color: green;
-    font-weight: 600;
+	color: green;
+	font-weight: 600;
 }
 
 .deactivated {
-    pointer-events: none;
-    opacity: 0.7;
+	pointer-events: none;
+	opacity: 0.7;
 }
 
 /*Login Link on register*/
 .register-form form h3 a {
-    color: #fff;
-    text-decoration: underline;
+	color: #fff;
+	text-decoration: underline;
 }
 
 td > .message-delete {
-    padding-left: 15px;
-    vertical-align: middle;
+	padding-left: 15px;
+	vertical-align: middle;
 }
 
 table>tbody>tr>td.user-tasks-cell {
-    vertical-align: middle;
+	vertical-align: middle;
 }
 
 
 #author-in-user-messages {
-    padding-right: 8px;
+	padding-right: 8px;
 }
 
 span.js-begin-chat-table {
-    padding-left: 4px;
-    color: #798d8f;
+	padding-left: 4px;
+	color: #798d8f;
 }
 
 
 #js-messages-col {
-    background-color: #f7f7f7;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
+	background-color: #f7f7f7;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
 }
 
 .nav-notifications{
-    float: right;
-    /*display: inline;*/
+	float: right;
+	/*display: inline;*/
 }
 
 div.container div.navbar-collapse {
-    float: right;
+	float: right;
 }
 
-        /***************chat messages*********/
+.input-for-file {
+	margin-bottom: 15px;
+}
+
+/*.input-for-file {
+	font-size: 1.25em;
+	font-weight: 700;
+	color: white;
+	background-color: black;
+	display: inline-block;
+}*/
+
+.input-for-file:focus,
+.input-for-file:hover {
+	cursor: pointer;
+}
+
+.navigate-back {
+	padding-left: 8px;
+	margin-bottom: 10px;
+	font-weight: 600;
+	font-size: 18px;
+}
+
+
+		/***************chat messages*********/
 #chat-div {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    width: 313px;
-    /*height: 400px;*/
-    background-color: #eee;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    vertical-align: middle;
-    display: none;
-    
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	width: 313px;
+	/*height: 400px;*/
+	background-color: #eee;
+	border-radius: 4px;
+	border: 1px solid #ccc;
+	vertical-align: middle;
+	display: none;
+	
 }
 
 #js-chat-input {
-    display: inline-block;
-    width: 265px;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+	display: inline-block;
+	width: 265px;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
 }
 
 #chat-input {
-    position: fixed;
-    bottom: 0;
-    
+	position: fixed;
+	bottom: 0;
+	
 }
 
 #js-send-chat-message {
-    float: right;
-    padding: 10px 5px;
-    margin:0;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+	float: right;
+	padding: 10px 5px;
+	margin:0;
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
 }
 
 #js-exit-chat {
-    position: absolute;
-    top: 3px;
-    right: 3px;
-    z-index: 10000;
-    font-size: 15px;
-    padding-left: 0;
+	position: absolute;
+	top: 3px;
+	right: 3px;
+	z-index: 10000;
+	font-size: 15px;
+	padding-left: 0;
 }
 
 #js-maximize-chat {
-    position: absolute;
-    top: 3px;
-    right: 23px;
-    z-index: 10000;
-    font-size: 15px;
-    color:#bbb; 
-    /*display: none;*/
+	position: absolute;
+	top: 3px;
+	right: 23px;
+	z-index: 10000;
+	font-size: 15px;
+	color:#bbb; 
+	/*display: none;*/
 }
 
 #js-maximize-chat:hover {
-    cursor: pointer;
-    color: #fff;
+	cursor: pointer;
+	color: #fff;
 }
 
 .js-hide {
-    display: none;
+	display: none;
 }
 
 #js-minimize-chat {
-    position: absolute;
-    top: 3px;
-    right: 23px;
-    z-index: 10000;
-    font-size: 15px;
-    color:#bbb; 
+	position: absolute;
+	top: 3px;
+	right: 23px;
+	z-index: 10000;
+	font-size: 15px;
+	color:#bbb; 
 }
 
 #js-minimize-chat:hover {
-    cursor: pointer;
-    color: #fff;
+	cursor: pointer;
+	color: #fff;
 }
 
 
 #js-exit-chat:hover {
-    cursor: pointer;
-    color: #FA6169;
+	cursor: pointer;
+	color: #FA6169;
 }
 
 
 #js-messages-holder {
-    position: relative;
-    height: 320px;
-    padding-left: 15px;
-    padding-top: 10px;
-    padding-right: 15px;
-    margin-bottom: 35px;
-    overflow-y: auto;
+	position: relative;
+	height: 320px;
+	padding-left: 15px;
+	padding-top: 10px;
+	padding-right: 15px;
+	margin-bottom: 35px;
+	overflow-y: auto;
 }
 
 #end-chat-message{
-    margin-top: 15px;
+	margin-top: 15px;
 }
 
 #chat-header {
-    position: relative;
-    
-    height: 30px;
-    font-weight: 600;
-    background-color: #3b3b3b;
-    color: #eee;
-    text-align: center;
+	position: relative;
+	
+	height: 30px;
+	font-weight: 600;
+	background-color: #3b3b3b;
+	color: #eee;
+	text-align: center;
 
 }
 
 #chat-header-name {
-    padding: 5px 0;
+	padding: 5px 0;
 }
 
 .hide-chat {
-    height: 30px; 
+	height: 30px; 
 }
 
 .show-chat {
-    height: 400px;
+	height: 400px;
 }
 /****BOOTSTRAP DATETIME PICKER******/
 
@@ -522,7 +547,7 @@ div.container div.navbar-collapse {
 
 
 .ui-datepicker {
-    font-size: 9pt !important;
+	font-size: 9pt !important;
 }*/
 
 
@@ -530,163 +555,163 @@ div.container div.navbar-collapse {
 
 
 span.field-validation-error {
-    color: red;
+	color: red;
 }
 
 span.field-validation-error span{
-    color: red;
+	color: red;
 }
 
 /*div.validation-summary-errors {
-    margin-top: 30%;
-    background-color: #fff;
-    border-radius: 7px;
-    border: 3px solid #dce4ec;
-    display: inline-block;
-    padding-right: 30px;
-    padding-top: 10px;
+	margin-top: 30%;
+	background-color: #fff;
+	border-radius: 7px;
+	border: 3px solid #dce4ec;
+	display: inline-block;
+	padding-right: 30px;
+	padding-top: 10px;
 }*/
 
 /*.validation-summary-errors li {
-    text-align: left;
-    list-style-type: none;
-    max-width: 220px;
+	text-align: left;
+	list-style-type: none;
+	max-width: 220px;
 }*/
 
 /***************LANDING PAGE************/
 
 .landing-body {
-    background-image: url("img/future.png");
-    background-attachment:fixed;
-    background-size: auto;
-    padding: 0;
-    margin-bottom: 0;
+	background-image: url("img/future.png");
+	background-attachment:fixed;
+	background-size: auto;
+	padding: 0;
+	margin-bottom: 0;
 }
 
 
 .overlay {
-    z-index: 1;
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-    background: rgba(66, 199, 173, 0.7);    
-    text-align: center;
-    overflow-x:hidden;
-    overflow-y:hidden;
+	z-index: 1;
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	background: rgba(66, 199, 173, 0.7);    
+	text-align: center;
+	overflow-x:hidden;
+	overflow-y:hidden;
   
 }
 
 #register-header {
-    color: #fff;
-    font-size: 2em;
-    margin-right: 8px;
+	color: #fff;
+	font-size: 2em;
+	margin-right: 8px;
 }
 
 
 #overlay .row .col-md-4 {
-    text-align: center;
+	text-align: center;
 }
 
 input.sign-up-input, select.sign-up-input {
-    margin: auto;
+	margin: auto;
 }
 
 .register-button-landing {
-    width: 100%;
+	width: 100%;
 }
 
 .register-form {
-    padding-top: 7%;
+	padding-top: 7%;
 }
 
 .login-form {
-    padding-top: 28%;
+	padding-top: 28%;
 }
 
 .landing-page-logo {
 
-    max-width: 60px;
-    height: auto;
-    position: absolute;
-    top: 20px;
-    left: 20px;
+	max-width: 60px;
+	height: auto;
+	position: absolute;
+	top: 20px;
+	left: 20px;
 
 }
 
 
 .fly-client-text {
-    font-size: 4.2em;
-    font-weight: bold;
-    color: #fff;
-    /*text-align: start;
-    vertical-align: bottom;
-    margin-top: 10px;
-    position: relative;*/
-    position: absolute;
-    top: 0px;
-    left: 90px;
+	font-size: 4.2em;
+	font-weight: bold;
+	color: #fff;
+	/*text-align: start;
+	vertical-align: bottom;
+	margin-top: 10px;
+	position: relative;*/
+	position: absolute;
+	top: 0px;
+	left: 90px;
 
 }
 
 .text-and-logo {
-    /*position: absolute;
-    top: 20px;
-    left: 20px;
-    display: inline-block;*/
-    position: relative;
+	/*position: absolute;
+	top: 20px;
+	left: 20px;
+	display: inline-block;*/
+	position: relative;
 }
 
 .login-on-register-page {
-    position: absolute;
-    top: 15px;
-    right: 25px;
-    color: #fff;
-    margin-left: 8px;
-    font-size: 1.3em;
+	position: absolute;
+	top: 15px;
+	right: 25px;
+	color: #fff;
+	margin-left: 8px;
+	font-size: 1.3em;
 }
 
 .login-on-register-page a {
-    color: #fff;
+	color: #fff;
 }
 
 .login-form p a {
-    color: #fff;
-    font-size: 1.3em;
+	color: #fff;
+	font-size: 1.3em;
 }
 
 .register-form p a {
-    color: #fff;
-    font-size: 1.3em;
+	color: #fff;
+	font-size: 1.3em;
 }
 
 /********HIDING MOBILE ELEMENTS**********/
 
 #mobile-table-title{
-    display: none;
+	display: none;
 }
 
 #mobile-add-customer-button{
-    display: none;
+	display: none;
 }
 
 
 #mobile-table-div{
-    margin-top: 15px;
+	margin-top: 15px;
 }
 
 .mobile-customer-glyphicons {
-    display: none;
+	display: none;
 }
 
 .mobile-task-table {
-    display: none;
+	display: none;
 }
 
 
 .notification-mobile {
-    display: none;
+	display: none;
 }
 
 
@@ -696,126 +721,126 @@ input.sign-up-input, select.sign-up-input {
 
 
 @media only screen and (max-width: 769px){
-    .notification-mobile {
-        display: block;
-    }
+	.notification-mobile {
+		display: block;
+	}
 
-    .notification-desktop {
-        display: none;
-    }
+	.notification-desktop {
+		display: none;
+	}
 
-    .nav-notifications {
-        padding-right: 25px;
-    }
+	.nav-notifications {
+		padding-right: 25px;
+	}
 }
 
 @media only screen and (max-width: 920px){
-    .text-and-logo {
-        text-align: center;
-        position: relative;
-        top: 0;
-        left: 0;
+	.text-and-logo {
+		text-align: center;
+		position: relative;
+		top: 0;
+		left: 0;
 
 
-    }
+	}
 
-    .overlay {
-        overflow-y: scroll;
-    }
+	.overlay {
+		overflow-y: scroll;
+	}
 
-    .login-on-register-page {
-        display: none;
-    }
+	.login-on-register-page {
+		display: none;
+	}
 
-    .login-form {
-        padding: 7%;
-    }
+	.login-form {
+		padding: 7%;
+	}
 }
 
 
 @media only screen and (max-width: 770px) {
-    /*********LAYOUT********************/
+	/*********LAYOUT********************/
 
 
-    /*******CUSTOMER INDEX ************/
-    .table-desktop {
-        display: none;
-    }
+	/*******CUSTOMER INDEX ************/
+	.table-desktop {
+		display: none;
+	}
 
-    .table-mobile {
-        display: block;
-    }
+	.table-mobile {
+		display: block;
+	}
 
-    #add-customer-button{
-        display: none;
-    }
+	#add-customer-button{
+		display: none;
+	}
 
-    #mobile-table-title{
-        display: inline;
-        font-size: 2em;
-        vertical-align: middle
-    }
+	#mobile-table-title{
+		display: inline;
+		font-size: 2em;
+		vertical-align: middle
+	}
 
-    #mobile-add-customer-button{
-        display: inline;
-    }
+	#mobile-add-customer-button{
+		display: inline;
+	}
 
 
-    /************* CUSTOMER DETAIL************/
-    
-    .mobile-customer-glyphicons {
-        display: block;
-        margin-top: 8px;
-    }
+	/************* CUSTOMER DETAIL************/
+	
+	.mobile-customer-glyphicons {
+		display: block;
+		margin-top: 8px;
+	}
 
-    th a.btn-info {
-        display: none;
-    }
+	th a.btn-info {
+		display: none;
+	}
 
-    #js-enlarge-messages {
-        display: none;
-    }
+	#js-enlarge-messages {
+		display: none;
+	}
 
-    .mobile-task-table {
-        display: table;
+	.mobile-task-table {
+		display: table;
 
-    }
+	}
 
-    .mobile-table-border {
-        border-bottom: 1px solid #aaa;
-    }
+	.mobile-table-border {
+		border-bottom: 1px solid #aaa;
+	}
 
-    .mobile-task-table td{
-        padding: 8px 3px;
+	.mobile-task-table td{
+		padding: 8px 3px;
 
-    }
+	}
 
-    .mobile-task-row-title {
-        margin-top: 10px;
-        font-size: 1.4em;
-        border-top: 20px solid #fff;
-    }
+	.mobile-task-row-title {
+		margin-top: 10px;
+		font-size: 1.4em;
+		border-top: 20px solid #fff;
+	}
 
-    .mobile-task-row-title td a {
-        text-decoration: none;
-    }
+	.mobile-task-row-title td a {
+		text-decoration: none;
+	}
 
-    .task-table-desktop{
-        display: none;
-    }
+	.task-table-desktop{
+		display: none;
+	}
 
-    .customer-index-glyphicons a, .customer-index-glyphicons span{
-        padding-right: 10px;
-    }
+	.customer-index-glyphicons a, .customer-index-glyphicons span{
+		padding-right: 10px;
+	}
 
 
 
 }
 
 /*@media (max-width: 992px) and (min-width: 451px) {
-    .hide-midsize {
-        display:none;
-    }
+	.hide-midsize {
+		display:none;
+	}
 
 }​*/
 

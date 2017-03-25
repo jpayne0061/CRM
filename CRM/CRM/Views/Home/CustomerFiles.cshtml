@@ -1,0 +1,36 @@
+﻿@model CRM.Models.Customer
+
+
+@{
+    ViewBag.Title = "CustomerFiles";
+}
+
+<h2>CustomerFiles</h2>
+<div class="navigate-back">
+    @Html.ActionLink("Back To Customer", "Detail", "Customer", new { id=Model.Id}, "")
+</div>
+<table class="table table-striped table-hover task-table-desktop">
+    <tbody>
+
+        @foreach (var file in Model.CustomerFiles)
+        {
+            <tr>
+                <td>@Html.ActionLink(@file.FileName, "Download", new { FileName = @file.FilePath })</td>
+                <td>@file.UploadedBy.Name</td>
+                <td>
+                    @file.DateTime.ToString("G")
+                 </td>
+                <td>@Html.ActionLink(" ", "Download", new { FileName = @file.FilePath }, new { @class= "glyphicon glyphicon-download" })</td>
+
+                
+            </tr>
+
+        }
+
+
+    </tbody>
+
+
+</table>
+
+
