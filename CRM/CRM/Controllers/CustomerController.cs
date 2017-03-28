@@ -104,13 +104,21 @@ namespace CRM.Controllers
             //build list of strings from checkbox
             List<string> usersSelected = new List<string>();
 
-            foreach(UserCheckBox userCb in viewCustomer.UserCheckBoxes)
-            {
-                if(userCb.Checked == true)
+            try {
+                foreach (UserCheckBox userCb in viewCustomer.UserCheckBoxes)
                 {
-                    usersSelected.Add(userCb.Name);
+                    if (userCb.Checked == true)
+                    {
+                        usersSelected.Add(userCb.Name);
+                    }
                 }
             }
+            catch (System.NullReferenceException)
+            {
+
+            }
+
+
 
 
             var userId = User.Identity.GetUserId();
