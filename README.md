@@ -1,15 +1,20 @@
 #What is this App?
 This app is a CRM or "Customer Relation Management" software. It is used to keep track of customers/leads and collaborate with other users.
 
-#Test account credentials
-#Manager Account
-#email: testy1234@CRM.com
-#password: codeLouisville1!
+Test account credentials
+
+Manager Account
+
+email: testy1234@CRM.com
+
+password: codeLouisville1!
 
 
-#User Account
-#email: frank@CRM.com
-#password: codeLouisville1!
+User Account
+
+email: frank@CRM.com
+
+password: codeLouisville1!
 
 feel free to create your own accounts!!
 
