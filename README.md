@@ -1,22 +1,15 @@
 #What is this App?
 This app is a CRM or "Customer Relation Management" software. It is used to keep track of customers/leads and collaborate with other users.
 
-
-#How can I get this app to run?
-
-1. Download/install Visual Studio 2015 
-2. Clone/download this repo to your local machine
-3. Navigate to the .sln file
-4. Open the application in Visual Studio
-
 #Test account credentials
 Manager Account
---email: testy1234@CRM.com
---password: codeLouisville1!
+email: testy1234@CRM.com
+password: codeLouisville1!
+
 
 User Account
---email: frank@CRM.com
---password: codeLouisville1!
+email: frank@CRM.com
+password: codeLouisville1!
 
 feel free to create your own accounts!!
 
