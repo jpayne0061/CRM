@@ -5,16 +5,17 @@ Test account credentials
 
 Manager Account
 
-email: testy1234@CRM.com
+email: rs@CRM.com
 
-password: codeLouisville1!
+password: Admin1234!
 
 
 User Account
 
-email: frank@CRM.com
+email: ap@CRM.com
 
-password: codeLouisville1!
+password: Admin1234!
+
 
 feel free to create your own accounts!!
 
