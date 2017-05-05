@@ -22,7 +22,7 @@ feel free to create your own accounts!!
 #A quick few notes
 1. Upon first running the app, it may "time out" on your machine. If this happens, refresh the page and try again
 2. To use the chat feature, you will need to login with two different accounts, using either incognito mode or a different browser
-3. To register a new user, you will need to join an existing group("Code Louisville" already exists) or register your own group as a manager
+3. To register a new user, you will need to join an existing group("Parks" already exists) or register your own group as a manager
 4. To use the app as a user, you will need to approve the "join request" as a manager
 
 #What can I do with this app? You can...
